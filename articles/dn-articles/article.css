@@ -1,0 +1,50 @@
+body {
+	font-family: Calibri, Verdana, "Bitstream Vera Sans", sans-serif;
+	margin: 0 0.5em 0.5em 0.5em;
+}
+
+.byline, blockquote {
+	font-style: italic;
+}
+
+.byline span.name {
+	font-weight: bold;
+}
+
+pre, tt, kbd, code {
+	font-family: Consolas, "Bitstream Vera Sans Mono", monospace;
+}
+
+var {
+	background-color: inherit;
+	color: blue;
+}
+
+dt {
+	font-weight: bold;
+}
+
+dt:after {
+	content: ":";
+}
+
+dl.nocolon dt:after {
+	content: "";
+}
+
+.BookTitle {
+	text-decoration: underline;
+}
+
+div.errata-bad-section, div.errata-corrected {
+	margin: 0.15em 1.75em 0.15em 1.75em;
+	padding: 0.25em 0.25em 0.25em 0.25em;
+}
+
+div.errata-bad-section {
+	border: 1px dotted red;
+}
+
+div.errata-corrected {
+	border: 1px dotted green;
+}

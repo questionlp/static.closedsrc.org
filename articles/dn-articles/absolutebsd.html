@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Book Review: Absolute BSD</title>
+<link rel="stylesheet" href="article.css" type="text/css" />
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18728142-3', 'closedsrc.org');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<h1>Book Review: Absolute BSD</h1>
+<div class="byline"><span class="name">Linh Pham</span> [<a href="mailto:question-articles@closedsrc.org">question-articles@closedsrc.org</a>]</div>
+
+<blockquote>
+<p>
+This article originally appeared in the October 2002 issue of the D&aelig;mon News Online Magazine.
+This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+else, the content has not been changed.
+</p>
+</blockquote>
+
+<p>
+<strong>Author:</strong> Michael Lucas<br />
+<strong>Publisher:</strong> No Starch Press<br />
+<strong>Pages:</strong> 612<br />
+<strong>ISBN:</strong> 1-886411-74-3<br />
+<strong>Website:</strong> <a href="http://www.AbsoluteBSD.com/">www.AbsoluteBSD.com</a>
+</p>
+
+<p>
+Although there are several other key books out there for FreeBSD (for example:
+<span class="BookTitle">The FreeBSD Handbook</span>, <span class="BookTitle">The Complete FreeBSD</span>,
+and <span class="BookTitle">The FreeBSD Corporate Networker's Guide</span>) that cover BSD
+administration, some cover too many topics or don't always provide enough details on more complex topics.
+Another problem with some other FreeBSD books is the fact that they can be too large to carry around and
+be used as a reference book. A new book on FreeBSD may just change that.
+</p>
+
+<p>
+Billed as &quot;The Ultimate Guide to FreeBSD&quot;, <span class="BookTitle">Absolute BSD</span> aims to
+be an all-in-one guide for anyone starting in FreeBSD and UNIX administration. The author's goal was to
+write a guide that is both detailed yet concise (without any additional bloat) and to provide all of the
+information one would need to get started and confident with FreeBSD. Although FreeBSD is part of the
+book's title, quite a bit of the book can also be applied to NetBSD and OpenBSD, and even Darwin/Mac
+OS X. Like in my previous book reviews, I will provide a in-depth review of the book and comments along
+the way.
+</p>
+
+<p>
+Below is the table of contents for the book which you can use as a reference while reading the review.
+</p>
+
+<table cellspacing="0" cellpadding="1" border="0" width="100%">
+<tr valign="top">
+	<td width="50%">
+		<ol>
+			<li>Installation</li>
+			<li>Getting More Help</li>
+			<li>Read This Before You Break Something Else! (Backup and Recovery)</li>
+			<li>Kernel Games</li>
+			<li>Networking</li>
+			<li>Upgrading FreeBSD</li>
+			<li>Securing Your System</li>
+			<li>Advanced Security Features</li>
+			<li>Too Much Information About /etc</li>
+			<li>Making Your System Useful</li>
+			<li>Advanced Software Management</li>
+			<li>Finding Hosts with DNS</li>
+		</ol>
+	</td>
+	<td width="50%">
+		<ol>
+			<li value="13">Managing Small Network Services</li>
+			<li>Email Services</li>
+			<li>Web and Ftp Services</li>
+			<li>Filesystems and Disks</li>
+			<li>RAID</li>
+			<li>System Performance</li>
+			<li>Now What's It Doing?</li>
+			<li>System Crashes and Panics</li>
+			<li>Desktop FreeBSD</li>
+		</ol>
+		<ul>
+			<li>Afterword</li>
+			<li>Appendix: Some Useful Sysctl MIBs</li>
+		</ul>
+	</td>
+</tr>
+</table>
+
+<p>
+The book starts off with a foreword, written by Jordan Hubbard (one of the founders of The FreeBSD
+Project) and a brief introduction and history of BSD; a look at the different BSD operating systems
+and other UNIX-like operating systems; reasons for using the different BSDs and the conventions used in
+the book. I did find one mistake on page xxxv where Michael states, &quot;AIX is based largely on BSD.&quot;
+AIX actually takes much of its heritage from AT&amp;T/USL's System V. Although the author mentions Solaris
+in the list of other UNIX-like operating systems, he doesn't mention that earlier versions of SunOS was
+based heavily on BSD (Bill Joy was a key developer of the original BSD operating system, helped start up
+Sun and used BSD as a base for SunOS through SunOS 4.x).
+</p>
+
+<p>
+Chapter one starts with the FreeBSD installation process for the i386 platform&#8212;it is probably quite
+rare to find someone without UNIX experience who would use a Digital/Compaq/HP Alpha server or workstation&#8212;by
+providing the minimum requirements for FreeBSD. A walkthrough of the install process using Sysinstall
+(including disk partitions and labelling), selecting which components to install, adding users, and
+configuring network interfaces is given.
+</p>
+
+<p>
+There were two typos on page 14 where the author refers the reader to chapter thirteen for information on
+soft-updates; it should be chapter sixteen. The chapter does provide the necessary information and steps
+to guide the reader through a basic install while not trying to explain every single option on each screen.
+</p>
+
+<p>
+The second chapter is something that <em>some</em> people wish it would be required reading for everyone
+learning FreeBSD (or any operating system or application): how to find and get help, along with what an
+e-mail sent to the <em>proper</em> FreeBSD mailing list should include. Also included in the chapter is
+how to use and find information in the man pages and a list of online resources that the reader can use
+to locate possible answers.
+</p>
+
+<p>
+Backup, backup, backup! A topic that any systems administrator should know quite well, but it's something
+that is usually pushed off to the side. Chapter three covers how to backup and restore data using
+<tt>tar</tt>, <tt>dump</tt> and <tt>restore</tt>; how to control tape drives and which tape devices do what;
+plus a look a RCS (revision control system), single-user mode, and a brief mention of the &quot;Fixit&quot;
+disk. For those who are looking for information on how to use tape autoloaders and libraries, as well as
+backup software that is not included in the base system (like Amanda), will have to look elsewhere. There
+are two things that jumped out at me: the &quot;-v (verbose)&quot; <tt>tar</tt> flag was mentioned twice
+(once on page 42 and again on page 45) and the footnote at the bottom of page 45 is referred to on page 46.
+</p>
+
+<p>
+Chapter four goes over out to optimize a FreeBSD system by using <tt>sysctl</tt> to modify some kernel
+settings while the system is running; work with the loader and kernel modules; making and building a custom
+kernel configuration to get rid of the excess that comes with the GENERIC kernel and some hints on how to
+use certain kernel options to boost performance.
+</p>
+
+<p>
+The chapter includes some additional descriptions to commonly used kernel options, but misses a kernel
+option that can cause grief for those using certain types of machines: <code>MAXMEM</code>. On some servers,
+no matter what option you select in the BIOS, FreeBSD will only detect a portion of the actual memory
+installed, say 16MB of out of the installed 480MB. In order for the kernel to see the rest of the memory,
+one must set <code>MAXMEM</code> to the amount of memory, in kilobytes, installed. Although the problem is
+listed in the FreeBSD FAQ, but it still should be included in the book as some readers may have to work on
+hardware that behaves the way I just mentioned. (I know as I and a couple of others ran into the same
+issue with a certain Compaq ProLiant 2500 server.)
+</p>
+
+<p>
+The fifth chapter in the book covers basic networking and network configuration concepts for FreeBSD
+(although much of it can also be applied to NetBSD and OpenBSD) and even contains an obligatory Monty
+Python reference.
+</p>
+
+<p>
+The author explains the OSI model in four logical layers (Application, Logical Protocol, Physical Protocol
+and Physical Layer), unlike some other books that take up pages after pages explaining the OSI (which is
+incorrectly referred to on page 90 as &quot;ISO&quot;) model and its seven well known layers. The author
+does a nice job of explaining the concepts of TCP/IP, IP addresses and subnets (even touching on slash
+notation along with a nice subnet mask conversion table), and Ethernet.
+</p>
+
+<p>
+The last part of the chapter covers how to configure a network connection using <tt>ifconfig</tt> and
+<tt>route</tt>; setting up IP address aliases; and using <tt>netstat</tt> to check out what ports the
+system is listening on, what connections are open and a couple of useful stats. In the example the author
+provides for setting up IP address aliases, he omits the netmask portion of the <tt>ifconfig</tt> command,
+and in the <tt>ifconfig_<var>device</var>_alias<var>#</var></tt> option in <tt>/etc/rc.conf</tt>. This
+can be a cause of some troubles and frustration for the reader as it may cause the system to not work as
+it is supposed to.
+</p>
+
+<p>
+Upgrading FreeBSD, the title and focus of chapter six, can either be a breeze or cause people to have
+recurring nightmares. Michael explains the different branches of the FreeBSD code (-RELEASE, -STABLE and
+-CURRENT) and which ones are most suited for different scenarios; the two common upgrade methods (make
+world and sysinstall); setting up your own local CVSup mirror using net/cvsup-mirror (how apropos).
+</p>
+
+<p>
+The steps outlined in the make world process is one that most seasoned FreeBSD users are accustomed to
+using and contain some helpful hints to reduce the chance of someone getting burned in the process, such
+as telling <tt>mergemaster</tt> to install a new <tt>/etc/master.passwd</tt> over an existing one). One
+step that wasn't mentioned in the make world process was to build and install the updated sysinstall
+tool as mentioned in the handbook. Including how to setup a local CVSup mirror was a really nice touch
+to the chapter since this can easily reduce the amount of bandwidth used for those who manage several
+FreeBSD servers that are being kept up to date.
+</p>
+
+<p>
+Chapter seven covers some of the basic ways to secure a system: how to change the permissions and
+ownership on a file, setting and unsetting flags on files, using securelevels, and using <tt>sockstat</tt>
+to check which sockets are open and which ones shouldn't be open. When discussing how to use <tt>chmod</tt>
+to change the permissions of a file or directory, the examples used uses octal numbers to set the proper
+permissions and doesn't cover the symbol method (which uses u, g and o to signify whom and r, w and x to
+signify the permissions). It's more of a matter of choice and what one is used to using, so I won't be
+dinging any points there.
+</p>
+
+<p>
+Chapter eight continues on the topic of security, but goes a bit deeper by touching on how to use TCP
+wrappers and how to write <tt>/etc/hosts.allow</tt> ACLs; setting up a machine to use IPFilter and
+writing up IPFilter rules (IPFW rules are not covered at this point in the book) and taking a look at
+jails and getting jails set up on a machine. To help those who are new to IPFilter, the author does a
+really good job of breaking down each example that he provides with a walkthrough of each keyword. He
+also explains any new concepts or exceptions to the rules.
+</p>
+
+<p>
+One of the aspects of UNIX and UNIX-like operating systems that frightens some newcomers is the fact
+that almost all of the configuration is done by hacking away at text files; some have the most archaic
+syntax and structure (I won't name any names, but you know who you are). The configuration files under
+<tt>/etc</tt> are the focus of chapter nine, which tries to demystify and explain the key files along
+with their purpose, syntax and options.
+</p>
+
+<p>
+Not every file is explained in detail in this chapter as they have already been covered or will be
+covered in later chapters. One set of files that are not covered are the Sendmail .cf files under
+<tt>/etc/mail</tt>. (The reason for this is that later in the book, the author will cover how to
+replace Sendmail with another MTA, or mail transfer agent.) When the author covers <tt>/etc/master.passwd</tt>,
+he tells the reader to use the <tt>vipw</tt> tool to make any necessary changes to the file rather
+than hacking the file by hand. One mistake that I did find in the explanation of the file was:
+</p>
+
+<blockquote>
+<p>
+When vipw finally allows you to save your work, it also recreates the file /etc/passwd. This
+file can only be read by root.
+</p>
+</blockquote>
+
+<p>
+The <tt>/etc/passwd</tt> is actually a world readable file; rather, <tt>/etc/master.passwd</tt> is
+the file that can only be read and written to by root.
+</p>
+
+<p>
+Once FreeBSD has been installed on a machine and has been configured to get on the Internet and
+tightened down a bit, one of the next steps would be to get some programs and services installed to
+make the machine a useful workstation or server. Chapter ten takes a look at installing and uninstalling
+programs using Ports and packages; using the available make options for different purposes; how to
+update the Ports collection on the system; using the <tt>pkg_*</tt> tools to find out what is
+installed and find information about each install port or package. What is missing from the chapter
+(and seemingly from the rest of the book) is a look at <tt>pkgdb</tt> and <tt>portupgrade</tt>, both
+of which are becoming more popular and can be a lot more useful than the standard tools provided in
+the base system. Perhaps they will make it on to the next edition of the book.
+</p>
+
+<p>
+Chapter eleven continues on the topic of running programs; working with libraries; the anatomy of an
+rc.d startup script; a look at the Linux, SCO, SVR4 and OSF/1 application compatibility; getting
+<tt>linux_base</tt> and other Linux RPM packages installed; a look at SMP (symmetric multiprocessing)
+and how they work with the FreeBSD kernel rounds out the chapter. On the topic of SMP, the author
+provides a brief history on SMP and FreeBSD, the &quot;Big Giant Lock&quot;, the changes that FreeBSD
+5.0 will bring to SMP, and a note that not all applications will benefit from having multiple processors.
+</p>
+
+<p>
+The next chapter, twelve, in the book is an overview of DNS (Domain Name Service) and the BIND DNS
+server and toolset. The chapter starts off with an explanation of what DNS is and what role it plays,
+along with two tools that are used to look up DNS results and information: <tt>host</tt> and <tt>dig</tt>
+(<tt>nslookup</tt> is not covered since either of the two tools can be easier to use and can provide
+more information without messing through <tt>nslookup</tt> commands). The author continues on with an
+explanation of the <tt>/etc/hosts</tt> and <tt>/etc/resolv.conf</tt> files.  The rest of the chapter
+is devoted to the configuration of BIND and setting up DNS zones which BIND will be setup to serve out.
+</p>
+
+<p>
+Since the base system includes BIND 8.x instead of BIND 9.x, the chapter focuses on configuring BIND
+8.x though almost all of the steps will also apply to BIND 9.x (with the exception of <tt>ndc</tt> as
+BIND 9.x recommends using the <tt>rndc</tt> tool, which requires some additional configuration). The
+author provides a good explanation of what information would go into the <tt>named.conf</tt> and DNS
+zone map files as it is geared towards those who are beginning to learn BIND.  For those who aspire to
+be a BIND god/goddess, both the author and I would recommend getting <span class="BookTitle">DNS and
+BIND</span> by Paul Albitz and Cricket Liu.
+</p>
+
+<p>
+Chapter thirteen takes a look at the other network services included with FreeBSD, such as <tt>inetd</tt>,
+OpenSSH, and using IPFW to limit bandwidth for some or all services. The first portion of the chapter
+covers how to setup IPFW and Dummynet to limit the amount of traffic to a specific service to keep the
+rest of the bandwidth available for additional services like e-mail. (Although IPFW can be used as a firewall,
+like IPFilter, the steps provided are not meant for setting up a basic firewall.)
+</p>
+
+<p>
+In the next portion, the author discusses the very basics of encryption, generating SSL certificates,
+certificate requests, setting up your own certificate authority (CA), and configuring OpenSSH; working
+with <tt>ntpdate</tt> and setting up your own time server using the Network Time Protocol (NTP)
+d&aelig;mon; and a look at <tt>inetd</tt> and its configuration file, <tt>inetd.conf</tt>. There was
+one minor typo on page 322 where the author mentions that <tt>ntpd</tt>'s configuration file is
+<tt>/etc/ntpd.conf</tt>; the actual file is <tt>/etc/ntp.conf</tt>.
+</p>
+
+<p>
+Chapters fourteen and fifteen cover the software behind the three most commonly used Internet services:
+e-mail, the Web and FTP. The first of the two chapters covers how e-mail messages are sent and gives an
+example of how to send an e-mail via using Telnet; the evils of allowing mail server relays; how to
+configure Postfix (although Sendmail and qmail are mentioned, neither of them are covered in this
+book); e-mail aliases and virtual domains; and setting up Qpopper for POP3 mail services. For those who
+are looking for help on setting up IMAP4 services, which could potentially be quite a few people, you
+will not find any information in the book.
+</p>
+
+<p>
+One thing that needs to be noted is that in the current and possibly next printing of the book, the
+configuration snippets in the <tt>qpopper.conf</tt> overview are actually what Qpopper considers as
+the default setting. Not knowing that could cause the reader to get a bit confused while reading the
+descriptions of each of the key settings. The chapter rounds out with a brief overview of setting up
+APOP and POP3-over-SSL to help increase the security of POP3, as all of the information sent over
+regular POP3 is done in plain-text (just like Telnet).
+</p>
+
+<p>
+The next chapter, fifteen, continues on with installing and configuring the Apache web server
+(focusing on Apache 1.3.x rather than Apache 2.x, though some of the configuration overview can also
+be used with Apache 2.x) along with setting up the included FTP d&aelig;mon. The Apache section of
+the chapter provides an in-depth look at the <tt>httpd.conf</tt> file; a brief touch on setting up
+the apache13-modssl port to use an SSL certficate; a note about how FrontPage Extensions and mod-ssl
+don't quite like each other; and setting up virtual hosting.
+</p>
+
+<p>
+On page 372, right in between the Apache and the FTP sections of the chapter, the author mentions how
+to install the Microsoft .NET Shared Source Common Language Interface (or SSCLI, which has the
+codename, Rotor) on FreeBSD. To me, it seems like an odd place to put it since the SSCLI doesn't
+provide any functioning plug-ins or modules for Apache for CGI-like or Web Services usage.
+</p>
+
+<p>
+Rounding out the chapter is a brief guide to using the FTP client and setting up the base system's
+FTP d&aelig;mon, including steps on how to cage (or chrooting users and/or groups) and tips on how to
+setup an anonymous FTP server.
+</p>
+
+<p>
+Chapter sixteen provides an overview of what could be considered the most important parts of any BSD
+system: the disks and the filesystems. Without working filesystems, a system can be about as useless
+as a paperweight. Therefore, proper knowledge on how to take care and how to repair filesystems,
+along with how to mount different filesystems for data access and retrieval, is a must.  The chapter
+covers all of those topics, along with different ways to mount a filesystem, working with the
+<tt>fsck</tt> (filesystem check) tool when some runs afoul, creating new filesystems (be it for
+BSD/UNIX or for DOS/Windows).  This chapter ends with a detailed look at SCSI disks under BSD, how
+they need to be treated differently than IDE/ATA disks, moving files to a new partition (or directory)
+while maintaining the file's metadata state, and stacking mounts (along with what not to do).
+</p>
+
+<p>
+One of the often ignored feature in FreeBSD (or any other operating systems that support it) is
+software RAID, or Vinum to be precise. The premise of chapter seventeen is RAID and using Vinum as a
+software RAID solution. The start of the chapter provides a look at the commonly used RAID levels
+(RAID-0, RAID-1, RAID-5 and RAID-10; the more <em>obscure</em> RAID levels like RAID-3 and RAID-4 are
+not mentioned or covered), what makes up a Vinum RAID array (or more appropriately, plexes) and the
+different plex types. To keep things sane and simple, RAID-5 and RAID-10 Vinum plexes are not
+covered in the chapter, but a URL for the <a href="http://www.vinumwm.org/">Vinum web site</a> is
+provided in case the reader is interested in configuring more complex plexes.
+</p>
+
+<p>
+The author spends quite a bit of time to explain how to configure Vinum, how to create a
+concatenated and a mirrored plex, as well as steps to recover and re-mirror a broken mirrored plex;
+and he does a great job at explaining some of the possible nuances of Vinum and what to not do by
+hand. The only thing that was not mentioned in the chapter that I thought should have been is the fact
+that the plexes cannot be used as boot partitions or can be used to hold key directories that are
+required during the boot process.
+</p>
+
+<p>
+Although setting up a RAID array or a plex may or may not increase the performance of your system,
+but there are other things that can hold back the system. Chapter eighteen goes in search for some of
+the possible performance limiting factors, as well as finding out what the culprit is. The four key
+performance areas that the chapter focuses on are: disk I/O, network bandwidth, processor, and
+memory (which also includes virtual memory, a.k.a. swap). In each of those areas, the author
+provides detailed information on how to use tools to monitor the resource usage (particularly
+<tt>top</tt> and <tt>vmstat</tt>). Also covered is how to use <tt>nice</tt> and <tt>renice</tt> to
+set or reset a process' priority level to allow more important processes more processing time.
+</p>
+
+<p>
+The last section of the chapter runs through a couple of rounds of <tt>make buildkernel</tt>, but
+for each run, the author tries out different methods that would impact the performance of the build.
+Along with explaining the modifications made to the system or telling make to run two parallel builds
+(on a dual processor system), he provides stats from <tt>top</tt> and <tt>vmstat</tt> along with the
+results of each build. There was one mistake that jumped out at me, on page 425, where the author
+refers the reader to chapter fifteen for information on generating bandwidth graphs; it should be
+chapter nineteen.
+</p>
+
+<p>
+Knowing what a system is doing and how much of it is being used are some of the most important
+things to know about a running system. Chapter nineteen explains some of the built-in facilities such
+as the Syslog d&aelig;mon (<tt>syslogd</tt>), rotating log files and how to configure
+<tt>newsyslog</tt>. The second half of chapter covers two often used services to grab information
+about a system: SNMP and MRTG. Along with explaining what MIBs (Management Information Base) are, how
+to view them with <tt>snmpwalk</tt>, setting up the SNMP d&aelig;mon, and using SNMP along with MRTG
+to generate detailed graphs displaying numerous counters and statistics. The author does a great job
+with explaining sometimes confusing and complex details of both SNMP and MRTG.
+</p>
+
+<p>
+Chapter twenty discusses system crashes and panics, how to set up a system to allow kernel debugging
+and memory dumps; also using the GNU Debugger (<tt>gdb</tt>) tool to walk through memory dumps to find
+the failure point and the memory content when the crash or panic occurred. The second section of the
+chapter covers serial consoles, setting up the system to set a serial port as <tt>stdout</tt> if a
+keyboard isn't detected on boot, and connecting to a serial console using <tt>tip</tt>. Rounding out
+the chapter is a touch on problem reports (PR), using <tt>send-pr</tt> and an explanation of each of the
+PR fields.
+</p>
+
+<p>
+Not only can FreeBSD (or any other BSD) be used as a server system, but it can also make for a good
+desktop system as well. Chapter twenty-one doesn't try to be the ultimate guide to setting up a FreeBSD
+desktop; rather, it covers some of the basics and provides suggestions for desktop programs that one
+can use. The first part of the chapter covers how to access Windows or Samba file shares using some of
+the tools that are bundled with Samba; setting up the Line Printer d&aelig;mon (<tt>lpd</tt>) to
+access remote and local printers; and a brief look at X Windows and XFree86, ignoring related
+configuration tools or files.
+</p>
+
+<p>
+The rest of the chapter takes a look at some of the major application groups (like web browser, mail
+client, office suites, and of course, games) and some of the more popular ports from each group. You
+may be asking yourself why hasn't the author covered using Samba as a Windows/CIFS file server rather
+than just the client tools. Setting up Samba as a file server along with the myriad of configuration
+options could (and does) take up an entire book. Instead, the author provides a couple of resources
+that one can use to learn more about Samba.
+</p>
+
+<p>
+The last two sections of the book are the Afterword and an appendix covering some of the more useful
+or commonly used Sysctl options (or MIBs). In the Afterword, the author talks about how the reader
+can help out in the BSD community, how not to approach the community in hopes of finding ways to
+help out, and the key point: be proactive and take the initiative. Within the appendix, Michael
+provides not only a list of common Sysctl MIBs but also tips, hints and words of caution about
+changing the setting or when not to change them. The list makes a great reference for any system
+administrator or for someone who likes to find ways to tweak his/her machine just to see what happens.
+</p>
+
+<p>
+Although the book is over 600 pages, a majority of the pages are packed with a lot of information
+while not taking up full pages for self-explanatory screenshots or code/configuration examples. I
+think that the author's goal for the book has been met as key topics like backup and recovery, security,
+analyzing the system's performance and usage, and major services (viz., DNS, mail and web) are covered.
+Some readers may feel a bit empty owing to lacking or missing coverage on how to setup Samba for
+Windows/SMB file and print serving, and XFree86 configuration. Both topics are covered in grand
+details in other books or on-line documentation, but having to look elsewhere may irk a few readers.
+</p>
+
+<p>
+Overall, the book was well written and tries to keep the reader's attention by including humorous
+commentaries and notes while staying on topic. Ramblings and rants are kept to a bare, bare minimum.
+Being the first edition and printing of the book, there were several errors/mistakes and a couple of
+typographical errors throughout the book. (I have brought the errors and mistakes that I have found
+to the author and most, if not all, of them have been corrected for future printings and editions.
+An errata for the book should be available on the book's website at
+<a href="http://www.absolutebsd.com/">www.AbsoluteBSD.com</a>.) There are also a couple of topics
+that could have made a mention of additional tools; in particular, there was no mention of the
+<tt>portupgrade</tt> and <tt>pkgdb</tt> tools in the chapter ten.
+</p>
+
+<p>
+Now, would I recommend this book? I think that the book should be highly recommended for those who
+have worked with FreeBSD for a while, but would like to learn a bit more about the included services.
+For anyone wanting to learn FreeBSD to set up a server, I think it would be useful--even for those with
+a bit of Linux experience. The book is definitely worth looking at for those who are well seasoned with
+FreeBSD and it could be a great complement to the other documentation available on-line or in book format.
+</p>
+
+<hr />
+<p>
+Article copyright &copy; 2002&#8211;2010 Linh Pham.
+All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
+</p>
+
+</body>
+</html>

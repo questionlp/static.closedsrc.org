@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>HOWTO - Backing Up a Windows Machine From FreeBSD</title>
+<link rel="stylesheet" href="article.css" type="text/css" />
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18728142-3', 'closedsrc.org');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<h1>HOWTO - Backing Up a Windows Machine From FreeBSD</h1>
+<div class="byline"><span class="name">Linh Pham</span> [<a href="mailto:question-articles@closedsrc.org">question-articles@closedsrc.org</a>]</div>
+
+<blockquote>
+<p>
+This article originally appeared in the October 2001 issue of the D&aelig;mon News Online Magazine.
+This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+else, the content has not been changed.
+</p>
+</blockquote>
+
+<p>
+Backing up data is one of the most crucial tasks that any company must face when dealing with networks
+and servers. Many large companies rely on backup packages from vendors like Veritas and Computer
+Associates, but not all of those packages are affordable for a company with a small network or will
+work with FreeBSD. Also, some companies will run into an interesting mix of Windows-based and
+FreeBSD-based file servers and system administrators must figure out a way to backup both platforms.
+FreeBSD includes a very powerful backup utility with any installation, called <tt>tar</tt>. With
+<tt>tar</tt>, one can archive/restore files from a <tt>.tar</tt> file or from one or more tape
+cartridges without having to purchase anything. One can use <tt>tar</tt> to backup files on the local
+server, as well as other UNIX servers via NFS... but how does one backup a Windows machine from
+FreeBSD? In this article, I will cover how to install and setup <tt>smbfs</tt> and Samba's
+<tt>smbclient</tt>, and how to backup files to both a <tt>.tar</tt> file and onto a single SCSI
+tape drive.
+</p>
+
+<h2>About smbfs and smbclient</h2>
+
+<p>
+<tt>smbfs</tt> is a kernel module that allows you to mount any SMB (or CIFS) shares that are served on
+a Windows NT/2000 or a server running Samba over the network. The utility that you would use to connect
+to any SMB share is <tt>mount_smbfs</tt> that is installed with the <tt>smbfs</tt> port. Unlike some of
+the other <tt>mount</tt> utilities installed with FreeBSD, <tt>smbfs</tt> does not allow you to mount
+FAT12, FAT16, FAT32 or NTFS partitions located on the same computer. Instead, you would use the included
+drivers and kernel module(s) to mount such partitions.
+</p>
+
+<p>
+When you mount an SMB share using <tt>smbfs</tt>, you will be able to read/write any files located on
+that share (depending on the permissions setup for the share or the permissions on the server's file
+system) as if it were an NFS mount or any standard directory on the local machine.
+</p>
+
+<p>
+<tt>smbclient</tt> is part of the Samba package that allows you to connect to any SMB shares served by
+a Windows NT/2000 or a Samba server using an FTP-like interface. Unlike <tt>smbfs</tt>, you will not
+be able to mount the share onto your machine and will not be able to access it from any program. For
+backup purposes, <tt>smbclient</tt> probably has enough functionality to meet almost any needs.
+</p>
+
+<p>
+For <tt>smbfs</tt> or <tt>smbclient</tt> to work, you must have a local account on the server (or a
+domain account if the server is part of a Windows NT/2000 domain) that has [read-only or read/write]
+permission to access the share(s). More about this will be discussed later in the article.
+</p>
+
+<h2>Installing smbfs and smbclient</h2>
+<blockquote>
+<p>
+<strong>Note:</strong> Before installing any ports, you may want to update your Ports collection to
+make sure that you have the latest versions to install from. I will be referencing <tt>smbfs</tt>
+version 1.1.0 and <tt>smbclient</tt> from Samba version 2.2.0 in this article. Older versions may
+include some bugs or features that might not be present in the current versions that might cause
+some disparities between the output provided here and what you may get from you machine. If you
+need help updating your Ports collection using CVSup, you can find some information
+<a href="http://www.freebsd.org/handbook/cvsup.html">here</a>.
+</p>
+</blockquote>
+
+<p>
+Installing <tt>smbfs</tt> is an easy task in FreeBSD since you can use the Ports Collection. The
+<tt>smbfs</tt> port is available under <tt>/usr/ports/net/smbfs</tt> and can be installed by running
+<tt>cd /usr/ports/net/smbfs ; make &amp;&amp; make install</tt> as root.
+</p>
+
+<p>
+During the installation, the installation script places a file in <tt>/usr/local/etc/rc.d</tt>
+called <tt>smbfs.sh.sample</tt> which is used to mount any Windows shares that you may want to
+add to <tt>/etc/fstab</tt>. For more information on how to automatically mount Windows shares via
+the <tt>smbfs.sh</tt> script and <tt>/etc/fstab</tt>, run <tt>man mount_smbfs</tt>.
+</p>
+
+<p>
+<tt>smbclient</tt> is part of the Samba package, which is available from both the Ports Collection
+(version 2.2.1a can be found in <tt>/usr/ports/net/samba-devel</tt>, version 2.0.10 is in
+<tt>/usr/ports/net/samba</tt>) or from Samba's website. Installing Samba from Ports is just as
+easy as running <tt>cd /usr/ports/net/samba-devel ; make &amp;&amp; make install</tt> as root.
+Once installed, <tt>smbclient</tt> from Samba 2.2.0 can be found in <tt>/usr/local/samba/bin</tt>.
+You may need to add a very simple <tt>smb.conf</tt> file in <tt>/usr/local/samba/lib</tt> for
+most of the Samba utilities and d&aelig;mons to run properly.
+</p>
+
+<h2>Backing Up and Restoring Data</h2>
+<h3>smbfs</h3>
+<p>
+Before you can backup from an SMB share, you will need to mount the share onto the FreeBSD machine.
+To mount the share, run the following as root:
+</p>
+
+<pre>
+	mount_smbfs //<var>user</var>@<var>server</var>/<var>share_name</var> <var>/path/to/mount_point</var>
+</pre>
+
+<p>
+<em>or</em>
+</p>
+
+<pre>
+	mount -t smbfs //<var>user</var>@<var>server</var>/<var>share_name</var> <var>/path/to/mount_point</var>
+</pre>
+
+<p>
+In my case, I ran <kbd>mount_smbfs //lpham@jenova2/foo /mnt/jenova2/foo</kbd> to mount a test share
+from my workstation that contains some junk. The machine should then ask for a password; just type
+in the password for the user that you are connecting as. If you get an authentication error after
+entering the password, make sure that the username you specified is a valid local user (or a valid
+domain user if the server is attached to a Windows NT/2000 domain) that has permission to connect.
+Also, you will not need to pre-append the username with the domain name (e.g.: foo\johnd).
+</p>
+
+<p>
+After successfully mounting the share, to back up the entire share onto the default tape device
+(which should be <tt>/dev/rsa0</tt>) you will need to run:
+</p>
+
+<pre>
+	cd <var>/path/to/mount_point</var> ; tar c .
+</pre>
+
+<p>
+To backup to a tar file, just run:
+</p>
+
+<pre>
+	cd <var>/path/to/mount_point</var> ; tar cf <var>/path/to/backup<var> .
+</pre>
+
+<p>
+To restore from tape to the mounted share, run:
+</p>
+
+<pre>
+	cd <var>/path/to/restore</var> ; tar x
+</pre>
+
+<p>
+To restore from a tar file to the mounted share, run:
+</p>
+
+<pre>
+	cd <var>/path/to/restore<var> ; tar xf <var>file.tar</var>
+</pre>
+
+<h3>smbclient</h3>
+<p>
+<tt>smbclient</tt> takes a different approach of connecting and working with the files than
+<tt>smbfs</tt> since you are placed into an FTP-like interface rather than actually mounting the
+share onto your machine. The standard FTP commands like <tt>get</tt>, <tt>put</tt>, <tt>lcd</tt>,
+etc., are available, as well as several additional commands that can be very useful, like
+<tt>print</tt>, <tt>archive</tt> and <tt>tar</tt>. The command that this section focuses on is
+<tt>tar</tt>.
+</p>
+
+<p>
+The <tt>tar</tt> command under <tt>smbclient</tt> is close to the standard <tt>tar</tt> found in
+FreeBSD, except that it only accepts a handful of options. For more information, you can check the
+<tt>smbclient</tt> man page or the on-line man page available at Samba's site
+<a href="http://us1.samba.org/samba/docs/man/smbclient.1.html">here</a>.
+</p>
+
+<p>
+To connect to an SMB share with <tt>smbclient</tt>, run:
+</p>
+
+<pre>
+	smbclient //<var>server</var>/<var>share</var> -U <var>user</var>
+</pre>
+
+<p>
+If it is able to access the server, it will prompt for a password; just type in the proper password
+and press <tt>ENTER</tt>. It may return some warnings (which can be ignored... but it will exit back
+to the shell if it cannot connect, log in, or is disconnected improperly) and should then come to a
+prompt like the following:
+</p>
+
+<pre>
+	smb:\&gt;
+</pre>
+
+<p>
+To backup the share to a tape drive, run the following from the <tt>smb:\&gt;</tt> prompt:
+</p>
+
+<pre>
+	tar c /dev/<var>tape_device</var>
+</pre>
+
+<p>
+To backup to a file, replace <tt>/dev/<var>tape_device</var></tt> from the example above with the path and
+filename where you want to backup to.
+</p>
+
+<p>
+You can also backup the share using a single command from the shell by running:
+</p>
+
+<pre>
+	smbclient //<var>server</var>/<var>share</var> -U <var>user</var> -Tc <var>tar_file</var>
+</pre>
+
+<p>
+To restore a file to the SMB share from within <tt>smbclient</tt>, run:
+</p>
+
+<pre>
+	tar x /dev/<var>tape_device</var>
+</pre>
+
+<p>
+To restore a file to the SMB share from within the shell, run:
+</p>
+
+<pre>
+	smbclient //<var>server</var>/<var>share</var> -U <var>user</var> -Tx <var>tar_file</var>
+</pre>
+
+<h2>Conclusion</h2>
+<p>
+Both <tt>smbfs</tt> and <tt>smbclient</tt> provide a very nice and quick way to not only mount and
+browse through SMB shares, but they also provide a nice way to backup and restore data from a FreeBSD
+machine. Either method will work wonders for those who want a quick, relatively inexpensive way (free
+if you have a lot of storage space or a tape drive, or the price of storage or a tape drive), and a
+simple way to getting crucial data archived. If you want a more granular method of backing up data off of
+an SMB share, you can combine <tt>smbfs</tt> with a commercial backup software bundle like BRU or an
+enterprise-level package that runs on FreeBSD.
+</p>
+
+<p>
+Who said that you needed a Windows machine to backup Windows-based servers?
+</p>
+
+<hr />
+<p>
+Article copyright &copy; 2001&#8211;2010 Linh Pham.
+All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Setting up FreeBSD on an iPaq</title>
+<link rel="stylesheet" href="article.css" type="text/css" />
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18728142-3', 'closedsrc.org');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<h1>Setting up FreeBSD on an iPaq</h1>
+<div class="byline"><span class="name">Linh Pham</span> [<a href="mailto:question-articles@closedsrc.org">question-articles@closedsrc.org</a>]</div>
+
+<blockquote>
+<p>
+This article originally appeared in the August 2000 issue of the D&aelig;mon News Online Magazine.
+This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+else, the content has not been changed.
+</p>
+</blockquote>
+
+<p>
+Before I go into setting up FreeBSD on my iPaq, I just wanted to give a run-down on what the
+<a href="http://www.compaq.com/products/internetdevices/iPAQ_Specs.html">iPaq</a> is. More
+information about the iPaq can be found at <a href="http://www.compaq.com/">Compaq's website</a>.
+</p>
+
+<p>
+With the recent explosion of Internet appliances, Compaq included their offering that does not
+have any legacy ports (ie: serial, parallel ports) nor includes any &quot;normal&quot; expansion
+slots. The name of this funny creation, with a funny look, is the iPaq.
+</p>
+
+<p>
+Instead of using PCI slots or serial ports for connecting devices to the computer, Compaq decided
+to go with USB ports. The standard iPaq (which Compaq calls the Legacy-free iPaq) has five USB
+ports, three in the back and two in the front.  To meet the demands of companies that have
+not embraced USB completely, Compaq has released a version of the iPaq with legacy ports and
+reduced the number of USB ports to two. The iPaq doesn't have any standard 3.5-inch or 5.25-inch
+drive bays, but rather has a single MultiBay that Compaq currently uses in their corporate and
+executive laptops. The iPaq does not include any MultiBay devices by default, but you can order
+several different kinds of MultiBay drives, including a 24X CD-ROM, DVD-ROM and a 120MB LS-120
+floppy drive. Compaq also has a 6GB MultiBay hard drive, but it is quite expensive. You may
+find it cheaper just to upgrade the hard drive.
+</p>
+
+<p>
+The heart of the iPaq is either an Intel Celeron PPGA 500MHz or a Pentium III FC-PGA 500MHz
+processor, and uses the Intel i810e chipset. As some of you might know, the i810e chipset
+supports up to 512MB of SDRAM (either PC100 or PC133) and includes integrated audio and video.
+</p>
+
+<p>
+Note: XFree86 does not support the integrated video built into the i810 on FreeBSD, but support
+for it is in the works. Since I am using this as a server and X Windows is not required, this is
+not a concern for me. For those who were planning to use the iPaq as an X Workstation will have to
+wait, or use the VGA_16 server.
+</p>
+
+<p>
+On the motherboard is an Intel EtherExpress 100B integrated network card. There are two IDE channels
+(capable of ATA/33), one dedicated to the hard drive and one for the MultiBay device.
+</p>
+
+<p>
+For my own personal server, I decided to stick with the iPaq with Legacy Ports since I had a PS/2 KVM
+switch and didn't want to have an extra keyboard lying around. The specs on the iPaq are as follows:
+</p>
+
+<ul>
+	<li>Intel Pentium III FC-PGA 500Mhz processor (for those who are concerned about heat, the
+	    Pentium III uses less power and generates a little less heat than the Celeron)</li>
+	<li>256MB of RAM (it initially came with 128MB)</li>
+	<li>8.4GB hard drive</li>
+	<li>24X CD-ROM MultiBay</li>
+	<li>Windows 98SE (you cannot purchase the iPaq without a Microsoft OS, so I chose to go with the
+	    lowest Microsoft tax option available)</li>
+</ul>
+
+<p>
+Now for the fun part... installing FreeBSD!
+</p>
+
+<p>
+I chose to go with FreeBSD 4.0 because of some of the updated components and the updated virtual memory
+system. Before I started the install, I went into the system BIOS settings and started to disable options
+that I did not need to use, such as USB and the on-board sound. I also had to tell the BIOS to boot off
+the CD-ROM instead of the hard drive.
+</p>
+
+<p>
+With the FreeBSD CD in the drive, I rebooted the machine and within 30 seconds, I was ready to do the
+installation. I opted to pull down the files from the FreeBSD FTP site instead of installation from
+the packages from the CD-ROM because I knew that the ports has changed a bit since I got the CD and
+that I wanted to make sure that I was somewhat up to date.
+</p>
+
+<p>
+I chose to go with a custom installation and proudly wiped the Windows partition that was on the hard
+drive. I allocated all of the hard drive for FreeBSD and created the /, /usr, /usr/local, /var, /var/ftp,
+/home and the swap partitions. Since FreeBSD was going to be the only operating system, I just chose the
+standard boot option rather than using a boot manager. I then chose the basic packages and a couple of
+other packages (mostly the games and additional documentation, plus crypto).
+</p>
+
+<p>
+After choosing one of the FTP mirrors (ftp3.freebsd.org) and configured the network card (which was
+auto-detected as fxp0) with the necessary addresses, the download and install process started. With DSL,
+I was able to complete this portion in less than 40 minutes.
+</p>
+
+<p>
+Once the download was done, I chose the necessary ports (including qpopper, Pine and links, a Lynx
+work-alike) and configured the machine to automatically start named and sshd. I enabled Anonymous FTP
+(I later replaced the standard ftpd with WU-FTPD) and set up the necessary accounts and shells. Once I
+was done, I rebooted the machine and crossed my fingers.
+</p>
+
+<p>
+Getting the machine to the login prompt took a little longer than normal because I forgot to eject the CD.
+During boot-up, nothing out of the ordinary occurred except for the media and that the speed of the fxp0
+adapter was set to "manual". According to my hub, the network card was running at 100Mbps and half-duplex,
+but I was able to ping the machine from my Windows machine. And there it was, the beautiful login prompt.
+</p>
+
+<p>
+I logged in as myself and su'd to root to start making changes to the kernel configuration and some of the
+files in /etc. First thing first, I went and tweaked the kernel configuration to strip out anything I did
+not need, which included things like ISA cards and the like. <!--You can download the sample kernel
+configuration file from <a href="ftp://q.closedsrc.org/pub/IPAQ_LINT">ftp://q.closedsrc.org/pub/IPAQ_LINT</a>.
+It may not be as detailed as the actual LINT file itself, but I have some comments to describe what needed
+to be in there or not.--> The kernel compiled and installed without a hitch, and I rebooted the machine.
+Then after a little bit, the machine came back up and was sitting happy at the login prompt.
+</p>
+
+<p>
+Next course of action, figure out how to set the network card's speed and duplex setting to auto. I read
+the ifconfig man page and tried to force it auto, but ifconfig would always say that the media type was not
+supported. Therefore, I decided to shoot over an e-mail to the freebsd-questions list and got a prompt
+response stating that the problem was resolved in 4.0-STABLE.
+</p>
+
+<p>
+So, my next step was to make my source tree current using cvsup and build for 4.0-STABLE. Instead of
+following the steps that many people use to upgrade to stable, I used the
+<a href="http://www.freebsddiary.org/upgrade40stable.html">method</a> described at FreeBSDDiary.org.
+I let the cvsup source update go overnight since I really didn't want to sit around and do nothing
+and the fact that it was approaching 3:30AM PDT. When I got up, the update was complete and it was
+waiting for the next step; building the source. I decided that I would continue to adventure when I
+got some time at work.
+</p>
+
+<p>
+When I had some time for breaks, I telnet'd into my BSD box and continued the update process by
+building and installing the updated source and files, re-built the kernel to match the new code, and
+used mergemaster to finish the process. I rebooted the machine when it was done (it took a while) and
+waited until the machine came back up, if it ever came back up. Within a couple of minutes, I got
+responses from pinging the machine and proceeded to telnet into the machine. I was able to log in
+without a problem and checked out the syslog to see if the Intel network adapter had actually set it
+self to auto-detect. To my amazement, it did and it actually ran a bit faster as well.
+</p>
+
+<p>
+With Apache 1.3.12+PHP4 and other web services installed, my iPaq is now a nice, compact, economical,
+and powerful Internet appliance.
+</p>
+
+<hr />
+<p>
+Article copyright &copy; 2000&#8211;2010 Linh Pham.
+All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
+</p>
+
+</body>
+</html>

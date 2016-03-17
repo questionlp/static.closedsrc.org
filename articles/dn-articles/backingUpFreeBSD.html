@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Backing Up FreeBSD using tar</title>
+<link rel="stylesheet" href="article.css" type="text/css" />
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18728142-3', 'closedsrc.org');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<h1>Backing Up FreeBSD using tar</h1>
+<div class="byline"><span class="name">Linh Pham</span> [<a href="mailto:question-articles@closedsrc.org">question-articles@closedsrc.org</a>]</div>
+
+<blockquote>
+<p>
+This article was originally submitted in December 2002 for an issue of the D&aelig;mon News Print Magazine.
+This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+else, the content has not been changed.
+</p>
+</blockquote>
+
+<p>
+Although FreeBSD is known for it's reliability and stability, there is always a chance that files or
+directories can get accidentally deleted or corrupted (be it running <tt><kbd>rm -R .*</kbd></tt> on
+accident, a failed <tt><kbd>make world</kbd></tt>, or a filesystem corrupted beyond repair). It is always
+important to backup critical application files, logs and configuration files on a regular basis,
+preferrably on to something that isn't located on the same system. In this article, I will go over the
+basics of using the <tt>tar</tt> utility to backup and restore data, as well as tips on copying the tar
+files to a remote share on a Windows/Samba server via smbfs.
+</p>
+
+<p>
+There are other utilities that can be used to backup and restore data under FreeBSD, including <tt>dump</tt>,
+<tt>restore</tt>, <tt>pax</tt> and AMANDA, but I will not be discussing those tools in this article.
+</p>
+
+<h2>Backing Up Data</h2>
+<p>
+The <tt>tar</tt> utility, which stands for <em>t</em>ape <em>ar</em>chiver, allows you to archive and
+restore files and directories to/from a single file or a tape. By default, <tt>tar</tt> will look at
+the <tt><var>$TAPE</var></tt> environment variable to see which tape device it will use; if the variable
+is not set, then it will default to <tt><code>/dev/sa0</code></tt> (which is a SCSI <em>sequential access</em>
+tape drive). If you have a tape drive that you would like to <tt>tar</tt> to use, that isn't
+<tt><code>/dev/sa0</code></tt>, you will need to set the <tt><var>$TAPE</var></tt> in your login script
+or the script that you will use to run the backup. To find out the tape device name for your tape drive,
+check out the contents of <tt>/var/run/dmesg.boot</tt>.
+</p>
+
+<p>
+Another little bit about tape drive devices is that not only is there just the main tape drive device,
+but also two additional devices for the tape device that are used to determine how the tape drive behaves.
+When the main device node (or <tt>sa0</tt> for most SCSI tape drives) is used, the tape will rewind when
+it is done. If you use the device node prefixed with a `n' (or <tt>nsa0</tt> for a SCSI drive), the tape
+will not be rewounded when the archive process is done. If you use the device node is prefixed with an &quot;e&quot;
+(or <tt>esa0</tt> for a SCSI drive), the tape will be ejected when the process is done, only if the drive is
+capable of that. Most of the time, the base device node and the tape drive node prefixed with an &quot;e&quot;
+should do you find. For more information about the different device node types can be found in the device's
+manual page.
+</p>
+
+<p>
+To backup data using <tt>tar</tt> to a tape drive, use the following command syntax to backup files (you must
+be root, or part of the operator group, in order to read from or write to a tape drive):
+</p>
+
+<pre>
+	tar c <var>files</var> <var>...</var>
+</pre>
+
+<p>
+where <tt><var>files ...</var></tt> is a list of files and/or directories that you want to backup to tape.
+If you want to use a different tape drive than what is set in <tt><var>$TAPE</var></tt>, you can supply an
+additional flag to the <tt>tar</tt> command as shown below:
+</p>
+
+<pre>
+	tar cf <var>/dev/ast1</var> <var>files</var> <var>...</var>
+</pre>
+
+<p>
+You can replace <tt><var>/dev/ast1</var></tt> (which refers to a second IDE tape drive in a system) with the
+tape device you want to use. If you do not have a tape drive (or want to create a tar file, a.k.a. a tarball),
+you can use the command above, just replace the tape device with either a filename ending in <tt>.tar</tt>
+or a full path where you want to create a tarball. The following example tells <tt>tar</tt> to create a tarball,
+<tt><var>/u02/backup/etc.tar</var></tt>, from the contents of <tt><var>/etc</var></tt>:
+</p>
+
+<pre>
+	tar cf <var>/u02/backup/etc.tar</var> <var>/etc</var>
+</pre>
+
+<p>
+If one or more of the files you want to create a tarball starts with a /, <tt>tar</tt> will display the
+following message:
+</p>
+
+<pre>
+	tar: Removing leading `/' from member names
+</pre>
+
+<p>
+The reason why <tt>tar</tt> removes the beginning slash is key when you restore files from the resulting
+archive or tarball. Say you want created a tarball containing the contents of <tt>/var/log</tt> and want to
+restore it on a different server, if the beginning slash was there, <tt>tar</tt> would overwrite
+the existing files under <tt>/var/log</tt> with the contents of the tarball. Instead, without the beginning
+slash, <tt>tar</tt> would extract the files to the current directory, leaving the contents of
+<tt>/var/log</tt> alone.
+</p>
+
+<p class="Normal">
+You can also tell <tt>tar</tt> to compress the resulting archive or tarball using either gzip or bzip2
+compression by using either the &quot;<tt>z</tt>&quot; or the &quot;<tt>j</tt>&quot; flags respectively.
+Depending on the type of files you are archiving, the compression ratio can be fairly high or very low.
+Compressing the archive might allow you to squeeze more data onto a tape or a disk, but also keep in
+mind that using either of the two compression <tt>tar</tt> flags will use up more processing power than
+without using compression.
+</p>
+
+<h3>Additional tar Flags</h3>
+<p>
+In addition to the &quot;<tt>c</tt>&quot;, &quot;<tt>f</tt>&quot; and the compression flags, there
+are a couple of other flags that can provide to be quite useful. Below is a brief look at the more
+common ones; for a more in-depth look at the flags and options available for <tt>tar</tt>, please
+check out the manual page for <tt>tar</tt>(1).
+</p>
+
+<dl>
+	<dt>t</dt>
+	<dd>Lists the file on a tape archive or in a tarball (when used before the &quot;<tt>f</tt>&quot; flag).</dd>
+
+	<dt>d</dt>
+	<dd>
+	<p>
+	After you backup files or create a tarball, you can run <tt>tar</tt> with the &quot;<tt>d</tt>&quot;
+	flag to compare the files in the archive with the files on the system. Without the &quot;<tt>v</tt>&quot;
+	flag below, <tt>tar</tt> will only display messages if files do not match (which can be expected when
+	comparing log files or mailboxes).
+	</p>
+	<p>
+	It is <strong>critical</strong> that you test your backups on a regular basis to make sure that you can
+	restore the data if/when you lose data on the system.
+	</p>
+	</dd>
+	
+	<dt>r</dt>
+	<dd>Append files to an archive or tarball (according to the manual page, this option will not work
+	with QIC, or Quarter-Inch Cartridge, tapes).</dd>
+		
+	<dt>u</dt>
+	<dd>Append files to an archive if the listed files have been updated since they were included in the
+	archive or tarball (this option also does not work with QIC tapes).</dd>
+		
+	<dt>v</dt>
+	<dd>This flag makes <tt>tar</tt> print out the files that are being backed up, extracted, or compared.</dd>
+	
+	<dt>P</dt>
+	<dd>When using this flag, <tt>tar</tt> <strong>will not</strong> strip the beginning slash from the
+	filenames that are being archived. Use this flag with the utmost caution as this can come back to
+	bite you in the future!</dd>
+	
+	<dt>U</dt>
+	<dd>If the destination files and/or directories, along with the destination tarball, exists,
+	unlink the destination file (which in essence deletes the file pointer) and writes out the
+	destination file.</dd>
+</dl>
+
+<p>
+The <tt>tar</tt> flags, like for many other utilities and applications, are case sensitive, so
+&quot;<tt>P</tt>&quot; will tell <tt>tar</tt> to act differently then &quot;<tt>p</tt>&quot;.
+</p>
+
+<h2>Backing Up Data to Another Server via smbfs</h2>
+<p>
+In some corporate networks, there are specific servers that handle backing up Windows servers and shares
+but are unable to work natively with FreeBSD without installing Samba and a fair amount of tweaking.
+Instead, you can use <tt>tar</tt> in conjunction with smbfs (which allows you to mount to Windows/Samba
+file shares from within FreeBSD) to create tarballs onto Windows shares that are routinely backed up.
+</p>
+
+<p>
+Starting with FreeBSD 4.4-RELEASE, smbfs was integrated into the kernel, which allows one to mount
+Windows shares without the need of first installing the net/smbfs port. To mount an Windows share onto
+a FreeBSD machine, you would run the following command as root:
+</p>
+
+<pre>
+	mount_smbfs [-W <var>WORKGROUP</var>] //<var>user</var>@<var>server</var>/<var>share</var> <var>/mount/point</var>
+</pre>
+
+<p>
+If you are in a Windows NT domain environment, you will need to include the &quot;<tt>-W</tt>&quot;
+flag and replace <tt><var>WORKGROUP</var></tt> with the name of the NT domain. One thing to watch
+out for is that the <var>server</var> value will only accept hostnames under a certain length.
+Instead of using a fully-qualified domain name for <tt><var>server</var></tt>, use the
+&quot;<tt>-I</tt>&quot; flag along with the full hostname and use the Windows name of the server
+in place of <tt><var>server</var></tt>.
+</p>
+
+<p>
+Once the machine has created a connection to the Windows machine, it will then prompt for a password;
+if it accepts the password and no errors come up, you should be able to browse to
+<tt><var>/mount/point</var></tt> and work with the files and directories as if it were any other files
+and directories on the local machine. You can also supply additional options on how it handles
+permissions and ownership. More information on those options can be found in <tt>mount_smbfs</tt>(8).
+</p>
+
+<p>
+To backup files from the local machine to a tarball located on the mounted Windows share, all you
+need to do is specify the path where you want to stick the tarball. For example, to backup <tt>/etc</tt>
+to a directory called <tt>fbsd_backup</tt> on the Windows share, run the following as root:
+</p>
+
+<pre>
+	tar cf <var>/mount/point</var>/fbsd_backup /etc
+</pre>
+
+<p>
+When you are done with the mounted share, use the <tt>umount</tt> command to unmount the share and the
+mount point. To unmount the share used in the above examples, run the following command as root (also
+make sure that noone including yourself are not using files in that share nor are sitting somewhere
+within the mount point):
+</p>
+
+<pre>
+	umount <var>/mount/point</var>
+</pre>
+
+<p>
+To mount and use a Windows share in a shell script without being prompted for a password, you can
+create a file called <tt>.nsmbrc</tt>, place it into the home directory of the user doing the backup
+(which could be root or another user), and make sure to change the permissions on the file so that
+only the owner can read and write to the file (this can be done by running
+&quot;<tt>chmod go-rw .nsmbrc</tt>&quot;). The file's content should look something like:
+</p>
+
+<pre>
+	[default]
+	workgroup=<var>WORKGROUP</var>
+	
+	[<var>SERVER</var>]
+	addr=<var>server.some.domain.com</var>
+	
+	[<var>SERVER</var>:<var>USERNAME</var>]
+	password=<var>password</var>
+</pre>
+
+<p>
+One thing to keep in mind when replacing the values italicized above is that the values are
+case-sensitive and that <tt><var>WORKGROUP</var></tt>, <tt><var>SERVER</var></tt>, and
+<tt><var>USERNAME</var></tt> have to be in upper-case letters. The password needs to be in plain-text,
+which makes it even more important to restrict who can read the contents of the <tt>.nsmbrc</tt> file.
+The <tt>addr</tt> setting is used to associate a full hostname for the server so that you won't have to
+update <tt>/etc/hosts</tt> nor supply it along with the `<tt>-I</tt>' flag when running <tt>mount_smbfs</tt>.
+These settings can also be stored in <tt>/etc/nsmb.conf</tt> and the file should also be set so that
+the root user is the only user capable of viewing the contents of the file (along with being able to
+write to the file). By storing the workgroup name and password in the <tt>.nsmbrc</tt>, you can shrink
+down the length of the command to mount a share and suppress the need to enter a password (a huge must
+when automating backups).
+</p>
+
+<h2>Automating Your Backups</h2>
+<p>
+Once you've decided what you would like to backup on a regular basis, now it's time to automate the
+process so that you won't have to manually (or forget) to do it. One way to automate the backup
+process is to create a shell script that contains the commands that handle the backups, add it to
+<tt>crontab</tt>, and let it go.
+</p>
+
+<p>
+If you will be backing up data using a tape drive, you will need to figure out how much data you have
+to backup and how much data you can fit onto a single tape. To find out how much data you need to backup,
+use the <tt>du</tt> command along with the &quot;<tt>-h</tt>&quot; flag to get more human readable results.
+You can shrink down the size of the backup by enabling compression, but it may not have a lot of affect if
+you are backing up pre-compressed files (such as: gzipped tarballs, GIF or JPEG images and binary files).
+If you still cannot fit a full backup onto a single tape, you may want to modify what you backup and when
+to schedule the next set so that you can swap out the tapes.
+</p>
+
+<p>
+If you will be backing up data out to the same tarball each time, you may want to take a look at the
+&quot;<tt>U</tt>&quot; <tt>tar</tt> flag as mentioned towards the beginning of this article. This will
+reduce the need to delete the destination tarball before you start the <tt>tar</tt> process.
+</p>
+
+<p>
+Once you have figured out how you will handle splitting up the files and/or directories to backup (if
+necessary), the next step is to create a shell script that will handle the backup for you. Below is an
+example C shell script that backs up the most critical files on a server to a SCSI tape drive (but ejects
+the tape for off-site storage when done), then creates a bzip2-compressed tarball of just the system
+logs out to a to-be mounted Windows/Samba share, and finally unmounts the share.
+</p>
+
+<pre>
+	#!/bin/csh
+	# backing up files
+	
+	tar cf /dev/esa0 /etc /var /usr/local/etc /home <var>&gt;&amp; /dev/null</var>
+	mount_smbfs //backup@file2/bsdbackup /mnt/bsdbackup
+	tar Ujcf /mnt/bsdbackup/syslogs.tar.bz2 /var/log <var>&gt;&amp; /dev/null</var>
+	umount /mnt/bsdbackup
+</pre>
+
+<p>
+The italicized portions of the script above redirect <tt>tar</tt>'s warning of, &quot;tar: Removing
+leading `/' from member names&quot; to /dev/null rather than returning it to the standard output
+(which is syslog if you will be running this script via <tt>cron</tt>); though you may want to omit it
+when testing out the script to make sure that it works. Also make sure that you enable the execute
+bit on the script by using &quot;<tt>chmod +x <var>script</var></tt>&quot; where <tt><var>script</var></tt>
+is the path and/or filename of the backup script.
+</p>
+
+<p>
+The final step is to add the tested and working script to root's <tt>crontab</tt> (root is required
+if you are planning on mounting and unmounting Windows/Samba shares) by using the &quot;<tt>crontab
+-e</tt>&quot; command. The following shows that the backup script at <tt>/u01/scripts/backupServer</tt>
+running everyday at 4:00 AM.
+</p>
+
+<pre>
+	# run the backup server script at 4:00 everyday
+	00	04	*	*	*	/u01/scripts/backupServer
+</pre>
+
+<p>
+You will need to modify the time and path of the shell script to match what you have decided upon. Save
+and exit out of the editor, and let the scheduled script run through once. Once it has been executed,
+check out syslog to see if any fatal errors occurred. If everything is okay, you should be all set to go,
+but always keep an eye out on syslog just to make sure everything is running and doesn't require any attention.
+</p>
+
+<h2>Restoring Data</h2>
+<p>
+Getting data out of a <tt>tar</tt> archive (be it from a tape or a tarball) is about as easy as backing up
+the files. To restore an uncompressed <tt>tar</tt> archive, you would replace the &quot;<tt>c</tt>&quot;
+flag with the &quot;<tt>x</tt>&quot; flag. For example, to extract the entire contents of the archive (from
+the tape in <tt>/dev/sa0</tt> or the drive set in <tt><var>$TAPE</var></tt>) into the current directory,
+just run the following command (again, either as root or a user that is part of the operator group):
+</p>
+
+<pre>
+	tar x
+</pre>
+
+<p>
+To selectively extract files from an archive, all you will need to do is list the files after the
+&quot;<tt>x</tt>&quot; flag in the command. For example, to extract only <tt>/etc/rc.conf</tt> and
+<tt>/etc/sysctl.conf</tt> from the archive to the current directory, run:
+</p>
+
+<pre>
+	tar x etc/rc.conf etc/sysctl.conf
+</pre>
+
+<p>
+If you have used either of the compression flags (&quot;<tt>z</tt>&quot; for gzip or
+&quot;<tt>j</tt>&quot; for bzip2) when creating the archive that you also include it in the command, like:
+</p>
+
+<pre>
+	tar jxf /u02/backup/etc.tar.bz2 etc/rc.conf etc/sysctl.conf
+</pre>
+
+<p>
+Remember that the paths stored in the archive is relative to where the archive was created (or relative
+to the root directory if you had included the beginning slash in list of the files or directories to
+include in the archive; unless if you included the &quot;<tt>P</tt>&quot; flag in the tar archive
+command). If you created an archive using the &quot;<tt>P</tt>&quot; flag, use the &quot;<tt>P</tt>&quot;
+flag to remove the beginning slash from the filenames when they are being extracted. 
+</p>
+
+<p>
+To restore data from a tarball located on a Windows/Samba file share, just follow the steps above but
+make sure that you mount the file share which the tarball is located before running <tt>tar</tt>.
+</p>
+
+<h2>Conclusion</h2>
+<p>
+Using <tt>tar</tt> to backup a FreeBSD system is a great and fairly simple way to get one of the most
+important task of a system administration done. There are a handful of gotchas when it comes to using
+<tt>tar</tt> and working with smbfs. Once you work with it enough and get familiar with it, it will
+become second nature to you. Remember that you should get into the habit of backing up your system on
+a regular basis and making sure that you test your backups to make sure that you can restore from them.
+Also if you are backing up to tapes, make sure that you rotate your tapes as well as clean the tape
+drive on a regular basis (per the tape manufacturer's requirements) to insure that the backups are in
+as tip-top shape as possible.
+</p>
+
+<hr />
+<p>
+Article copyright &copy; 2002&#8211;2010 Linh Pham.
+All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
+</p>
+
+</body>
+</html>

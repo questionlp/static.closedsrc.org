@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Book Review: Essential System Administration, 3rd Edition</title>
+<link rel="stylesheet" href="article.css" type="text/css" />
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18728142-3', 'closedsrc.org');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<h1>Book Review: Essential System Administration, 3rd Edition</h1>
+<div class="byline"><span class="name">Linh Pham</span> [<a href="mailto:question-articles@closedsrc.org">question-articles@closedsrc.org</a>]</div>
+
+<blockquote>
+<p>
+This article originally appeared in the January 2003 issue of the D&aelig;mon News Online Magazine.
+This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+else, the content has not been changed.
+</p>
+</blockquote>
+
+<p>
+<strong>Author:</strong> &AElig;leen Frisch<br />
+<strong>Publisher:</strong> O'Reilly &amp; Associates, Inc.<br />
+<strong>Pages:</strong> 1176<br />
+<strong>ISBN:</strong> 0-596-00343-9<br />
+<strong>Web Page:</strong> <a href="http://www.oreilly.com/catalog/esa3/">http://www.oreilly.com/catalog/esa3/</a>
+</p>
+
+<p>
+To many systems administrators, <span class="BookTitle">UNIX System Administration Handbook</span>, and
+<span class="BookTitle">Essential System Administration</span> are considered the two must-have books for
+anyone working with UNIX and UNIX-like operating systems. Recently, O'Reilly published the third edition
+of <span class="BookTitle">Essential System Administration</span>, which updates a lot of the topics to
+include changes made by the latest versions (as of the time the book was written) of most commercial UNIX
+operating systems along with Linux. Notably, FreeBSD 4.6 has been added to the list of operating systems
+covered; though with this addition, the author dropped SCO UNIX and IRIX from the list. The operating
+systems that are covered in the book are:
+</p>
+
+<ul>
+	<li>IBM AIX 5.1</li>
+	<li>FreeBSD 4.6 (there are brief glances at 5.0 in the book as well)</li>
+	<li>HP-UX 11 and 11i</li>
+	<li>Sun Solaris 8 and 9</li>
+	<li>HP/Compaq Tru64 UNIX (a.k.a. Digital UNIX) 5.1</li>
+	<li>RedHat Linux 7.1 and SuSE Linux 8</li>
+</ul>
+
+<p>
+Below is the book's table of contents that you can reference while reading through this article.
+</p>
+
+<table cellspacing="0" cellpadding="1" border="0" width="100%">
+<tr valign="top">
+	<td style="width: 50%">
+		<ol>
+			<li>Introduction to System Administration</li>
+			<li>The Unix Way</li>
+			<li>Essential Administrative Tools and Techniques</li>
+			<li>Startup and Shutdown</li>
+			<li>TCP/IP Networking</li>
+			<li>Managing Users and Groups</li>
+			<li>Security</li>
+			<li>Managing Network Services</li>
+			<li>Electronic Mail</li>
+			<li>Filesystems and Disks</li>
+		</ol>
+	</td>
+	<td style="width: 50%">
+		<ol>
+			<li value="11">Backup and Restore</li>
+			<li>Serial Lines and Devices</li>
+			<li>Printers and the Spooling Subsystem</li>
+			<li>Automating Administrative Tasks</li>
+			<li>Managing System Resources</li>
+			<li>Configuring and Building Kernels</li>
+			<li>Accounting</li>
+		</ol>
+		<ul>
+			<li>Afterword: The Profession of System Administration</li>
+			<li>Appendix: Administrative Shell Programming</li>
+		</ul>
+	</td>
+</tr>
+</table>
+
+<p>
+The first chapter introduces the reader to the world of system administration (which I will refer as a
+<em>sysadmin</em> hereafter) by going over common tasks of sysadmins and how they have or haven't
+changed over the years, tips on how to cover one's rear, and the importance and dangers of the root user.
+The chapter rounds out with an overview of the different graphical or menu-based system configuration
+tools (including AIX's <acronym title="System Management Interface Tool">SMIT</acronym> and
+<acronym title="Workspace System Manager">WSM</acronym>, HP-UX's
+<acronym title="System Administration Manager">SAM</acronym>, and good ol' sysinstall) as well as a
+brief look at <acronym title="Virtual Network Computing">VNC</acronym> and a journal-like tool called
+<tt>plod</tt>, which isn't in the FreeBSD ports collection but can be found at
+<a href="http://bullwinkle.deer-run.com/~hal/plod/">http://bullwinkle.deer-run.com/~hal/plod/</a>.
+</p>
+
+<p>
+Chapter two goes over how things are done in UNIX, be it with file ownership and permissions, working
+with links (hard or symbolic), managing processes, devices, and the file system layout (covering both
+the BSD-style and the System V-style layout, and thankfully not advocating putting the Apache document
+root under <tt>/var</tt>). The chapter covers very common commands such as: <tt>ls</tt>, <tt>chmod</tt>
+and <tt>chown</tt>, <tt>pwd</tt>, <tt>ps</tt> and the different commands used for controlling processes,
+like <tt>fg</tt>, <tt>bg</tt> and <tt>jobs</tt>. The author has released an
+<a href="http://www.oreilly.com/catalog/esa3/errata/ch02.pdf">errata for page 66</a>
+in which the commands to display devices has been updated for almost all of the operating systems
+covered. Unfortunately, the author replaced <tt>dmesg</tt> with <tt>pciconf -l -v</tt> and
+<tt>camcontrol devlist</tt> for FreeBSD which both commands may not display all of the devices listed in
+<tt>dmesg</tt>.
+</p>
+
+<p>
+Chapter three continues on, providing an overview of programs and techniques that would be used
+frequently by sysadmins. The first half of the chapter shows the reader how to use the <tt>man</tt>
+command (though the author missed the <tt>apropos</tt> command when discussing the <tt>-k</tt>
+<tt>man</tt> flag) as well as working with pipes, <tt>grep</tt> and <tt>awk</tt>, an overview of the
+many <tt>find</tt> options, more on working with files and directories, a very brief look at using
+<tt>chroot</tt> to lock a command into a cage, and rounds up with the <tt>tail</tt> command. Scheduling
+jobs using <tt>cron</tt> and FreeBSD's <tt>periodic</tt> facilities, configuring the syslog d&aelig;mon,
+viewing system error messages and installing software via packages and source are covered in the second
+half of the chapter. The author does do a nice job with covering <tt>periodic</tt> but only briefly
+looks at how to use the Ports collection (only installing ports are covered but not re-installing or
+un-installing a port).
+</p>
+
+<p>
+The fourth chapter covers the entire startup process of both System V and BSD types of UNIX, how to
+boot into single-user mode, the basics of what happens after the kernel is loaded and executed, and
+how the two different initialization (a.k.a. init) file and boot script schemes (BSD and System V)
+work. After the boot and init scripts are covered, the author moves to how one would shutdown or halt
+a system, how to abort a pending shutdown, and how to troubleshoot boot issues and other hardware
+and/or software problems that crop up during a system startup or shutdown.
+</p>
+
+<p>
+Networking, or more specifically <acronym title="Transport Control Protocol/Internet Protocol">TCP/IP</acronym>
+networking, is the main topic of chapter five which starts off with a general overview of the different
+networking terminologies like nodes, client and server, along with the different network topologies and
+media types (sorry, no cool pictures of multi-strand fiber-optic cables), and of course, the seven layers
+of the <acronym title="Open Systems Interconnection">OSI</acronym> model. The remainder of the chapter
+covers how to configure a system with an IP address, work with <tt>ifconfig</tt> and
+<acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> (both client and d&aelig;mon), using
+the <tt>route</tt> command to setup a route table and the system's hostname, and basic network
+troubleshooting tips. One thing that I found to be quite useful was that the author touched on subnets
+and supernets along with how to use
+<acronym title="Classless Inter-Domain Routing">CIDR</acronym> addressing and read slash notation.
+</p>
+
+<p class="Normal">
+Chapter six, which is one of the longer chapters in the book, covers managing users and groups, along
+with using LDAP as an authentication mechanism. In the first part of the chapter, the author writes about
+the contents of the password file, its shadow password file (if applicable) counterpart, the group file,
+and adding/removing accounts either by editing the password file, using a shell utility, or a graphical
+interface. In the section, the author also touches on account login controls (such as who can login when
+and where), assigning shells and setting up login initialization files using files under a template or
+skeleton directory. Although the author does mention FreeBSD's <tt>/usr/share/skel</tt> directory, she
+doesn't tell the reader that the files are named in the format of <tt>dot.<var>initfile</var></tt> and
+need to be copied and renamed to drop the <tt>dot</tt> from the filename.
+</p>
+
+<p class="Normal">
+In the latter half of the chapter, the author covers password policies and recommendations on how to
+create stronger passwords and tips on how to create your own password schemes, using
+<acronym title="Pluggable Authentication Modules">PAM</acronym> modules (the author focuses primarily on
+Linux PAM modules though PAM modules included in FreeBSD and other UNIX system are covered), and using
+<acronym title="Lightweight Directory Access Protocol">LDAP</acronym> as the authentication backend,
+primarily focusing on setting up OpenLDAP. The author also covers two password <em>testing</em> tools,
+John and Crack, as ways to find out the strength of passwords on a system.
+</p>
+
+<p class="Normal">
+Security is one of the hottest topics for sysadmins over the past several years and is something that
+shouldn't be taken lightly; it is also the sole topic of chapter seven. The chapter starts out with a
+couple of examples (including Sendmail) on the design of UNIX tools, some of the key security issues
+that the tools are famous for, and how it ties into the mentality that those systems would be used in
+a trusted environment... which is unfortunately not the case today. Much of the chapter consists of how
+system security should be looked at and handled, different ways that one can secure a system (both
+physically and through hardware and/or software), how human mistakes and <em>social engineering</em>
+can compromise security, and facilities to help harden the system's weak spots. The facilities covered
+include using smart cards and one-time passwords, Kerberos authentication, access control lists, using
+encryption, and using Solaris' role based access facility.
+</p>
+
+<p>
+The second half of the chapter focuses primarily on network security, additional ways to harden a UNIX
+system, and things that a sysadmin can do to reduce the risk of other forms of security leaks and
+intrusions. Utilities like Tripwire, <acronym title="Security Administrator's Integrated Network Tool">SAINT</acronym>,
+and Nessus are also mentioned as additional ways to find out where security issues are. In addition to
+securing built-in utilities, the author covers some possible replacements or wrappers that can provide
+additional ways to restrict access to specified services. Although there is a mention of firewalls and
+packet filters in the chapter, the author doesn't mention the ones included (but not enabled by
+default), in FreeBSD (ipfw or ipfilter) or in Linux (ipchains). The author does a good job covering
+where security problems could occur and how to work out and implement a security plan.
+</p>
+
+<p>
+<acronym title="Domain Name Service">DNS</acronym>, DHCP, <acronym title="Network Time Protocol">NTP</acronym>,
+<acronym title="Simple Network Management Protocol">SNMP</acronym>, and network monitoring utilities
+are very common network services that are used on a daily basis and are the topics for chapter eight.
+Consisting of almost half of the chapter is an overview of how domain names are handled, how DNS
+functions, and how to troubleshoot DNS issues using utilities like <tt>nslookup</tt> and <tt>dig</tt>
+(though the <tt>host</tt> utility is not mentioned). The author focuses on
+<acronym title="Berkeley Internet Name Domain">BIND</acronym> 8 and 9 within the chapter and does a
+pretty good job at explaining the configuration files and terminologies associated to BIND and DNS in
+general; for more detailed explanations and configurations, she refers the reader to
+<a href="http://www.oreilly.com/catalog/dns4/">DNS and BIND</a>. After the DNS section, routing
+(protocols and configuration), setting up a DHCP server using the operating system's bundled DHCP
+server, using NTP to synchronize system clocks, and using basic network tools like <tt>netstat</tt>,
+<tt>ping</tt> and packet sniffers. The remainder of the chapter covers network monitoring tools
+including SNMP, NetSAINT (now called Nagios), Angel Network Monitor, and using
+<acronym title="Multi-Router Traffic Grapher">MRTG</acronym> and Cricket/RRDtool to collect network usage.
+</p>
+
+<p>
+I also found a couple of minor errors in the chapter worth noting. In Table 8-9 on page 459, under
+&quot;Boot script that starts the DHCP server&quot;, the author notes that both the DHCP server and
+the relay component startup scripts should be under <tt>/etc/init.d</tt> and that it needs to be added
+manually for FreeBSD. In FreeBSD, one should actually put startup scripts under <tt>/usr/local/etc/rc.d</tt>
+(or, using the old-fashion method, add the startup commands in <tt>/etc/rc.local</tt>). The other bit is
+that the author states that the <acronym title="Internet Software Consortium">ISC</acronym>-DHCP lease
+data file is <tt>/var/lib/dhcpd.leases</tt>; in FreeBSD, the file is actually <tt>/var/db/dhcpd.leases</tt>
+as stated in the dhcpd.leases(5) man page. The other thing that I should note is that the URL listed on
+page 470 for the list of publically available NTP servers is missing an &quot;l&quot; at the end of the
+URL. The correct URL should be
+<a href="http://www.eecis.udel.edu/~mills/ntp/servers.html">http://www.eecis.udel.edu/~mills/ntp/servers.html</a>.
+</p>
+
+<p>
+<abbr title="Electronic Mail">E-mail</abbr> is the topic for chapter nine, which provides an overview of
+how e-mail works, the different components used to send, receive and read messages, and a section on how
+to write your own Procmail scripts to help filter out unwanted messages. The author briefly covers Mutt
+and PINE as well as how to setup both clients to use <acronym title="Pretty Good Privacy">PGP</acronym>.
+For the server side of e-mail, the author covers how to configure Sendmail and Postfix, both of which
+are considered <em>mail transfer agents</em> (or MTA), along with <acronym title="Post Office Protocol">POP</acronym>
+and <acronym title="Internet Message Access Protocol">IMAP</acronym> d&aelig;mons and using Fetchmail to
+retrieve messages from remote servers. qmail users will have to look elsewhere, such as Dave Sill's
+<a href="http://www.lifewithqmail.org/lwq.html">&quot;Life with qmail&quot;</a> or
+<a href="http://www.lifewithqmail.org/">&quot;The qmail Handbook&quot;</a>. The author does a good job
+at explaining the configuration options and setup of Sendmail, Postfix and Procmail without going too
+deep into cryptic rules and recipes. I did notice two minor errors/typos in the chapter: the first one
+is on page 523 in Figure 9-1 where the author wrote &quot;incomming&quot; which should be
+&quot;incoming&quot;. The second mistake is in the Sendmail section of the chapter on page 546 in Table
+9-3 where the author stated that FreeBSD's <tt>syslog <var>mail</var></tt> facility messages go to
+<tt>/var/adm/messages</tt>; the messages actually go into the <tt>/var/log/maillog</tt> file.
+</p>
+
+<p>
+Almost everything the reader ever wants to know about the different filesystems used by the different
+operating systems, disks and data backup except for the neat trick of backing everything up to /dev/null
+to speed up data backup jobs (okay, that last part is a joke, don't ever do that for a real data backup
+job!) is covered in chapters ten and eleven. Chapter ten starts off with a look at the history of the UNIX
+filesystems and an overview of the different filesystems (and their respective monikers) along with
+supported features used by the different operating systems. Filesystem management, checking, basic
+repairing steps, mounting and unmounting filesystems, and working with disks and partitions span the
+second section of the chapter. The bulk of the chapter is dedicated to volume management (including
+setting up <acronym title="Redundant Array of Independent (or Inexpensive) Disks (or Drives)">RAID</acronym>
+arrays) tools provided by each of the covered operating systems, including: Tru64's Logical Storage
+Manager, Solaris' Volume Manager, and FreeBSD's Vinum Volume Manager. The chapter wraps up with a look
+at removable media, exporting and importing shares via <acronym title="Network File System">NFS</acronym>,
+using Samba to share out files to Windows servers, and connecting to either Samba or Windows file shares
+in Linux and FreeBSD.
+</p>
+
+<p>
+After reading about filesystems and working with data, it is logical to follow up the discussion with a
+look at backing up and restoring data in case of accidentally deleted files or worse, a corrupt filesystem
+or after rebuilding a system from a major crash. Chapter eleven starts off with a list of answers to
+common questions regarding backing up and restoring data, insights on planning data backup jobs and
+considerations that one should make when choosing how to backup data and what to do with the archived and
+backed up data. The author also compares different backup media, examining physical characteristics, storage
+capacity and the lifetime of media including tape cartridges, optical media (such as CD-R and DVD
+Recordables), hard drives, and other media or media sets. The remainder of the chapter covers the different
+tape device nodes used by the different operating systems, using common backup and restore utilities
+(<tt>tar</tt>, <tt>dump</tt>, <tt>restore</tt>, <tt>cpio</tt>, <tt>pax</tt>, <tt>dd</tt>, and operating
+system specific tools), a good overview of the
+<acronym title="The Advanced Maryland Automatic Network Disk Archiver">Amanda</acronym> backup solution,
+and how to backup and restore system files including a brief look at how to create a Fixit floppy.
+</p>
+
+<p>
+Consoles, terminals and serial devices under UNIX are things that many people don't think about very often
+but understanding them can be a life saver in some cases. Chapter twelve covers those three topics as well
+as setting up HylaFAX for faxing and touches upon USB support. The first portion of the chapter goes into
+the different device nodes and files used to reference both physical and virtual, or <em>pseudo</em>,
+terminals, how to configure all or specific terminals through either the BSD-style <tt>/etc/termcap</tt>
+and <tt>/etc/ttys</tt>, or System V's <tt>terminfo</tt> and <tt>/etc/gettytab</tt> configuration files, and
+changing terminal properties once logged in using <tt>tset</tt> and <tt>stty</tt>. The author also discusses
+the different kinds of serial connectors, the wiring of straight-through and null modem cables, and Solaris'
+way of managing terminals by way of the Service Access Facility. Rounding out the chapter is a look at
+setting up HylaFAX to send/receive faxes, what USB is, and how to enable support for USB under FreeBSD,
+Linux and Solaris. The one thing that some will find missing from the chapter is the discussion on
+connecting to devices through serial ports, plus setting up and using
+<acronym title="Point-to-Point Protocol">PPP</acronym> for dial-up services. Neither of those topics are
+discussed in any detail (with the exception of a couple of references to dial-up networking and PPP
+passwords supported by a couple of operating systems), which leaves me a little empty after reading the
+chapter.
+</p>
+
+<p>
+Chapter thirteen takes a look at printing and spooling under UNIX, mostly covering the standard BSD,
+System V and AIX spooling systems as well as the more recent ones:
+<acronym title="Common UNIX Printing System">CUPS</acronym> and LPRng. The author covers the basics steps
+of setting up printers and filters (be it local or remote), printing, managing print queues and spool
+d&aelig;mon, and working with user commands for five different systems. In addition, the author also
+slightly touches on using LPD printing under Windows, sharing printers out using Samba, and managing
+fonts under X Windows. The last bit may seem out of place at first, but getting certain font types to
+print (TrueType fonts in particular) isn't exactly the easiest thing to get working on one's first try.
+Ghostscript is only mentioned a couple of times in the chapter but its setup and configuration is not
+discussed in the chapter.
+</p>
+
+<p>
+Automation is one aspect of system administration that will not only save you from repeating many mundane
+tasks day after day but can also reduce the chance of human error (that is, once you work the bugs out).
+Chapter fourteen introduces the aspect of shell scripts and toolkits that can be used to help automate
+some to many of the tasks a sysadmin has to do on a system. In the shell script section of the chapter,
+the author provides a couple of basic yet potentially useful Bourne and C shell scripts to do tasks like
+checking differences between the current and a previous copy of <tt>/etc/passwd</tt> (which is done as
+part of one of the FreeBSD <tt>periodic</tt> scripts) and making a backup key portions of a system. The
+author also gives tips on how to help test and debug scripts. After covering Bourne and C shell scripts,
+the author covers the basics of writing Perl script including how to create GUI interfaces for Perl
+using Tk and using Expect to automate tasks that require use of an interactive program. The chapter
+rounds out with a look at using Cfengine to programmatically configure and maintain a system's
+configuration, using Stem to create basic client/server programs, and a  brief look at C programming and
+writing a man page. Like the other topics in the book, this chapter only provides a very basic overview
+of programming (either with shell scripts or creating simple graphical tools) and should not be viewed as
+a complete beginner's guide to the respective languages. If you want to really get into shell or Perl
+programming, I'd recommend on checking out other books available such as
+<a href="http://www.oreilly.com/catalog/lperl3/">Learning Perl</a> (also known as the &quot;Camel&quot;
+book). Although not mentioned in the book, there are many other programming languages that would work
+quite well for sysadmin tasks like <a href="http://www.python.org/">Python</a>,
+<a href="http://www.ruby-lang.org/en/">Ruby</a>, and the standalone version of <a href="http://www.php.net/">PHP</a>.
+</p>
+
+<p>
+Once a system is up and running in a production environment with users and applications, making sure
+that the system doesn't run out of resources like memory and disk space is very important. In chapter
+fifteen, the author takes a look at utilities to monitor and manage different aspects of system usage,
+and some ways to make more efficient use of system resources. The system resources covered in the chapter
+are: overall system performance, processor, memory and virtual memory, disk space and I/O, and network.
+Throughout the chapter, the author provides steps and insights into finding out how much of a system
+resource is being used, how to find out when a resource is  beginning to run out, and some ways to
+remedy the situation. Also covered in the chapter are ways to limit usage of specific system resources
+by using built-in facilities like disk quotas, limit options in shells, using <tt>nice</tt> set the
+CPU priority for a process, and the schedulers included in AIX and Solaris.
+</p>
+
+<p>
+Chapter sixteen is something that many FreeBSD users are fairly accustomed to&#8212;building a custom
+kernel. The chapter covers the steps for configuring, tuning and building a custom kernel for FreeBSD,
+Tru64 UNIX, HP-UX and Linux, as well as loadable kernel modules used in the different systems. Also
+covered is how to set system parameters in AIX and working with FreeBSD and Linux boot loaders. Unlike
+other documentation, <span class="BookTitle">Complete FreeBSD</span> and <span class="BookTitle">The
+FreeBSD Handbook</span> in particular, the coverage on building a custom kernel under FreeBSD is
+limited to installing the kernel source, how to make a new kernel configuration file, a brief look at
+the file syntax and a handful of options, and compiling a new kernel. Although it's barely enough to
+introduce the reader to the steps in building a kernel, it definitely lacks in giving any handholding
+or explanation of the different parts of a kernel configuration file. The same also goes with building
+a custom Linux kernel.
+</p>
+
+<p>
+Accounting is probably one of the last things anyone wants to hear after the accounting problems in
+2002, but under UNIX it is quite useful in trying to figure out how much of the server's resources are
+being used by whom. Both the BSD-style and System V-style account systems are covered in chapter
+seventeen, including their tools and facilities, along with setting up LPRng and BSD-style printing
+system accounting.
+</p>
+
+<p>
+The book's Afterword, or chapter eighteen according to the footer on page 1070, talks about The System
+Administrators Guild, SAGE, USENIX and a humorous look at the virtues of sysadmins. The two virtues
+that got me laughing out loud are:
+</p>
+
+<blockquote>
+<dl>
+	<dt><em>Patience</em></dt>
+	<dd>Remaining capable of waiting until the final sendmail configuration bug is fixed.</dd>
+	
+	<dt><em>Laziness</em></dt>
+	<dd>Writing a 250-line Perl script to avoid typing 15 characters.</dd>
+</dl>
+</blockquote>
+
+<p>
+The book's appendix takes an additional look at creating shell scripts for the Bourne shell
+(<tt>sh</tt>). The author explains the basic concepts and abilities of a Bourne shell script, such as:
+using pipes and redirects, exit codes, capturing command output with &quot;<tt>`</tt>&quot;,
+variables, substitutions, using control blocks (if, while, case and for), and other useful built-in
+commands. The appendix provides a nice start into shell script programming for the reader and doesn't
+go into any additional extensions to the basic Bourne shell or combines other Bourne-like shells
+(Bourne-again and Korn) to confuse the reader.
+</p>
+
+<p>
+In summary, I think that the author did a good job with covering a large number of topics and
+components of UNIX and the covered operating systems. It is very nice to see that FreeBSD finally made
+the list of operating systems and was given about the same amount of coverage as most of the other
+systems. There were some errors and typos in the book, some regarding to FreeBSD, as well as some
+topics that were absent or barely covered.
+</p>
+
+<p>
+For someone who has some experience with FreeBSD, Linux and/or another UNIX operating system and
+wants to get into the world of system administration, I would recommend this book not only for the
+coverage of multiple operating systems but also for the insight provided on security and overall system
+management. It would also be a good read for those who want or need to work in an environment that has
+several varieties of UNIX. For those already experienced in system administration, I would still
+recommend on taking a look through the book. It's probably a book that I wouldn't recommend stuffing
+into your day bag or backpack on a daily basis since it isn't exactly the thinnest book out there. If
+you are looking for a book that you could reference while on the go, I would recommend on taking a look
+at the <a href="./esapr.html">mini-review</a> for <span class="BookTitle">Essential System Administration
+Pocket Reference</span>.
+</p>
+
+<hr />
+<p>
+Article copyright &copy; 2003&#8211;2010 Linh Pham.
+All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
+</p>
+
+</body>
+</html>

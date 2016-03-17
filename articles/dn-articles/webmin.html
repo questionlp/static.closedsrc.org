@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Remote Administration with Webmin</title>
+<link rel="stylesheet" href="article.css" type="text/css" />
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18728142-3', 'closedsrc.org');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<h1>Remote Administration with Webmin</h1>
+<div class="byline"><span class="name">Linh Pham</span> [<a href="mailto:question-articles@closedsrc.org">question-articles@closedsrc.org</a>]</div>
+
+<blockquote>
+<p>
+This article originally appeared in the May 2001 issue of the D&aelig;mon News Online Magazine.
+This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+else, the content has not been changed.
+</p>
+</blockquote>
+
+<p> 
+Did you ever wish that there was an easier way to configure and administer your BSD server? Well...
+other than whipping out your favorite editor and hack configuration files? How would you like to
+remotely manage a server without using [insecure] Telnet or SSH? There are several products that
+allow a sysadmin to configure a server via a web-browser. Some of the most flexible ones aren't
+available for free (like <a href="http://www.plesk.com/home.php">Plesk</a>), although trial versions
+can be downloaded.
+</p>
+
+<h2>What is Webmin?</h2>
+<p>
+Webmin was created to provide a fairly simple, but powerful, way to administer a UNIX-like system.
+Since its first release in late 1997, it has always been freely available under the BSD license and
+has since been acquired by Caldera. Webmin is completely web-based and uses its own simple web server
+(which is written entirely in PERL 5 without any external modules). For people who need a little more
+security, you can setup Webmin to use SSL and HTTPS.
+</p>
+
+<p>
+Not only does Webmin support a large number of UNIX-like operating systems (a list of supported OSs,
+as of version 0.84, can be found <a href="http://www.webmin.com/webmin/support.html">here</a>), but
+through the use of modules, it can support many of the commonly used daemons and server software.
+Webmin includes quite a few modules with the standard install (including: Sendmail, BIND 4 and BIND 8,
+Apache, Postgres SQL, MySQL, NFS, and Samba). A list of all of the standard modules can be located
+<a href="http://www.webmin.com/webmin/standard.html">here</a> and a list of third-party modules is
+available <a href="http://www.thirdpartymodules.com/webmin/">here</a>. Most modules available are
+licensed under the GNU Public License; the rest are either commercial-ware or licensed under the BSD
+License.
+</p>
+ 
+<h2>Installing Webmin</h2>
+<p>
+Downloading and installing Webmin is rather painless since you can either install it via Ports or by
+downloading the source code <a href="http://www.webmin.com/webmin/download.html">here</a>. The system
+that I am using to install Webmin on is running FreeBSD 4.2-RELEASE; the Ports collection on the machine
+is sync'd up every night. If you are installing from Ports, you can either pull the Webmin port tar file
+from an FTP server or sync up the Ports collection to get the latest port.
+</p>
+
+<p>
+To install Webmin from the local Ports collection, login to the machine, su to root, and run:
+</p>
+
+<pre>
+	cd /usr/ports/sysutils/webmin; make &amp;&amp; make install
+</pre>
+
+<p>
+To compile and install Webmin from source code, extract the .tar.gz, as root, and run:
+</p>
+
+<pre>
+	cd /path/to/webmin/source/; setup.sh
+</pre>
+
+<p>
+During the installation, the setup script will prompt where you want the config files to be located,
+etc. Below is a quick snippet of the output from the install I did on my test machine. Text in italics
+are the values that I used for my install. In most cases, I would recommend you use the defaults for each
+of the options that come up during the setup.
+</p>
+
+<p>
+The setup will ask you where you want Webmin to store the config and log files:
+</p>
+
+<pre>
+	Config file directory [/usr/local/etc/webmin]: <var>[default]</var>
+	Log file directory [/var/log/webmin]: <var>[default]</var>
+</pre>
+
+<p>
+The setup will then ask where PERL 5 is installed and tests to see if it's working or not. If you get an
+error message, make sure that you are pointing to the right path, or that an earlier version of PERL is
+not installed:
+</p>
+
+<pre>
+	Full path to perl (default /usr/bin/perl): <var>[default]</var>
+
+	Testing Perl ...
+	Perl seems to be installed ok
+</pre>
+
+<p>
+Next, it will prompt for the operating system that you are running; so just select the correct one from
+the list that it gives you. Then it will bring up a list of different versions of the operating system
+you just chose.
+</p>
+
+<p>
+The last portion covers how the standalone web server will be configured and the security of the web
+server. Here you can use the defaults or use anything to your liking. I decided to use port 902
+instead of the default since it was one port up from the Samba SWAT port... makes it easier for me
+to remember.
+</p>
+
+<pre>
+	Web server port (default 10000): <var>902</var>
+	Login name (default admin): <var>radmin</var>
+	Login password: <var>not echoed</var>
+	Password again: <var>not echoed</var>
+	Web server hostname (default bsdmirror): <var>bsdmirror</var>
+	Use SSL (y/n): <var>y</var>
+</pre>
+
+<p>
+When finished, the installer script will generate the proper configuration files and make any changes
+necessary for Webmin to work. If you had chosen to use SSL with Webmin, the following warning will appear:
+</p>
+
+<pre>
+	Because Webmin uses SSL for encryption only, the certificate
+	it uses is not signed by one of the recognized CAs such as
+	Verisign. When you first connect to the Webmin server, your
+	browser will ask you if you want to accept the certificate
+	presented, as it does not recognize the CA. Say yes.
+</pre>
+
+<p>
+Make sure that you take note of that and do not use Webmin's certificate authority module to assign
+certificates for other use. Once everything is done, you can just open up a web browser and type in
+http://<var>hostname</var>:<var>port</var> (or https://<var>hostname</var>:<var>port</var>). Type in
+the username and password that you used in the install script to login and you will be greeted with
+the start page.
+</p>
+
+<h2>Configuring Webmin</h2>
+
+<blockquote>
+<p>
+<strong>Warning:</strong> As with any administration tool, it is important that any and all critical
+configuration files are backed up on a regular basis and before you have any major changes. Webmin is
+no exception and with its ease of use, it is easy to take down a server with several mouse clicks.
+</p>
+
+<p>
+Also, before you apply any changes, double-check what you have changed and make any notes about the
+changes in a log. This way, if something failed to work after the change was made, you can easily
+backtrack the steps that were taken to restore a daemon or the server.
+</p>
+
+<p>
+And finally, if you are not sure about any settings that are presented, you can use the built-in help
+system or documents available from Webmin's site. Some of the third-party modules do not provide a
+lot of documentation, either bundled or from their site. Most module authors have a way to contact
+them or have mailing lists setup to ask for help.
+</p>
+</blockquote>
+
+<p>
+The Webmin site is divided into five different sections: Webmin, System, Servers, Hardware and Others.
+Under each section, there are many modules that are pre-packaged with Webmin that allow you to start
+working immediately. Let's start off with configuring Webmin to your liking.
+</p>
+
+<p>
+At the Webmin start page, browse to the Webmin section and click on <strong>Webmin Configuration</strong>.
+Here, you can limit access to Webmin to a group of IP addresses, configure which port Webmin runs on,
+tweak the user interface, etc. Let's say that you want to restrict access to Webmin so that only users
+on the <var>172.16.1.0</var> subnet can access Webmin. To do so, just click on IP Access Control,
+select <strong>Only allow from listed addresses</strong> and type in <var>172.16.1.0/255.255.255.0</var>
+into the field. Thankfully, you don't have to worry about converting a standard subnet mask into the
+number format (ie: 255.255.255.0 -&gt; /24).
+</p>
+
+<p>
+By default, each of the letters in the pages' title are GIF images... although this does help keep a
+consistent look-and-feel and it makes the page load a lot slower on dial-up connections. You can
+change that (and any other style options) under the User Interface module. Just switch <strong>Display
+titles as text?</strong> from <strong>No</strong> to <strong>Yes</strong>.
+</p>
+
+<p>
+One other note is that you setup Webmin to use a form for login rather than the standard HTTP
+authentication method. Webmin calls this form of authentication &quot;Session Authentication,&quot;
+which gives you the option to lock out a login after a determined number of failed attempts. It also
+gives you the option to set an idle time-out for each session. The authentication options can be set
+in <strong>Webmin / Webmin Configuration / Authentication</strong>. Below is an example of the
+authentication options:
+</p>
+ 
+<div style="text-align: center"> 
+<img src="auth_options.png" height="543" width="673" alt="Webmin Authentication Options Page" />
+</div>
+
+<p>
+If you enabled Session Authentication, you will be presented with a form to log in to rather than the
+standard login dialog as shown below.
+</p>
+
+<div style="text-align: center"> 
+<img src="login.png" height="194" width="319" alt="Webmin Web Form Login" />
+</div>
+
+<p>
+Before leaving the <strong>Webmin Configuration</strong> section, you will notice that you can update
+Webmin through a very simple web form (it will ask you if you want to update from a source package
+that you have downloaded already or pull it from Webmin's site directly), add/remove modules, and tweak
+with the SSL options. There is a also module for themes, but I haven't seen a lot of notes or
+documentation on how it works or where one can download themes.
+</p>
+
+<h2>Webmin Security</h2>
+<p>
+I would like to quickly touch on Webmin's access list and how you can have different logins that are
+restricted to a number of modules. Webmin normally uses its own password database for its users. This
+way no one can try to hack the root account on that machine. In my example, the Webmin <tt>root</tt>
+user is named <tt>radmin</tt>, and has full access to every module. It's not always a good idea to give
+out the Webmin root username and password to users just so they can get into Webmin. You can create
+accounts and set it so that only certain accounts can get to specific modules. For example, you can
+have a user called <tt>dnsadmin</tt> that only has access to the BIND 8 module if that user is only
+to maintain BIND 8 on that particular machine.
+</p>
+
+<p>
+Each Webmin user can have a different password (which can be set to the local system's password if the
+Webmin username matches an account on the local system), a default language, different IP access control
+lists, etc. To setup Webmin users, go to <strong>Webmin / Webmin Users</strong> and choose <strong>Create
+a new Webmin user</strong>.
+</p>
+
+<p>
+If you have several Webmin users that need to access the same modules, you can create a group that has
+those common modules enabled. This way you won't forget to enable modules for each individual user.
+</p>
+
+<h2>Webmin Modules</h2>
+<p>
+Once you have finished setting up and configuring Webmin, you can start using Webmin to maintain the
+system. The system maintenance modules are broken into four different groups: <strong>System, Servers,
+Hardware</strong> and <strong>Others</strong>.
+</p>
+
+<p>
+The <strong>System</strong> group contains modules that you would use to maintain disk quotas, file
+systems, NFS exports, manage system users and groups, manage software packages and to look at
+individual system logs. You can even peek into each user's mailbox if you wanted to, but that the
+function to do so should be restricted to troubleshooting a user's mailbox (like deleting a message
+with a 100MB attachment); or if you are a BOFH, you can read the user's love letters that he/she
+might receive ;-).
+</p>
+
+<p>
+The <strong>Servers</strong> group has modules that pertain mostly to daemons or any server software
+that may reside on that machine. The most common daemons are included with the Webmin package are
+Apache, Sendmail and Samba. Now you can venture into Sendmail configuration without having to read
+or write cryptic .cf files. One of the small quirks of the included modules is that some of the default
+settings don't correlate with the default BSD layout.
+</p>
+
+<p>
+The <strong>Hardware</strong> group is fairly barren, but does allow you to configure your network
+interfaces and printers. Even though setting up a printer or a print queue in BSD is relatively easy,
+doing the same in Webmin is much easier. If <tt>gs</tt>, or GhostScript, is installed, you can use the
+Webmin printer drivers to setup some of the most common printers that may not use Postscript or can be
+a pain to find a print filter for. This is a huge thumbs up for Webmin.
+</p>
+
+<p>
+The final group is named <strong>Other</strong>, which holds a couple of the most interesting modules
+available. Here, you can launch a Java applet that will allow you to cruise the file system or to
+Telnet into the machine, view a very high-level system status report, or even create your own custom
+command. A custom command allows you to run scripts or programs that output information back to the
+console, where Webmin captures it and spits it back out into HTML format.
+</p>
+
+<h2>Installing Additional Modules</h2>
+<p>
+Installing Webmin modules is very simple and can be done through three slightly different methods.
+You will need to go to <strong>Webmin / Webmin Configuration / Webmin Modules</strong> to install the
+modules. From here, you can install a module that you have already downloaded onto that machine or onto
+the machine that you are accessing Webmin with, or from a URL. After click on <strong>Install Module
+From File</strong>, it will pull down the file, if necessary, and install the <tt>.wbm</tt> file into
+the Webmin modules directory and that's it. You can use the new module without having to restart Webmin.
+</p>
+
+<h2>Other Useful Modules</h2>
+<p>
+As mentioned above, the default Webmin package includes a Java applet that allows a user to Telnet into
+the server. Using Telnet to get into a server is not only insecure, but doesn't make sense if you are
+using SSL/HTTPS to access Webmin. Thankfully, you can pull down a module that uses a MindTerm Java applet
+to SSH into the server. The module was created by Jamie Cameron and can be downloaded
+<a href="http://www.webmin.com/webmin/download/modules/ssh.wbm">here</a>.
+</p>
+
+<p>
+Another nice module that isn't included by default is called &quot;Backup System,&quot; which provides a
+quick way to backup and restore files without having to remember the tar options and syntax. It's
+definitely not a replacement for AMANDA or any other backup solution, but if you need a quick and simple
+solution, this will do the job. The module can be downloaded
+<a href="http://www.cyberman.at/webmin/backup_1.01.wbm">here</a>; the module's website is
+<a href="http://www.cyberman.at/webmin/">here</a>.
+</p>
+
+<h2>Gripes and Complaints</h2>
+<p>
+It is really nice to see a web-based remote administration tool that is not only user friendly, but it is
+also free and it uses the BSD license. Of course, it doesn't go away without any quirks of its own. As I
+mentioned previously, some of the modules don't work after being installed. Also, the default FTP module
+is geared towards WU-FTP rather than the default FTP daemon found in most BSD-based servers. Unfortunately,
+there aren't that many modules for FTP daemons other than one for the default OpenBSD FTP daemon.
+</p>
+
+<p>
+Also missing is a page that shows how many users are logged into the Webmin server at any given moment.
+This may not be a problem for some people, but it does cause a problem where one needs to see who is doing
+what. The Webmin Actions Log doesn't show much detail either. I haven't stopped using Webmin or cursed at
+Webmin because of this, but I know this is on the plate for the Webmin developers.
+</p>
+
+<p>
+My last gripe is more on performance on slower systems. Since Webmin is written with PERL and extensively
+uses CGI programs, it can soak up a lot of processor cycles and memory on any machine with an x86-based
+processor running at speeds &lt;200Mhz and has less than 32MB of memory. If the system is already strapped
+for resources, you may want to upgrade the memory in the system before using Webmin.
+</p>
+
+<h2>Final Words</h2>
+<p>
+UNIX purists will probably cringe at the idea of <em>not</em> using a text editor to hack away at a server's
+configuration. For the rest of the community, Webmin does provide a nice, extensible and unique way of
+managing a server without having to trying to decipher configuration files. The product is definitely not
+perfect, but the product will continue to improve at a very fast pace as it reaches version 1.0. 
+</p>
+
+<p>
+For people who are just starting to learn UNIX systems administration, this might make UNIX less intimidating
+and easier to learn. It definitely does not replace hacking configuration files completely, but it reduces the
+complexity by a lot.
+</p>
+
+<h2>Resources</h2>
+<p>
+Webmin's project website is located at <a href="http://www.webmin.com/webmin">http://www.webmin.com/webmin</a>.
+</p>
+
+<hr />
+<p>
+Article copyright &copy; 2001&#8211;2010 Linh Pham.
+All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
+</p>
+
+</body>
+</html>

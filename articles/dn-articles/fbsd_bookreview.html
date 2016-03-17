@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Review: FreeBSD: An Open Source OS for your PC</title>
+<link rel="stylesheet" href="article.css" type="text/css" />
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18728142-3', 'closedsrc.org');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<h1>Review: FreeBSD: An Open Source Operating System For Your Personal Computer, First Edition</h1>
+<div class="byline"><span class="name">Linh Pham</span> [<a href="mailto:question-articles@closedsrc.org">question-articles@closedsrc.org</a>]</div>
+
+<blockquote>
+<p>
+This article originally appeared in the September 2001 issue of the D&aelig;mon News Online Magazine.
+This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+else, the content has not been changed.
+</p>
+</blockquote>
+
+<p>
+<strong>Title:</strong> FreeBSD: An Open-Source Operating System For Your Personal Computer<br />
+<strong>Author:</strong> Annelise Anderson<br />
+<strong>Publisher:</strong> The Bit Tree Press<br />
+<strong>ISBN:</strong> 0-9712045-0-0<br />
+<strong>Pages:</strong> 439
+</p>
+
+<h2>Introduction</h2>
+<p>
+For those who live and breathe FreeBSD daily, there are many online and offline resources that
+someone can go to for help. Some of those resources include mailing lists, on-line documentation,
+man pages, books such as &quot;The Complete FreeBSD&quot; and &quot;The FreeBSD Corporate
+Networker's Guide&quot;, and IRC chat sessions. Unfortunately, there are not a lot of resources
+available, for someone who is interested in learning and using FreeBSD, that is geared towards
+those who are just beginning their journey. A recently released book written by Annelise Anderson
+titled, &quot;FreeBSD: An Open-Source Operating System For Your Personal Computer&quot;, was
+written for those who want to learn and use something outside of Windows.
+</p>
+
+<p>
+The book is structured so that  it progresses from an introduction and background of FreeBSD to
+setting up a machine for everyday use. Towards the end of the book, the author covers topics such
+as modifying and building a custom kernel, upgrading FreeBSD and even simple steps on what one can
+do if something goes really wrong. Included with the book is a copy of FreeBSD 4.3-RELEASE (only
+the first CD is included), which is the version referenced in the book. The book is organized in
+twenty chapters and two appendix sections, which are listed below:
+</p>
+
+<h3>Chapters:</h3>
+<ol>
+	<li>FreeBSD and UNIX</li>
+	<li>Preparing to Install FreeBSD</li>
+	<li>Installing FreeBSD</li>
+	<li>Polishing Your Installation</li>
+	<li>Running FreeBSD</li>
+	<li>Shell Wars</li>
+	<li>What's Happening</li>
+	<li>Editing Files</li>
+	<li>Ready-to-Run Packages</li>
+	<li>Build-It-Yourself Ports</li>
+	<li>Software</li>
+	<li>Connecting to the Internet</li>
+	<li>FreeBSD Can Be a Blast</li>
+	<li>The X Window System</li>
+	<li>Printing</li>
+	<li>Configuring Your Kernel</li>
+	<li>Upgrading FreeBSD</li>
+	<li>Other Tasks</li>
+	<li>Crisis Management</li>
+	<li>Other Resources</li>
+</ol>
+
+<h3>Appendices:</h3>
+<ol style="list-style-type: upper-alpha">
+	<li>Supported Hardware</li>
+	<li>The FreeBSD CD-ROM</li>
+</ol>
+</div>
+
+<h2>So What's The Book About?</h2>
+<p>
+In the first chapter, the author gives a nice, brief overview of what FreeBSD is, what FreeBSD could
+be and is used for, the <em>roots</em> of FreeBSD, and a basic comparison between FreeBSD and Linux.
+The overview is written in terms and in a context that a beginner to UNIX (and FreeBSD) could
+understand. A small section of the chapter is dedicated to the differences between the &quot;Open
+Source&quot; philosophy and Microsoft. Thankfully, the topic of the GPL versus the BSD license was
+not discussed. The chapter concludes on how to get FreeBSD (either from the included CD-ROM, the
+FreeBSD CD-ROM set, or online).
+</p>
+
+<p>
+Chapters two through four cover how to prepare for a FreeBSD installation, the actual FreeBSD
+installation itself, and getting the major components configured and working properly. In these
+chapters, the author goes over what an installation of FreeBSD requires (like a separate partition,
+or slice, and a boot manager), and how to  back up current data with steps for Windows 95/98 and
+Windows NT/2000. Something that I found to be helpful for beginners were the instructions on getting
+hardware information about the computer (i.e. IRQ, DMA) as well as instructions on how to retrieve
+some of the dial-up information (if any) to re-connect to the Internet.
+</p>
+
+<p>
+On page 21, a table shows how much hard drive space each component of the install might take, along
+with a running total. I think this is very helpful since <tt>sysinstall</tt> does not really provide
+that information up front. Running out of hard drive space in a middle of an installation is neither
+pretty nor a good way to start off your first installation experience. Continuing on, there is a
+mention of the nice 1024-cylinder limitation and offers help to possibly avoid the issue. The author
+keeps in mind that someone starting in FreeBSD may want to leave Windows as is and provides
+information on dual-booting. Kudos there, considering that you will have an angry reader if the
+steps provided cause Windows (and his/her data) to be destroyed. The chapter rounds out by providing
+information about creating boot floppies, additional steps to keep Windows safe (including a mention
+of running FreeBSD within VMWare), and a quick mention about partition resizing and the boot manager.
+</p>
+
+<p>
+Chapter three covers the joys of install FreeBSD using <tt>sysinstall</tt>. Before getting into the
+actual installation itself, the author provides steps on how to navigate through <tt>sysinstall</tt>,
+as well as its nuances. She continues on with the installation by walking the reader through the
+<tt>Standard</tt> installation steps, including using <tt>FDISK</tt>, creating slices and labelling
+them, choosing the distribution sets, and making the installation choices final. The steps given are
+clear and explained in a way that the reader would not get too confused.
+</p>
+
+<p>
+The fourth chapter covers the post-installation process of setting up the network connection, the
+mouse, X Window System, and login information. While in the networking portion of the setup, the
+author takes time to explain what each TCP/IP setting means (like what a name server is and does) as
+well as a brief explanation of Anonymous FTP and NFS (even though it may not matter to the reader).
+The author continues by going over the Linux binary compatibility feature, setting up the mouse,
+adding software packages and user accounts, and setting the almighty <tt>root</tt> password. The
+last topic covered in the chapter is setting up the X Window System and a window manager/desktop
+environment... as well as making it clear that KDE and GNOME are not window managers per se.
+</p>
+
+<p>
+In the fifth chapter, the reader gets to learn how to login and logout of the system, learn the
+basics of the <tt>ee</tt> editor, user management, how to find and use the man pages and GNU info,
+mounting and dismounting volumes (i.e. CD-ROMs, floppy disks and DOS/Windows partitions), and a bit
+on printing from FreeBSD. For someone who is learning FreeBSD, using a command line interface can be
+quite intimidating and this chapter provides a concise introduction.
+</p>
+
+<p>
+Chapters six and seven delve more into the shell, system utilities and basic maintenance. Most of
+the command line (i.e. shell) examples in the book are geared toward the <tt>bash</tt> (sorry
+<tt>csh</tt> and <tt>ksh</tt> users). There are several examples/templates of the <tt>.bash_profile</tt>
+and <tt>.bashrc</tt> that helps make the person feel a little bit more at home. Chapter seven shows
+the reader how to find how much space is left on the hard drive, what is taking up so much space
+(nah... it couldn't be that stash of MP3's now, could it?), how to dig through <tt>dmesg</tt> as
+well as <tt>grep</tt>-ing the output, and find out more about the system. The second half of the
+chapter goes into a nice presentation of processes, the kernel status and modules, looking through
+<tt>syslog</tt> messages and setting up <tt>syslog</tt>. The chapter ends with libraries, a bit
+about <tt>crontab</tt>, and turning on soft updates through <tt>tunefs</tt>.
+</p>
+
+<p>
+Chapter eight might be kind of short, but it is probably one of the most important one for any
+FreeBSD user starting out since it covers how to edit files. The author chose to use <tt>vi</tt> as
+the editor of choice for most of the book (<tt>ee</tt> is used in the first several chapters since
+it is much easier for someone to start out with) and provides quite a bit of help and commands to
+guide the reader through the quite terse interface/editor that is <tt>vi</tt>. The author does
+mention <tt>emacs</tt> and <tt>pico</tt>, but does not recommend them for just simple text editing
+due to some of their downsides.
+</p>
+
+<p>
+Chapters nine through eleven cover the installation of software through the packages mechanism and
+the Ports collection (coveres the differences between them) as well as how to find out which
+applications do what, installation from different sources (like FTP, the Port tar file, package
+files found on the CD) and, update and removal of installed packages and ports. Chapter eleven
+covers commonly used software, what each Ports category would contain, as well as quick descriptions
+of some of the Ports in the collection.
+</p>
+
+<p>
+Getting on the Internet and getting it on a network are the two topics covered in chapter twelve.
+The first item coveres connecting to a Internet Service Provider over a modem using <tt>ppp</tt>.
+Nowadays, modems that come with almost every desktop or laptop are software-based, also known as
+<em>WinModems</em>, which do not work under FreeBSD. Author makes a note of that; unfortunately,
+does not provide any information on how to find out if one has acquired a WinModem, even if it
+means contacting the computer or modem manufacturer.
+</p>
+
+<p>
+For those with a network connection, the author provides a walk through of <tt>ifconfig</tt> and
+<tt>route</tt>, getting other machines speaking to FreeBSD via TCP/IP, and setting up a
+gateway/router and an <tt>ipfw</tt> firewall. One note that I would like to make is that there
+is not any mention about setting up FreeBSD to connect via PPPoE (Point-to-Point Protocol over
+Ethernet) which is used by many broandband providers and requires a slightly different
+configuration compared to a regular Ethernet connection.
+</p>
+
+<p>
+The next two chapters, thirteen and fourteen, go over setting up sound and video (well, at
+least X Window System anyway). Both chapters provide a detailed step-by-step process of setting
+up the sound card drivers in the kernel, creating the device nodes, and using <tt>xf86config</tt>
+to configure XFree86. I find it refreshing that the author decided to stick with the text-based
+method of configuring XFree86 since using the graphical interface included with either XFree86
+3.x or 4.x can cause confusion for the person, not to mention unexpected results. What I find
+funny is that the author shows screenshots of both a GNOME + Enlightenment desktop and a KDE2
+desktop, but done through VNC on a Windows machine. It is not a bad thing, just kind of funny :-)
+</p>
+
+<p>
+Setting up a printer, printing and managing the print queue are topics covered in chapter fifteen.
+The chapter details editing the <tt>/etc/printcap</tt> file, using the <tt>lpr</tt>,
+<tt>lprm</tt>, printing to a printer shared from a Windows machine using Samba's <tt>smbclient</tt>
+tool, as well as <tt>dos2unix</tt> and <tt>unix2dos</tt>. The second half of the chapter provides
+detailed steps to install and setup <tt>apsfilter</tt>.
+</p>
+
+<p>
+Although the author touched on configuring the kernel to add support and drivers for sound cards and
+<tt>ipfw</tt> in earlier chapters, chapter sixteen is dedicated to modifying the kernel
+configuration and compiling the kernel. The reader is guided through a well done overview of loading
+and unloading of kernel modules, creating and modifying a kernel configuration file, descriptions
+of each section, common options and devices, compiling the monster and basic troubleshooting if
+something fails. Although it is nowhere nearly as detailed as the kernel portions in
+&quot;The Complete FreeBSD&quot;, but it is written so that it would not confuse or overwhelm the reader.
+</p>
+
+<p>
+Chapter seventeen continues on by covering how to update ports and the ports collection, upgrade the
+local source to -STABLE (as well as information on binary upgrades), and doing ever so fun task of
+making and building the world and merging the changes. The steps are laid out so that a beginner
+should be able to upgrade the system without too much difficulty. The author touches on the topic of
+using mergemaster and provides a list of things that a &quot;make world&quot; does not do and how
+to make up for those items. This chapter is great for those who have run into problems doing a
+&quot;make world&quot;. One nice touch that the author made was to include a nice diagram laying out
+the source tree, including a brief discussion on <tt>-CURRENT</tt>, <tt>-RELEASE</tt> and <tt>-STABLE</tt>.
+</p>
+
+<p>
+Chapter eighteen covers some topics that just do not really fit in anywhere else, like adding colors to
+the console by using <tt>ls -G</tt>, booting from a floppy disk, setting up the machine to send and
+receive e-mail, the basics of <tt>tar</tt>, and replacing Telnet with SSH (OpenSSH of course). Although
+<tt>tar</tt> is covered in the chapter, presenting some information on <tt>gzip</tt> or <tt>bzip2</tt>
+would have been helpful. Chapter nineteen goes over what one can do when things go wrong... really wrong.
+This chapter covers how to recover the boot manager if it gets blown out, booting into single-user
+mode, editing conf files with <tt>ed</tt> when <tt>vi</tt> just will not work, and using the Fixit
+floppy disk. The chapter wraps up with common error messages, what they mean and what to do to resolve
+the error (including the silly &quot;Timecounter Went Backwards&quot; error).
+</p>
+
+<p>
+Chapter twenty provides information on FreeBSD resources, such as mailing lists, the Handbook and the FAQ,
+published books and web sites pertaining to Unix (even mentioning good ol' D&aelig;mon News ;-), as well
+as finding out which port installed which file or library. The two appendices cover supported hardware
+(pretty much what's included in <tt>HARDWARE.TXT</tt> and the Release Notes, but with some additional
+information) and a quick blurb about the FreeBSD CD-ROM and a brief system requirements list.
+</p>
+
+<h2>Summary</h2>
+<p>
+To take the first sentence in the book's introduction:
+</p>
+
+<blockquote>
+<p>
+This book is an introduction to FreeBSD, a powerful, stable, fast UNIX-style operating system that runs
+on a personal computer, for people who have never used FreeBSD or any flavor of UNIX before.
+</p>
+</blockquote>
+
+<p>
+I think that the author has fulfilled that goal by presenting something that is foreign to a Windows
+user and provides instructions, information and hints on topics that would normally intimidate the user
+(seeing a terse console screen would intimidate many computer users). The book does provide some notes
+if something that is being discussed is related or similar in both FreeBSD and Linux, in case someone
+who has tried Linux wants to try out FreeBSD.
+</p>
+
+<h3>Praises</h3>
+<ul>
+	<li>Does a very good job of avoiding or starting flame wars</li>
+	<li>Explains technical or complex terms or concepts in a way that a beginner would be able to understand</li>
+	<li>Step-by-step instructions are easy to follow</li>
+	<li>Keeps in mind that the reader may not be ready or willing to dump Windows (just yet)</li>
+</ul>
+
+<h3>Gripes</h3>
+<ul>
+	<li>States that WinModems will not work under FreeBSD, but does not provide any steps or information for the user to determine if he/she has one or not</li>
+	<li>PPPoE is not covered; which is becoming more common in broadband installations</li>
+	<li>Although <tt>tar</tt> is covered fairly well, but <tt>gzip</tt> and <tt>gunzip</tt> are not</li>
+</ul>
+
+<p>
+I would highly recommend this book for anyone who is just starting in the world of FreeBSD or for
+those who got it installed, but need some help that is not always easy to find. For those who have
+used FreeBSD, Linux or any other UNIX operating system,  but does not rely on more of the advanced
+networking or programming topics (like installing and configuring BIND or writing a wrapper for a
+device), this book would be nice as a reference.
+</p>
+
+<hr />
+<p>
+Article copyright &copy; 2001&#8211;2010 Linh Pham.
+All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
+</p>
+
+</body>
+</html>

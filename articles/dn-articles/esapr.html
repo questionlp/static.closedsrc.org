@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Book Review: Essential System Administration Pocket Reference</title>
+<link rel="stylesheet" href="article.css" type="text/css" />
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18728142-3', 'closedsrc.org');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<h1>Book Review: Essential System Administration Pocket Reference</h1>
+<div class="byline"><span class="name">Linh Pham</span> [<a href="mailto:question-articles@closedsrc.org">question-articles@closedsrc.org</a>]</div>
+
+<blockquote>
+<p>
+This article originally appeared in the January 2003 issue of the D&aelig;mon News Online Magazine.
+This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+else, the content has not been changed.
+</p>
+</blockquote>
+
+<p>
+<strong>Author:</strong> &AElig;leen Frisch<br />
+<strong>Publisher:</strong> O'Reilly &amp; Associates, Inc.<br />
+<strong>Pages:</strong> 144<br />
+<strong>ISBN:</strong> 0-596-00449-4<br />
+<strong>Web Page:</strong> <a href="http://www.oreilly.com/catalog/esapr/">http://www.oreilly.com/catalog/esapr/</a>
+</p>
+
+<p>
+Published three years ago, <span class="BookTitle">UNIX in a Nutshell</span> is a full reference book
+aimed at system administrators (or sysadmins) as a book that can be used to reference any of the
+commands and utilities included in UNIX. Unfortunately, the book was geared at System V and its UNIX
+derivatives; therefore, it may not be quite as useful for BSD sysadmins nor is it portable enough to
+carry in one's pocket to reference when working away from a desk or on the road. Recently published,
+a companion to <span class="BookTitle">Essential System Administration, 3rd Edition</span>
+(<a href="esa3.html">reviewed this month</a>) is a quick pocket reference for the command, tools and
+important topics that can be found in the full book. Since it was done after the release of the full
+book, the round-up of the covered operating systems has been updated, with the exception of HP/Compaq
+Tru64 (or Digital) UNIX, to include the latest versions. Below is the list of operating systems covered.
+</p>
+
+<ul>
+	<li>IBM AIX 5</li>
+	<li>FreeBSD 4.7 (which is called &quot;Free BSD&quot; on the back cover)</li>
+	<li>HP-UX 11</li>
+	<li>Sun Solaris 8 and 9</li>
+	<li>RedHat Linux 8.0 and SuSE Linux 8.1</li>
+</ul>
+
+<p>
+Below is the table of contents for the pocket reference.
+</p>
+
+<table cellspacing="0" cellpadding="1" border="0" width="100%">
+<tr valign="top">
+	<td style="width: 50%">
+		<ul>
+			<li>The root Account</li>
+			<li>Essential Administrative Tools</li>
+			<li>Devices and Device Files</li>
+			<li>File Ownership and Protection</li>
+			<li>System Messages and Log Files</li>
+			<li>Startup and Shutdown</li>
+			<li>User Accounts</li>
+			<li>Process and Resource Management</li>
+		</ul>
+	</td>
+	<td style="width: 50%">
+		<ul>
+			<li>Filesystems and Disks</li>
+			<li>Printing</li>
+			<li>Serial Lines</li>
+			<li>Networking</li>
+			<li>Electronic Mail</li>
+			<li>Security</li>
+			<li>Kernel Configuration</li>
+		</ul>
+	</td>
+</tr>
+</table>
+
+<p>
+Under each section, the author includes an explanation of each command and its options and arguments
+(along with the different option and argument variations used across the different systems), file
+locations for files related to its topic, configuration file syntax, and checklists for important
+topics. For example, starting on page 100: the different options and syntax used in both the BIND
+configuration file, <tt>named.conf</tt>, and the domain map files.
+</p>
+
+<p>
+In addition to configuration file syntax and command arguments, there are some tables scattered
+throughout the pocket reference that can very, very useful. The one that sysadmins will mostly likely
+love the most is the <acronym title="Classless Inter-Domain Routing">CIDR</acronym> table, on page
+100, containing CIDR suffixes (in slash notation), its more common dotted-quad subnet mask, and the
+maximum number of hosts available in the respective subnet (with the network number and the broadcast
+address subtracted from the count). On the opposite page is another table that lists commonly used TCP
+and UDP (which is misspelled as &quot;UPD&quot;) ports and its associated service.
+</p>
+
+<p>
+Being the first printing and edition, there are some typos that I found while reading through it. The
+first one that stood out was the variables listed for enabling or setting the syslog d&aelig;mon in
+FreeBSD on page 23. The second variable listed is &quot;<tt>syslogd_flag</tt>&quot;; instead, it should
+be &quot;<tt>syslogd_flags</tt>&quot;. On page 126, the author listed the kernel build directory for
+FreeBSD as &quot;<tt>/usr/src/sys/<var>arch</var>/conf</tt>&quot;, which is actually the location of
+the kernel configuration file location. The kernel build directory (when using the old kernel compile
+method) should be &quot;<tt>/usr/src/sys/compile/<var>kernel-name</var></tt>&quot; Also, the reason why
+I italicized <tt><var>arch</var></tt> is that the author should have made a note for the reader to
+replace it with the architecture moniker for which the kernel should be built for (this occurs on both
+page 126 and on page 127).
+</p>
+
+<p>
+Although the author mentions a downloadable log rotation tool, <tt>logrotate</tt> in the &quot;System
+Messages and Log Files&quot; section, FreeBSD's <tt>newsyslog</tt> utility was not covered.
+<tt>newsyslog</tt> can be used to not only rotate the system log file based on the file's size or on a
+routine basis, but it can also be used to rotate Apache log files or other program output file. Under
+the &quot;Startup and Shutdown&quot; section, the author lists <tt>/etc/rc.*</tt> for FreeBSD's
+&quot;Secondary boot scripts/script directories&quot;, but does not include <tt>/usr/local/etc/rc.d</tt>
+as a startup/shutdown script directory.
+</p>
+
+<p>
+Looking past the mistakes (which is mostly forgivable since it is the first printing and edition), the
+pocket reference is something that many sysadmins - including myself - will find to be very useful in the
+field. There are times that you need to know which command option does what, but a man page could just
+have a cryptic explanation for it. One option that could be very appealing for some sysadmin is an
+eBook version of the pocket reference that can be viewed on a PDA. Unless you have memorized every
+command and its options and variations across the different UNIX systems, the pocket reference is
+something I would highly recommend getting.
+</p>
+
+<hr />
+<p>
+Article copyright &copy; 2003&#8211;2010 Linh Pham.
+All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
+</p>
+
+</body>
+</html>

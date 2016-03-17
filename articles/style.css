@@ -1,0 +1,80 @@
+@media print {
+	body {
+		font-family: Calibri, Verdana, Arial, sans-serif;
+		margin: 0.1em;
+	}
+	
+	.noPrint {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+@media screen {
+	body {
+		font-family: Calibri, Verdana, Arial, sans-serif;
+		font-size: 1em;
+		margin: 0 0.5em 0.5em 0.5em;
+	}
+}
+
+@media print, screen {
+	.byline {
+		font-size: 1.1em;
+		font-style: italic;
+	}
+
+	.byline span.name {
+		font-weight: bold;
+	}
+
+	code, kbd, pre, samp, tt {
+		font-family: Consolas, "Courier New", sans-serif;
+	}
+
+	code:after, samp:after {
+		content: '"';
+		font-style: italic;
+	}
+
+	code:before, samp:before {
+		content:'"';
+		font-style: italic;
+	}
+
+	pre {
+		border: 1px dotted blue;
+		margin: 0 4em 0 4em;
+		padding: 0.25em 0.25em 0.25em 0.25em;
+	}
+
+	var {
+		background-color: inherit;
+		border: 1px dotted gray;
+	}
+
+	dt {
+		font-weight: bold;
+	}
+
+	dt:after {
+		content: ":";
+	}
+
+	dl.nocolon dt:after {
+		content: "";
+	}
+
+	div.errata-bad, div.errata-corrected {
+		margin: 0.15em 1.75em 0.15em 1.75em;
+		padding: 0.25em 0.25em 0.25em 0.25em;
+	}
+
+	div.errata-bad {
+		border: 1px dotted red;
+	}
+
+	div.errata-corrected {
+		border: 1px dotted green;
+	}
+}

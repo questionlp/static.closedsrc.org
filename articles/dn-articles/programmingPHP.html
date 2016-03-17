@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Book Review: Programming PHP</title>
+<link rel="stylesheet" href="article.css" type="text/css" />
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18728142-3', 'closedsrc.org');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<h1>Book Review: Programming PHP</h1>
+<div class="byline"><span class="name">Linh Pham</span> [<a href="mailto:question-articles@closedsrc.org">question-articles@closedsrc.org</a>]</div>
+
+<blockquote>
+<p>
+This article originally appeared in the July 2002 issue of the D&aelig;mon News Online Magazine.
+This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+else, the content has not been changed.
+</p>
+</blockquote>
+
+<p>
+<strong>Authors:</strong> Rasmus Lerdorf &amp; Kevin Tatroe with Bob Kaehms and Rick McGredy<br />
+<strong>Publisher:</strong> O'Reilly &amp; Associates, Inc.<br />
+<strong>ISBN:</strong> 1-56592-610-2
+</p>
+
+<p>
+PHP is one of the most used scripting languages that is capable of running on multiple platforms,
+operating systems and web servers (FreeBSD/i386, Solaris/SPARC, Mac OS X, Windows + IIS, etc.) One
+of the many reasons why PHP has become so popular (excluding the fact that it is Open Sourced) is that it
+is capable of doing many things that Perl can do, but with a more friendly syntax while still being quite
+extensible. Learning how to write PHP code using the available
+<a href="http://www.php.net/manual/en/html/index.html">PHP Manual</a> is one of the popular options;
+however, the manual isn't too friendly to those who are new to programming or scripting languages:
+some of the sections in the manual are not complete and others do not provide enough examples or
+warnings on things that can trip up someone new to PHP. O'Reilly has published a book on PHP4 for those
+who want to get started in PHP programming, as well as hints on how to write relatively secure and stable
+applications.
+</p>
+
+<p>
+In this book review, I will be giving a detailed overview of &quot;Programming PHP&quot; and will
+provide any critiques and additional comments that you can take into consideration when deciding to
+purchase the book. The book itself has 524 pages and is bound in the usual O'Reilly form factor and
+style; the size of the book is about right if you were going to be carrying it around in a backpack or
+a laptop bag without breaking your shoulders. The book is organized into fifteen chapters and two
+appendices, where the two appendices provide a basic PHP function list/reference and an extensions
+reference. Below is a brief table of contents contained in the book.
+</p>
+
+<table cellspacing="0" cellpadding="1" border="0" width="100%">
+<tr valign="top">
+	<td width="50%">
+		<ol>
+			<li>Introduction to PHP</li>
+			<li>Language Basics</li>
+			<li>Functions</li>
+			<li>Strings</li>
+			<li>Arrays</li>
+			<li>Objects</li>
+			<li>Web Techniques</li>
+			<li>Databases</li>
+			<li>Graphics</li>
+			<li>PDF</li>
+		</ol>
+	</td>
+	<td width="50%">
+		<ol>
+			<li value="11">XML</li>
+			<li>Security</li>
+			<li>Application Techniques</li>
+			<li>Extending PHP</li>
+			<li>PHP on Windows</li>
+		</ol>
+		<strong>Appendices</strong>
+		<ol style="list-style-type: upper-alpha">
+			<li>Function Reference</li>
+			<li>Extension Overview</li>
+		</ol>
+	</td>
+</tr>
+</table>
+
+<p>
+The first chapter introduces the PHP scripting language to the reader, a brief history of PHP
+(including the text from the PHP release announcements for versions 1.0, 2.0, a.k.a. PHP/FI, and
+3.0), installing PHP along with the Apache web server from the source tarballs (sorry, no
+installation notes on installing PHP and Apache from BSD ports even though the platform listed in
+the configure script output shows &quot;<tt>FreeBSD 4.2</tt>&quot;), and finally some sample
+scripts used in conjunction with a web server or as a shell script. The chapter does not cover all
+of the <tt>php.ini</tt> configuration options; instead, it provides a link to the proper page in
+the PHP Manual.
+</p>
+
+<p>
+The next five chapters in the book (two through six) cover the very core of the PHP scripting language
+including: code syntax, style and structure, data types, operators (arithmetic, logical or bitwise),
+including files, functions, strings, POSIX and Perl regular expressions, arrays (which alone takes up
+about a third of chapter four), and objects. Each chapter provides sufficient examples to help explain
+the uses of the many different pieces of PHP, but doesn't overwhelm the reader with fluff nor is as
+terse as some documentation (if there are any). Unfortunately, working with Unicode strings are not
+really covered in any of these five chapters or even in the rest of the book. I think that covering a
+portion of handling Unicode strings should be included as more and more sites and applications are
+required to deal with multiple languages, primarily those that require multi-byte characters to
+represent all of the symbols in a particular language or written language style.
+</p>
+
+<p>
+Chapters seven and eight cover topics that would be used by PHP programmers when building websites with
+PHP. Chapter seven goes over functions and features used by almost all PHP based web sites such as
+reading server variables, handling forms and utilizing cookies and sessions to maintain state. The
+chapter briefly covers using the <tt>header</tt> function to set content types, handle redirections,
+page expiration (quite handy when dealing with proxy servers) and authentication. Even though the
+authors cover the many uses of the <tt>header</tt> function, one use was not covered and I think it
+should be, sending a response code of 404, and building a semi-smart &quot;Page Not Found&quot; that
+provides a link back to the referrer and maybe suggest a link to the visitor.
+</p>
+
+<p>
+The next chapter focuses on setting up and using database connections by using the PEAR DB library
+(rather than the specific database extension functions available and documented in the PHP Manual). The
+examples provided in the chapter use a MySQL database server, though almost all of the examples would
+also be valid for those who connect to a PostgreSQL database server. For those who are not familiar
+with SQL queries and database tables, the chapter covers the most basic query statements (i.e.:
+<tt>select</tt>, <tt>insert</tt> and <tt>update</tt>) as well as creating and using tables. To combine
+the items covered in the chapter, the authors include a web application that allow users to create
+and maintain a business directory listing.
+</p>
+
+<p>
+After the book covers the core of PHP in the last set of chapters, the authors cover some topics that
+may or may not be used in everyday web sites or applications. Chapter nine covers creating basic images
+using the GD library; ten covers creating PDF files along with basic text formatting, embedding images,
+notes and other files. One use of the GD library and PHP that was not included in chapter nine is the
+creation of basic graphs and charts, which are becoming more popular among managers. The eleventh
+chapter goes over creating XML files, handling XML files with and without using XSLT, using XML-RPC to
+create <em>web services</em> by pulling data from other web servers, and parsing Rich Site Summary
+(RSS) documents. The XML chapter does not cover the creation of a Document Type Definition (also
+known as DTD) or validating DTD, XML and XSLT files as that topic would (and does) fill up an entire
+book.
+</p>
+
+<p>
+In chapter 12, the authors go over a topic that all PHP programmers should keep in mind while writing
+PHP code: making sure that the code is as &quot;secure&quot; as possible. Earlier versions of PHP4
+would allow the programmer to reference a query string or form variable by just using <tt>$var</tt>
+where <tt>var</tt> is the name of a query string and/or a form variable. PHP 4.20 and later disables
+the <tt>register_globals</tt> option (it can still be enabled in php.ini) by default. This can lead
+to tainting of data if additional checks are not made. The chapter not only covers a way to make sure
+that data is not being tainted, as well as dealing with file names, paths and permissions, and the
+evils of allowing arbitrary PHP code and shell commands from being executed (but no mention of the
+evils of allowing users to run arbitrary SQL queries on a database, which is a huge no-no).
+</p>
+
+<p>
+The next chapter in the book, thirteen, goes through topics like using templates to possibly reduce
+the number of hand written HTML pages, buffering or compressing the output, working with error handling,
+benchmarking the web server using the Apache <tt>ab</tt> program and inserting timers to find slow
+points in your PHP application. Also included in the chapter are some simple tips to increase the
+application's performance, as well other techniques to lower response time by using Squid to act as a
+caching server along with load balancing web and database servers. The authors do not provide a whole
+of lot detail on the last set of items as setting up caching servers and load balancing multiple
+servers can get quite complicated and involve solutions outside of the scope of PHP.
+</p>
+
+<p>
+Chapter fourteen is the only chapter in the book that is <b>not</b> geared for those who are just
+learning PHP and/or do not have C programming experience as the chapter is on writing C extensions to
+PHP. The chapter provides the basic steps for preparing, coding, and compiling both an extension
+that ROT13's a string; also covered is how to read in and return values, working with arrays, objects,
+references and variables using the structures provided in Zend and the Server Abstraction APIs. The
+pace of the chapter is a bit fast for those who only have a little experience in C (like me) but it
+should be an easy read for those who live and breathe C.
+</p>
+
+<p>
+The last chapter in the book talks about using PHP within a Windows environment. On the web server side,
+the authors only cover using PHP with Personal Web Server and Apache under Windows 98, but does not cover
+how to get PHP to work with Internet Information Server (IIS) under Windows NT/2000. By not covering
+IIS, the authors miss out on a sizeable chunk of the readers who are required to work within Windows (for
+those who want to use PHP with IIS, you will probably find the
+<a href="http://www.php.net/manual/en/html/install.windows.html">specific section</a> within the PHP
+Manual to be a decent starting point.) The chapter continues with tips that focus on writing code that is
+capable of running on both Windows and Unix, a brief discussion on using COM to write data out to a Word
+document, and using ODBC to connect to Windows-specific data sources like Access and Excel (but no
+information about connecting to a server running Microsoft SQL Server).
+</p>
+
+<p>
+The first appendix in the book provides an alphabetically sorted function list (only functions that
+are in the base PHP build are included, functions from any extensions that would be enabled via
+<tt>configure</tt> are included) where each function includes the syntax and return value type (in
+the form of <tt>dataType functionName (dataType argument ...)</tt>), what the function does and
+returns, and some include a list of valid values or modes. The descriptions of the functions are not
+as detailed as the ones found in the PHP Manual, but it should be used as a quick reference rather
+than a tutorial or training document.
+</p>
+
+<p>
+Appendix B covers extensions that are available during the <tt>configure</tt> phase of
+building/installing PHP, including a brief description of what the extension provides, the dependant
+libraries required to build that extension, and the <tt>configure</tt> script option to enable that
+extension. The authors refer the reader to the PHP website for more information about the dependant
+libraries and other information regarding the extensions.
+</p>
+
+<p>
+The book does a nice job of covering the basic concepts of programming in PHP as well as providing
+some insight and items to look out for to help teach those starting out in PHP how to write decent
+PHP code. For those who have quite a bit of PHP experience under his/her belt, the function
+reference in Appendix A along with the security chapter might be of use as a reference point. Those
+who are looking into writing PHP extensions and have quite a bit of experience in C programming may
+find the chapter on writing extensions (chapter fourteen) to be quite informative. There are some
+places where the book could be improved in the second edition:
+</p>
+
+<ul>
+	<li>Cover both the PEAR DB and the database-specific methods to connect to database servers</li>
+	<li>Include IIS along with Personal Web Server and Apache in the chapter covering Windows</li>
+	<li>Provide some more advanced tricks and ways to optimize existing code</li>
+	<li>Cover how to handle, process and parse multi-byte characters and Unicode data</li>
+</ul>
+
+<p>
+I think that &quot;Programming PHP&quot; would provide a perfect complement to the PHP Manual for
+those who are looking into learning PHP as well as those who are fairly experienced in PHP. The
+&quot;PHP Pocket Reference&quot; (though it is a bit dated) may be a better choice for those well
+versed in PHP, are looking for a quick way to lookup function argument lists and don't wish to carry
+around a larger book.
+</p>
+
+<hr />
+<p>
+Article copyright &copy; 2002&#8211;2010 Linh Pham.
+All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
+</p>
+
+</body>
+</html>

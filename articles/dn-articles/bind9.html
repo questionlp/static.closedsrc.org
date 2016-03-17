@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Replacing FreeBSD Base System's BIND with BIND 9</title>
+<link rel="stylesheet" href="article.css" type="text/css" />
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18728142-3', 'closedsrc.org');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<h1>Replacing FreeBSD Base System's BIND with BIND 9</h1>
+<div class="byline"><span class="name">Linh Pham</span> [<a href="mailto:question-articles@closedsrc.org">question-articles@closedsrc.org</a>]</div>
+
+<blockquote>
+<p>
+This article originally appeared in the March 2003 issue of the D&aelig;mon News Online Magazine.
+This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+else, the content has not been changed.
+</p>
+</blockquote>
+
+<p>
+When working any network that uses <acronym title="Transport Control Protocol/Internet Protocol">TCP/IP</acronym>,
+having host name resolution (typically <acronym title="Domain Name Service">DNS</acronym> is really important for
+applications, but also to reduce the need to remember IP addresses. FreeBSD includes
+<acronym title="Berkeley Internet Name D&aelig;mon">BIND</acronym> (developed by
+<acronym title="Internet Software Consortium"><a href="http://www.isc.org/">ISC</a></acronym>)
+to handle DNS services for itself or other hosts. The most version included in the two latest FreeBSD
+releases (4.7-RELEASE and 5.0-RELEASE) is 8.3.3-RELEASE. Similar to FreeBSD, there are two release
+branches for BIND: 8.x and 9.x; the 8.x release branch is the most prevelant version (as it is
+normally included in most UNIX releases, though some are still coming with 4.x!), but it is known for
+its history of nasty bugs. Although the 9.x release branch may look and feel like the 8.x, but a
+majority of its code has been rewritten in attempts to not acquire 8.x's (or even 4.x's) legacy of
+<em>issues</em>. In addition, 9.x includes some additional security features.
+</p>
+
+<p>
+In this article, I will cover upgrading the base system's BIND from 8.x to version 9.2.2 (the steps
+have been tested on FreeBSD 4.6-RELEASE and newer, though it ought to work on 5.0-RELEASE) using Ports
+as well as building from source, as well as cover some of the changes and new features in BIND 9. I will
+not be covering how to install and configure BIND 9 in a chroot'd or jailed environment nor setting up
+BIND 9 to run as an un-priveleged user.
+</p>
+
+<h2>So What Is So Special About BIND 9?</h2>
+<p>
+If you are wondering why you should upgrade the version of BIND that came with your FreeBSD install,
+mostly to a newer release branch, there are quite a few. Below is a list of some of the key reasons along
+with a brief description of the benefits of the 9.x release branch.
+</p>
+
+<dl>
+	<dt>BIND 9.x is a rewrite of the BIND code</dt>
+	<dd>As many BIND administrators can attest, BIND 4.x and 8.x have been a source of many
+	security vulnerabilities, mostly ones that could allow an attacker to gain root access to the
+	server. BIND 9.x, though has had its share (though smaller number) of issues, isn't burden by
+	legacy code that could make it even more susceptable to vulnerabilities.</dd>
+	
+	<dt>DNS security</dt>
+	<dd>With BIND 9.x, you can <em>sign</em> your domain zones as well as sign DNS requests to
+	allow even more strict query and zone access rules.</dd>
+	
+	<dt>IPv6 support</dt>
+	<dd>Although BIND 8.x servers can host domain zones that contain IPv6 addresses, it could
+	not listen nor respond to queries transported using IPv6. BIND 9.x now be setup to listen
+	to and respond over IPv6-only, IPv4-only, or a combination of IPv4 and IPv6. BIND 9.x also
+	supports some additional IPv6-specific record data.</dd>
+	
+	<dt>Views</dt>
+	<dd>If you were working in a firewalled or multi-homed environment in which you had to have
+	different DNS responses based on where the request came from, you would have had to setup
+	separate servers to respond to each segment under BIND 8.x. With BIND 9.x, you can setup
+	multiple views and associate access control lists for each one so that one server can
+	respond with different answers for a domain depending on which access control list the
+	request matched. The only drawback with views is that you must setup every domain the server
+	is authoritative for in every view (so it can be a headache if you are an ISP or host a lot
+	of different domains).</dd>
+	
+	<dt>Remote control</dt>
+	<dd>With BIND 9.x, you can setup a management workstation or server along with your DNS
+	servers to allow remote control using shared keys and using the <tt>rndc</tt> command.
+	Instead of having to SSH into a DNS server, and send a <tt>SIGHUP</tt> to the BIND
+	process, you can just use <tt>rndc</tt> from an authorized system and reload or refresh
+	specific zones or the entire server remotely.</dd>
+	
+	<dt>Multi-threaded and support for multiple processors</dt>
+	<dd>BIND 9.x now allows you to build BIND with support for multiple threads to take advantage
+	of multiple processors in your system. This can provide a sizable performance increase with
+	busy and well-equipped DNS servers.</dd>
+</dl>
+
+<p>
+I will not be covering all of the new features of BIND 9.x in this article, but you can find out more
+about the new features and how to work with them in the
+<a href="http://www.nominum.com/content/documents/bind9arm.pdf">BIND 9 Administrator Reference Manual</a>
+or in <span class="BookTitle"><a href="http://www.oreilly.com/catalog/dns4/">DNS and BIND, 4th Edition</a></span>.
+You can also refer to some of the other BIND 9 <a href="#res">resources</a> listed towards the end of this article.
+</p>
+
+<h2>Building and Installing BIND 9</h2>
+<p>
+<strong>Warning:</strong> As with any software installation or upgrade, please make sure that you have a
+recent backup of not only your BIND configuration and domain zone files, but the base system itself. There
+is always a chance that BIND 9.x could cause some problems with your system and may have to revert back
+to the previous version. If you still want to proceed but have some additional form of <em>insurance</em>,
+<strong>do not</strong> build/install with the options to replace the base system's BIND.
+</p>
+
+<h3>Via Ports</h3>
+<p>
+Before starting the build/install process using Ports, make sure that you have a fairly recent, if not
+up-to-date, Ports collection. If you need to update your local Ports collection and are not sure how to,
+please refer to the <a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/cvsup.html">CVSup
+section</a> of the <a href="http://www.freebsd.org/handbook/">FreeBSD Handbook</a> for the necessary instructions.
+</p>
+
+<p>
+Installing BIND 9 via Ports is the easiest way to get the software built and installed on your system.
+By default, the dns/bind9 port (which has recently been updated for 9.2.2-REL instead of its release candidate,
+9.2.2rc1) will install the package using the prefix of <tt>/usr/local</tt> and sticks the configuration
+directory under <tt>/usr/local/etc/namedb</tt>, which <strong>does not</strong> replace the existing BIND
+under <tt>/usr</tt>. To do a basic build and install of BIND 9 <strong>without</strong> replacing the base
+system's BIND, run the following as root:
+</p>
+
+<pre>
+	# cd /usr/ports/dns/bind9
+	# make all install
+</pre>
+
+<p>
+Once the build/install process has finished and you want to have it use your existing BIND configuration
+file, you will need to copy the contents of your <tt>/etc/namedb</tt> (or the directory where your BIND
+configuration files are located) into <tt>/usr/local/etc/namedb</tt>. To start up the newly installed
+(if you still have the original BIND running, kill that process first) BIND 9, run <tt>/usr/local/sbin/named</tt>
+and keep a look out in your syslog for errors that make appear. If you are running a FreeBSD version before
+4.3-RELEASE, you will most likely see the following error in your syslog; if so, you can safely ignore it.
+</p>
+
+<pre>
+	fcntl(8, F_SETFL, 4): Inappropriate ioctl for device
+</pre>
+
+<p>
+If you get any other errors complaining about domain zone file or configuration errors, you will want to
+jump down further in this article to see if the problems are known common problems and how to fix them.
+To have the newly installed BIND be started automatically during the startup process, add the following
+line into <tt>/etc/rc.conf</tt>:
+</p>
+
+<pre>
+	named_program=&quot;/usr/local/sbin/named&quot;
+</pre>
+
+<p>
+To build/install the port and have it replace the base system's install, run the following commands as root:
+</p>
+
+<pre>
+	# cd /usr/ports/dns/bind9
+	# make PORT_REPLACES_BASE_BIND9=yes all install
+</pre>
+
+<p>
+This will build and install BIND 9 so that it replaces the existing BIND binaries, as well as use the
+default BIND configuration directory of <tt>/etc/namedb</tt>. To start up the new BIND (making sure that
+you stop the current BIND process first), just run the following as root:
+</p>
+
+<pre>
+	# /usr/sbin/named
+</pre>
+
+<p>
+Make sure that you take a look at your syslog file to make sure that no warnings or fatal errors occurred.
+If any domain zone file or BIND configuration file errors occur, jump down further in this article to see
+if the problems are one of the more common ones.
+</p>
+
+<h3>Via Source Tarball</h3>
+<p>
+If you are on the brave side or always liked to build/install software packages on your own, installing
+BIND 9 using ISC's tarball should be right down your alley. You can download the source tarball for BIND
+9.2.2 from ISC's FTP server at
+<a href="ftp://ftp.isc.org/isc/bind9/9.2.2/bind-9.2.2.tar.gz">ftp://ftp.isc.org/isc/bind9/9.2.2/bind-9.2.2.tar.gz</a>.
+You can verify the tarball using ISC's
+<a href="ftp://ftp.isc.org/isc/bind9/9.2.2/bind-9.2.2.tar.gz.asc">PGP signature for the tarball</a>
+or using the <a href="http://www.freebsd.org/cgi/pds.cgi?ports/dns/bind9">MD5 checksum for the tarball</a>
+generated by the FreeBSD dns/bind9 port maintainer.
+</p>
+
+<p>
+Once you have downloaded the tarball, uncompress and expand the tarball by running:
+</p>
+
+<pre>
+	% tar zxf bind-9.2.2.tar.gz ; cd bind-9.2.2/
+</pre>
+
+<p>
+After expanding the tarball and going into the expanded source directory, you will need to run the
+<tt>configure</tt> script along with several flags depending on how you want to build/install BIND 9
+or which compile options you would like to have. The following are the bare minimum <tt>configure</tt>
+flags that you should provide if you want to install BIND 9 without replacing the base system's BIND:
+</p>
+
+<pre>
+	% ./configure --prefix=/usr/local --localstatedir=/var --disable-threads \
+	  --with-openssl=/usr
+</pre>
+
+<p>
+That will tell the <tt>configure</tt> script to setup the build to install the binaries under
+<tt>/usr/local</tt> and will have the default configuration directory be <tt>/usr/local/etc</tt>. If
+you want to change the default configuration directory to be something else, add
+<tt>--sysconfdir=<var>/some/path</var></tt> to the command above.
+</p>
+
+<p>
+The bare minimum <tt>configure</tt> flags required to install BIND 9 over the base system BIND are:
+</p>
+
+<pre>
+	% ./configure --prefix=/usr --sysconfdir=/etc/namedb --mandir=/usr/share/man \
+	  --localstatedir=/var --disable-threads --with-openssl=/usr
+</pre>
+
+<p>
+If you want to mimic the Ports build, add the following flags to either of the commands above:
+</p>
+
+<pre>
+	--disable-linux-caps --with-randomdev=/dev/random
+</pre>
+
+<p>
+In theory, the <tt>configure</tt> script should automatically detect and set those options, but it
+may not always be the case. If you want to be on the safe side, you will want to include those flags.
+I've built BIND 9 myself without those flags and haven't run into any problems under FreeBSD 4.7-PRERELEASE
+or newer (but not with 5.0, either -CURRENT or -RELEASE). If you are feeling <strong><em>very</em></strong>
+brave and daring (mostly when running any FreeBSD version prior to 5.0-RELEASE), you can enable multi-threading
+support by adding <tt>--enable-threads</tt> to either of the commands above.
+</p>
+
+<p>
+After running the <tt>configure</tt> command with the flags that you need, you are now ready to build and
+install the files. To do so, run the following as root:
+</p>
+
+<pre>
+	# make &amp;&amp; make install
+</pre>
+
+<p>
+Once the build and install process has finished, you are now ready to start it up and see if the install
+works or not. As root, run <tt>/usr/local/sbin/named</tt> or <tt>/sbin/named</tt> (depending on where you
+installed BIND 9, also make sure to stop any running BIND processes first) and keep in eye out on your syslog
+file to see if any errors or warnings appear.
+</p>
+
+<h2>BIND 9 Configuration</h2>
+<p>
+After you've got BIND 9 installed and, hopefully, able to start up, now its time to take a look at your
+BIND configuration to see if there are any items in your BIND configuration and zone files that BIND 9
+may choke on, as well as two of the new features in BIND 9: views and <tt>rndc</tt>.
+</p>
+
+<h3>BIND 8 to 9 Configuration Changes</h3>
+<p>
+In most cases, BIND 9 should be able to use an existing BIND 8.x configuration and domain zone files
+without too much or any tweaking. Along with the rewrite of the BIND code for BIND 9, BIND 9 also has
+a more strict configuration and domain zone file parser under its hood; it also means that instead of
+returning a warning, most configuration errors will cause BIND 9 to abort its startup process or
+ignore the domain zone completely. One of the most common mistakes that will trip up BIND 9 is how
+BIND 8 and BIND 9 deals with the <acronym title="Start of Authority">SOA</acronym> record at the
+beginning of every domain zone file. With BIND 8, the following SOA record would normally be
+treated as okay and a warning normally isn't issued, but BIND 9 will complain:
+</p>
+
+<pre>
+	foobar.org.	IN SOA plan9.foobar.org. outerspace.foobar.org.
+			( 1 10800 3600 604800 3600 )
+</pre>
+
+<p>
+The proper syntax should have the opening parenthesis on the same line as the &quot;<tt>IN SOA</tt>&quot;
+statement, rather than on the second line. In order for BIND 9 to load up the zone without any errors,
+change the SOA record to be:
+</p>
+
+<pre>
+	foobar.org.	IN SOA plan9.foobar.org. outerspace.foobar.org. (
+			1 10800 3600 604800 3600 )
+</pre>
+
+<p>
+It is also a good practice to include the zone's <acronym title="Time To Live">TTL</acronym>
+before the SOA record by adding the following line at the very beginning of the zone file.
+</p>
+
+<pre>
+	$TTL <var>3600</var>
+</pre>
+
+<p>
+You can substitute <tt><var>3600</var></tt> with any value, though a value of 3600 (seconds, or the
+same as one hour) should be fine unless if you want to keep its TTL low or high for a reason.
+</p>
+
+<p>
+Below is a brief list of BIND configuration options that have been removed or its default value
+changed within the &quot;options&quot; section of the BIND configuration file. The BIND 9
+Administrator Reference Manual provides a more in-depth description, default values and which
+options are no longer used or are ignored in BIND 9.
+</p>
+
+<table border="1" cellspacing="0" cellpadding="1" width="60%" style="margin-left: 2em">
+<thead>
+<tr valign="top">
+	<td align="center" rowspan="2"><strong>Configuration Option</strong></td>
+	<td align="center" colspan="2"><strong>Default Value</strong></td>
+</tr>
+<tr valign="top">
+	<td align="center"><strong>BIND 8</strong></td>
+	<td align="center"><strong>BIND 9</strong></td>
+</tr>
+</thead>
+
+<tbody>
+<tr valign="top">
+	<td align="left"><em>auth-nxdomain</em></td>
+	<td align="center"><em>yes</em></td>
+	<td align="center"><em>no</em></td>
+</tr>
+<tr valign="top">
+	<td align="left">rfc2308-type1</td>
+	<td align="center">no</td>
+	<td align="center">Not Supported</td>
+</tr>
+<tr valign="top">
+	<td align="left">fetch-glue</td>
+	<td align="center">-</td>
+	<td align="center">Obsoleted</td>
+</tr>
+<tr valign="top">
+	<td align="left">named-xfer</td>
+	<td align="center">-</td>
+	<td align="center">Obsoleted</td>
+</tr>
+<tr valign="top">
+	<td align="left">deallocate-on-exit</td>
+	<td align="center">-</td>
+	<td align="center">Obsoleted</td>
+</tr>
+<tr valign="top">
+	<td align="left">host-statistics</td>
+	<td align="center">-</td>
+	<td align="center">Obsoleted</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The most important change between BIND 8 and 9 as noted in the table above is the default value
+for the &quot;auth-nxdomain&quot; option. This option is a fairly important option if the DNS server
+acts as a DNS proxy or caching server, and if the server should claim that its negative answer
+(i.e.: host or domain doesn't exist) is authoritative, even if that isn't the case.
+</p>
+
+<h3>Using Views</h3>
+<p>
+As mentioned earlier in this article, BIND 9 brings along a new feature that may help consolidate
+DNS servers but also provide a form of who gets which answer based on where the request came from. In
+order for views to be setup in BIND 9, you will need to setup access control lists (or ACLs) and plan
+out how you want to setup your views.
+</p>
+
+<p>
+Setting up ACLs in your BIND configuration file is fairly simple, though you will need to be fairly
+familiar with using slash notation for defining subnets. A very nice
+<a href="http://www.tangent.org/~brian/dict/subnet.html">cheat sheet</a> is available online which
+gives you a list of subnet masks and its corresponding slash notation (not all possible combinations
+are provided but it should provide you with enough to get you started). To define an ACL in BIND,
+you would add the following declaration to your BIND configuration file:
+</p>
+
+<pre>
+	acl &quot;<var>acl-name</var>&quot; { <var>a.b.c.d/slash</var>; <var>[...];</var> };
+</pre>
+
+<p>
+Where <tt><var>acl-name</var></tt> is what you want to call the ACL set (the name string supports
+alphanumeric characters and limited symbols such as a hyphen), <tt><var>a.b.c.d/slash</var></tt> is
+a subnet in slash notation that you want to associate to the ACL. For example, if you wanted to list
+the entire 192.168.0.0 network in the ACL, you can either use <tt>192.168.0.0/16</tt> or
+<tt>192.168/16</tt>. Make sure that you trail the IP address or subnet address with a semi-colon.
+Below is an example of an ACL that limits access to specific groups of addresses within an internal network:
+</p>
+
+<pre>
+	acl &quot;netadmins&quot; { 10.1.2/24; 10.1.3/24; 10.1.4.5; };
+</pre>
+
+<p>
+Once you have defined your ACLs, now it is time to define the different views in your configuration
+file. A basic example configuration file with two views defined (one for the internal network and one
+for everyone else) would look something like:
+</p>
+
+<pre>
+	acl &quot;corpnet&quot; { 10.1/16; };
+	
+	view &quot;internal&quot; {
+		match-clients { &quot;corpnet&quot;; };
+		
+		zone &quot;foobar.org&quot; {
+			type master;
+			file &quot;internal/map.foobar.org&quot;;
+		};
+	};
+	
+	view &quot;external&quot; {
+		match-clients { any; };
+		
+		zone &quot;foobar.org&quot; {
+			type master;
+			file &quot;external/map.foobar.org&quot;;
+		};
+	};
+</pre>
+
+<p>
+One thing that you might notice are the two different &quot;match-clients&quot; statements for the two
+views. Only requests that have a source address that matches the &quot;corpnet&quot; ACL would be served
+by the &quot;internal&quot; view, all other requests (matched by the &quot;any&quot; keyword) would be
+served by the &quot;external&quot; view. When building your views, keep in mind that BIND handles views
+in the order that they are defined in the configuration file. That means if the &quot;external&quot;
+view was defined first, it would catch <em>all</em> requests, leaving the &quot;internal&quot; view
+unused. The last view should always be treated as a catch-all for any requests that do not match the
+other views above it. You can also define multiple ACLs for &quot;match-clients&quot; if you wanted to
+make the ACL declarations any more granular.
+</p>
+
+<p>
+The most important requirement when setting up views is that if you define a zone in one view, you must
+define the zone in <strong>all</strong> views, even if the zone data for multiple views are the same.
+That means that if you want to define an internal-only zone (for example: internal.foobar.org) and want to
+restrict query access to only the &quot;corpnet&quot; ACL, you would need to use the &quot;allow-query&quot;
+structure in the &quot;external&quot; view and list the &quot;corpnet&quot; ACL within it, as in the example below:
+</p>
+
+<pre>
+	acl &quot;corpnet&quot; { 10.1/16; };
+	
+	view &quot;internal&quot; {
+		match-clients { &quot;corpnet&quot;; };
+		
+		zone &quot;foobar.org&quot; {
+			type master;
+			file &quot;internal/map.foobar.org&quot;;
+		};
+		
+		zone &quot;internal.foobar.org&quot; {
+			type master;
+			file &quot;internal/map.internal.foobar.org&quot;;
+		};
+	};
+	
+	view &quot;external&quot; {
+		match-clients { any; };
+		
+		zone &quot;foobar.org&quot; {
+			type master;
+			file &quot;external/map.foobar.org&quot;;
+		};
+		
+		zone &quot;internal.foobar.org&quot; {
+			type master;
+			file &quot;internal/map.internal.foobar.org&quot;;
+			allow-query { &quot;corpnet&quot;; };
+		};
+	};
+</pre>
+
+<p>
+If you forget to include a zone in all views in your BIND configuration file, the following error will
+be listed in syslog the next time you restart BIND or reload the configuration file:
+</p>
+
+<pre>
+	Mar  2 11:10:17 foo named[135]: /etc/dns/named.conf:34: when using 'view'
+	statements, all zones must be in views
+</pre>
+
+<p>
+If you are looking at using views on your DNS server and you host a lot of domains, this can easily
+bloat up and make your BIND configuration file more chaotic, though you can use the <tt>include</tt>
+statement and declare your different views as separate files. Using the example above, if we move each
+&quot;view&quot; section into its own files, say <tt>views.internal</tt> and <tt>views.external</tt>,
+you can shrink down the main configuration file to be:
+</p>
+
+<pre>
+	acl &quot;corpnet&quot; { 10.1/16; };
+	
+	// include internal view
+	include &quot;views.internal&quot;;
+	
+	// include external/catch-all view
+	include &quot;views.external&quot;;
+</pre>
+
+<p>
+You may also want to plan your directory structure to accomodate your different views, one way is to
+create directories under the BIND configuration directory named for the different views and place the
+appropriate zone files into the corresponding directories. You can have multiple views point to the
+same zone file.
+</p>
+
+<h3>Setting Up rndc</h3>
+<p>
+In BIND 9, you can use <tt>rndc</tt> to remotely control a BIND 9 DNS server and run some basic
+operations like reloading the server's configuration or clearing out the server's cache. Instead
+of using a UNIX account to authenticate the user, <tt>rndc</tt> uses a shared key authentication
+system in which both the server and the users would use to gain access. Prior to BIND 9.2, you
+had to manually generate the key and hack out the configuration files yourself. With the release of
+BIND 9.2, getting <tt>rndc</tt> configured and setup in BIND got much easier with the introduction
+of the <tt>rndc-confgen</tt> utility, which is included in your BIND 9.2.2 install. By default,
+running the utility without any options will set the key size to 128-bits, allow only the local
+system to control the DNS server, and display the configuration file contents back out to
+the standard output; below is an example of the output:
+</p>
+
+<pre>
+	# Start of rndc.conf
+	key &quot;rndc-key&quot; {
+		algorithm hmac-md5;
+		secret &quot;nm/mg36TVXZ7/fQSr9tD4g==&quot;;
+	};
+
+	options {
+        	default-key &quot;rndc-key&quot;;
+		default-server 127.0.0.1;
+		default-port 953;
+	};
+	# End of rndc.conf
+
+	# Use with the following in named.conf, adjusting the allow list as needed:
+	# key &quot;rndc-key&quot; {
+	#	algorithm hmac-md5;
+	#	secret &quot;nm/mg36TVXZ7/fQSr9tD4g==&quot;;
+	# };
+	#
+	# controls {
+	#	inet 127.0.0.1 port 953
+	#	allow { 127.0.0.1; } keys { &quot;rndc-key&quot;; };
+	# };
+	# End of named.conf
+</pre>
+
+<p>
+You will not want to use the example above for your DNS server, instead you will want to run
+the utility yourself to generate a different secret as well as change the key's name to be
+something less generic. Below are the more useful <tt>rndc-confgen</tt> options that you will
+want to look at and/or use.
+</p>
+
+<dl>
+	<dt>-a</dt>
+	<dd>This option will automatically generate the <tt>rndc</tt> configuration file using the
+	default key size and key file (the default keyfile is called <tt>rndc.key</tt> and is
+	placed in the BIND 9 configuration directory). It is recommended that you change the key
+	file name and location by using the <tt>-c</tt> option described below.</dd>
+	
+	<dt>-b <var>keysize</var></dt>
+	<dd>This option sets the key size, in bits, that is generated. By default, the key size is
+	128 bits, though the size can range from 1 to 512 bits. It is recommended that you use a
+	key size of at least 256 bits if you are using this for a public DNS server.</dd>
+	
+	<dt>-c <var>keyfile</var></dt>
+	<dd>This option sets the location of the generated <tt>rndc</tt> configuration file; it
+	defaults to <tt>rndc.key</tt> and places it under the BIND 9 configuration directory. It
+	is recommended that you set this option to be <tt>/path/to/dns/config/rndc.conf</tt> so
+	that you don't have to manually rename or move the file later.</dd>
+	
+	<dt>-k <var>keyname</var></dt>
+	<dd>Use this option to set the key name that is generated by <tt>rndc-confgen</tt> to be
+	something different than the default name of &quot;rndc-key&quot;. It is highly
+	recommended that you do change the key name, mostly on a DNS server that is on a network
+	that you may not have full knowledge or control over the traffic flowing through it,
+	mostly when you want to open up <tt>rndc</tt> use to other machines on that network.</dd>
+</dl>
+
+<p>
+You can view the other <tt>rndc-confgen</tt> options in the rndc-confgen(8) man page.
+</p>
+
+<p>
+To generate a usable <tt>rndc.conf</tt> file under the base system's BIND configuration directory,
+<tt>/etc/namedb</tt>, with the key name of &quot;dnsadmin&quot;, and with a key size of 256 bits, run
+the following command as root:
+</p>
+
+<pre>
+	# rndc-confgen -a -c /etc/namedb/rndc.conf -k dnsadmin -b 256
+</pre>
+
+<p>
+Although <tt>rndc-confgen</tt> will create the <tt>rndc</tt> configuration file, it will
+<strong>not</strong> touch your existing BIND configuration file. In order to tell BIND 9 to accept
+control requests via <tt>rndc</tt>, you will need to add the following lines to your
+<tt>named.conf</tt> file.
+</p>
+
+<pre>
+	key &quot;<var>keyname</var>&quot; {
+		algorithm hmac-md5;
+		secret &quot;<var>secret-string</var>&quot;;
+	};
+	
+	controls {
+		inet * allow { localhost; } keys { &quot;<var>keyname</var>&quot;; };
+	};
+</pre>
+
+<p>
+Replacing <tt><var>keyname</var></tt> with the key name that you decided on using and
+<tt><var>secret-string</var></tt> with the secret string in the <tt>rndc.conf</tt> file that was
+generated. The &quot;<tt>*</tt>&quot; within the &quot;controls&quot; section tells BIND that control
+mechanism to listen to any addresses used by BIND. To allow multiple hosts to control BIND, using the
+key <tt><var>keyname</var></tt>, just add additional addresses with a trailing semi-colon within the
+&quot;allow&quot; curly-brackets. You will also want to make sure that you allow port 953/tcp from the
+remote machines to reach the DNS server. You can the port used by adding &quot;<tt>default-port
+<var>portnum</var>;</tt>&quot; to the &quot;options&quot; section of <tt>rndc.conf</tt> and add
+&quot;<tt>port <var>portnum</var></tt>&quot; after &quot;<tt>inet *</tt>&quot; in your
+<tt>named.conf</tt> file.
+</p>
+
+<p>
+On the machines that would use <tt>rndc</tt> to control the DNS server, you will need to install BIND 9
+on those machines and copy over the <tt>rndc.conf</tt> generated on the server. If there is a firewall
+in front of the remote machine, make sure that the firewall is set to allow the <tt>rndc</tt> defined
+TCP port through, or else the connection will fail. Below is a brief list of the most commonly used
+<tt>rndc</tt> control commands:
+</p>
+
+<dl>
+	<dt>reload</dt>
+	<dd>Tells BIND to reload its configuration file and all of it's domains and zones; use after
+	adding a new zone or after you make changes to the configuration file. Equivalent to sending a
+	<tt>SIGHUP</tt> signal to the <tt>named</tt> process.</dd>
+	
+	<dt>reload <var>zone</var> [class <var>view</var>]</dt>
+	<dd>Use this command to update/reload a single zone or a zone in a specific view.</dd>
+	
+	<dt>refresh <var>zone</var> [class <var>view</var>]</dt>
+	<dd>Use this command to refresh a zone, or a zone within a view, to update the server's running
+	cache of that zone.</dd>
+	
+	<dt>reconfig</dt>
+	<dd>Tells the server to reload its configuration file and only pull in any new zones (omits
+	zones that already have been loaded).</dd>
+	
+	<dt>dumpdb</dt>
+	<dd>This causes the server to dump the entire contents of its cache into a zone file. The dump
+	file is called <tt>named_dump.db</tt> and is placed in your BIND configuration directory.</dd>
+	
+	<dt>stop</dt>
+	<dd>Stops all of the <tt>named</tt> processes.</dd>
+	
+	<dt>flush [<var>view</var>]</dt>
+	<dd>Causes the server to clear all of its caches or all of the cached data for a particular view.</dd>
+	
+	<dt>stats</dt>
+	<dd>Tells the server to write out its statistics (including successful query answers, recursive
+	queries, etc.) into a file called <tt>named.stats</tt>, which is placed in your BIND configuration
+	directory.</dd>
+</dl>
+
+<p>
+Pairing up <tt>rndc</tt> with one of its commands above without any other options will run the command
+using the default server (typically localhost), ports and keys defined in <tt>rndc.conf</tt>. To use
+<tt>rndc</tt> to connect to a different server, run:
+</p>
+
+<pre>
+	rndc -s <var>server</var>
+</pre>
+
+<p>
+Replacing <tt><var>server</var></tt> with the server's hostname or IP adress. To use a different port, use
+the &quot;<tt>-p <var>port</var></tt>&quot; option, and to use a different key, use the &quot;<tt>-k
+<var>keyname</var></tt>&quot; option. For more information on the different <tt>rndc</tt> control commands
+and run-time options, take a look at the rndc(8) man page.
+</p>
+
+<h2>Final Words</h2>
+<p>
+As you can see, BIND 9 brings on many new and useful features to the BIND DNS software package, both on
+the server and administrative sides. There are many other features, nuances and tricks that aren't
+covered in this article, though you can find more information in both online and offline form listed at
+the end of this article.
+</p>
+
+<p>
+I hope that you found this article to be informative and gives you the urge to move up to BIND 9. Spread
+the word around and help wave good-bye to BIND 8!
+</p>
+
+<h2 id="res">Resources on BIND 9</h2>
+<p>
+Looking for more information on BIND 9 or trying to figure out how something isn't working even after
+giving the server the mallet treatment? Below are some resources that pertain to BIND and/or BIND 9.
+</p>
+
+<ul>
+	<li><a href="http://www.nominum.com/content/documents/bind9arm.pdf">BIND 9 Administrator Reference Manual</a></li>
+	<li><a href="http://www.oreilly.com/catalog/dns4/">DNS and BIND, 4th Edition</a>, by Paul Albitz and Cricket Liu</li>
+	<li><a href="http://www.oreilly.com/catalog/dnsbindckbk/">DNS and BIND Cookbook</a>, by Cricket Liu</li>
+	<li><a href="http://isc.org/services/public/lists/bind-lists.html">BIND	Mailing Lists</a> (hosted by ISC)</li>
+	<li><a href="http://marc.theaimsgroup.com/?l=bind9-users">BIND 9 Users Mailing List Archive</a></li>
+</ul>
+
+<hr />
+<p>
+Article copyright &copy; 2003&#8211;2010 Linh Pham.
+All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
+</p>
+
+</body>
+</html>

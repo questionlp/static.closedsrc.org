@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>HOWTO - Limiting Access to TCP-wrapped Services With hosts.allow</title>
+<link rel="stylesheet" href="article.css" type="text/css" />
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18728142-3', 'closedsrc.org');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<div style="float: right">
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="questionlp">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fstatic.closedsrc.org%2Farticles%2Fdn-articles%2Fhosts_allow.html&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:20px; margin-top: 0; padding-top: 0" allowTransparency="true"></iframe> 
+<g:plusone size="medium" href="http://static.closedsrc.org/articles/dn-articles/hosts_allow.html"></g:plusone>
+</div>
+<h1>HOWTO - Limiting Access to TCP-wrapped Services with hosts.allow</h1>
+<div class="byline"><span class="name">Linh Pham</span> [<a href="mailto:question-articles@closedsrc.org">question-articles@closedsrc.org</a>]</div>
+
+<blockquote>
+<p>
+This article originally appeared in the June 2002 issue of the D&aelig;mon News Online Magazine.
+This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+else, the content has not been changed.
+</p>
+
+<p>
+<strong>Note:</strong> Please note the <a href="#errata">errata</a> at the end of this page, which
+includes any corrections made and/or additional notes added recently.
+</p>
+</blockquote>
+
+<p>
+If you have a BSD server that allows access to POP3, IMAP4 or other services like ntalk and Samba's
+SWAT tool, there are times that you wish that you could limit access to only a few workstations.
+One way of limiting access to those services is to place the machine behind a firewall or some
+port/packet filtering services, but that may not be a valid or efficient solution. Thankfully,
+FreeBSD, OpenBSD, NetBSD and Mac OS X have a host access control facility configured via
+<tt>/etc/hosts.allow</tt> file. In this HOWTO, I will go over the basic syntax and concepts of
+the file and some nuances that I have found. In this article, I will be using the default
+<tt>hosts.allow</tt> file from a recent build of FreeBSD 4.6-RC.
+</p>
+
+<h2>Setting Up "hosts.allow"</h2>
+<h3>File Syntax</h3>
+<p>
+The syntax of <tt>/etc/hosts.allow</tt> is actually quite simple and easy to understand, unlike,
+say, <tt>sendmail.cf</tt> or the scattered nature of qmail. Most of the rules and settings are
+used in the following form:
+</p>
+
+<pre>
+	<var>service</var> : <var>host</var>/<var>network</var> : <var>option</var> [: <var>option</var>] ...
+</pre>
+
+<p>
+where:
+</p>
+
+<dl>
+	<dt>service</dt>
+	<dd>The name of the d&aelig;mon or service program that rule will be written for. Examples include
+	<tt>popa3d</tt>, <tt>imapd</tt>, and <tt>sshd</tt>. You can also use the <tt>ALL</tt> wild card to
+	cover all services and d&aelig;mons.</dd>
+
+	<dt>host/network</dt>
+	<dd>The host or network that the rule will apply to. You can use the any of the following notations
+	to best suit your needs.
+	
+		<ul>
+			<li>IP Address: <tt>10.4.2.5</tt> or <tt>172.16.7.4</tt></li>
+			<li>IP Class A/B/C Subnet: <tt>10.4.</tt> or <tt>172.16.7.</tt></li>
+			<li>IP Network with Subnet Mask: <tt>10.4.0.0/255.255.0.0</tt> or <tt>172.16.7.0/255.255.255.0</tt></li>
+			<li>IPv6 Addresses: <tt>[2f3f::]/10</tt> or <tt>[4c20:fe37:1:1::]/64</tt></li>
+			<li>Fully Qualified Domain Name: <tt>foo.insecure.net</tt> or <tt>bad.hairday.insecure.net</tt></li>
+			<li>Domain Name: <tt>insecure.net</tt> or <tt>hairday.insecure.net</tt></li>
+			<li>Relative Hostname: <tt>foo</tt> or <tt>bad</tt></li>
+			<li>Wild Cards: Wild card optionss that can be used are:
+				<ul>
+					<li><tt><strong>ALL</strong></tt>: All clients regardless of IP address or domain name.</li>
+					<li><tt><strong>PARANOID</strong></tt>: Clients that have hostnames that don't match its
+					ident/domain lookup names. This does not apply to machines that do not have any reverse
+					domain lookup names.</li>
+					<li><tt><strong>LOCAL</strong></tt>: A client that comes from the same machine or domain
+					as the host.</li>
+					<li><tt><strong>UNKNOWN</strong></tt>: A client that cannot be resolved to anything known.</li>
+					<li><tt><strong>KNOWN</strong></tt>: A client who's name and addresses can be resolved.</li>
+				</ul>
+			</li>
+		</ul>
+	</dd>
+
+	<dt>option</dt>
+	<dd>A command or an option telling it how to treat the connection request. In majority of the cases, you
+	will see or use <tt>allow</tt> or <tt>deny</tt> for the command. <tt>spawn</tt> or <tt>twist</tt>
+	commands can also be used to send a customized error to the requester or send an alert to the administrator.
+	Some of the most commonly used options will be covered a bit later in this article.</dd>
+</dl>
+
+
+<h3>Options</h3>
+<p>
+The option field for each of the rules provides the basic <tt>allow</tt> and <tt>deny</tt> directives,
+plus several other options that allow you to customize how it logs the connection attempt (via syslog
+or e-mail), run a system command and other options that control the connection. Below are the most
+common options that you may use in <tt>/etc/hosts.allow</tt> and how they affect the connection.
+</p>
+
+<dl>
+	<dt>allow</dt>
+	<dd>As the name implies, it simply lets the connection through; this option must be at the end of a rule.</dd>
+
+	<dt>deny</dt>
+	<dd>Denies the connection without providing the requester any chance to try again. All denied connections
+	are logged to syslog with the service and host that the deny rule matched.</dd>
+
+	<dt>spawn (<tt>command(s)</tt>)</dt>
+	<dd>Generates a new process that will run the command(s) given, but the spawn commands themselves will not
+	allow or deny the connection, so you must have either &quot;<tt>&nbsp;:&nbsp;allow</tt>&quot; or
+	&quot;<tt>&nbsp;:&nbsp;deny</tt>&quot; at the end of the rule in order to make the rule truly effective.</dd>
+
+	<dt>twist <tt>command(s)</tt></dt>
+	<dd>Like spawn, it will create a new process to allow you to run the necessary commands, with the common
+	standard input, output and error objects are linked to the twist option. This option can be used to print
+	out a customized message when someone tries to connect to a service like ftpd. Instead of allowing or
+	denying the connection immediately, the twist commands determine if the requester should be let through
+	or not. A twist option followed by only an echo command will send the echo'd text to the client and closes
+	the connection.</dd>
+
+	<dt>rfc931 [<tt>timeout</tt>]</dt>
+	<dd>This option does a username lookup of the requester via ident, and checks to see if the username and
+	the information povided by the requester match up. The timeout option is used to limit the amount of time
+	that the machine will wait to receive a ident response.</dd>
+
+	<dt>nice [<tt>priority</tt>]</dt>
+	<dd>Like the <tt>nice</tt> in BSD, this option allows you to change a process' priority; thus provides
+	means to limit how much processor a guest or a not-quite-so-trusting client can use.</dd>
+
+	<dt>banner <tt>/dir/path</tt></dt>
+	<dd>This option searches for a file named after the specified service in <tt>/dir/path</tt>, reads in
+	the contents, resolves expansions (a list of expansions can be found in <tt>hosts_access(5)</tt> manual
+	page. This option is valid only for TCP services and d&aelig;mons, not for UDP services.</dd>
+</dl>
+
+<p>
+Comments in the <tt>/etc/hosts.allow</tt> are very similar to shell scripts where each comment line starts
+with a hash mark (<tt>#</tt>) and extends to the end of the line. There is one significant difference in
+how comments are handled in <tt>hosts.allow</tt> and shell scripts is that comments are not allowed after
+a rule. The following example shows valid uses of comments in the file.
+</p>
+
+<pre>
+	# this is a valid comment
+	portmap : 1.2.3.4 : deny
+	# so is this
+	
+	sshd : 9.8.7.6 : deny	# but not this one
+</pre>
+
+<h2>Tightening Down Your Services</h2>
+<p>
+Once you understand the syntax of setting up access controls and options, you are now ready to write
+your own <tt>hosts.allow</tt> file. Without the use of deny rules all running TCP-wrapped services or
+enabled in inetd will be wide open until you explicitly. The example below allows shows some of the
+possible ways to configure the <tt>hosts.allow</tt> file.
+</p>
+
+<pre>
+	portmap : localhost : allow
+	portmap : 10. : allow
+	portmap : .insecure.net : allow
+	portmap : ALL : deny
+	
+	sshd : ALL : allow
+	sshd : bad.host : deny
+	sshd : 88.4.2. : deny <sup><a href="#errata-1">(1)</a></sup>
+	
+	ALL : ALL : deny
+</pre>
+
+<p>
+Taking a look at the portmap section of the configuration, we are allowing localhost, any machines
+with an IP address starting with <tt>10.</tt> and any machines that have <tt>.insecure.net</tt> for
+a domain name or ident name. All other machines and hosts are disallowed. If you do not include
+<tt>localhost</tt> in a rulset, you will lock the host out which may or may not be a good thing.
+</p>
+
+<p>
+The sshd section states that all machines are allowed at first, but then blocks any machine with the
+relative hostname of <tt>bad.host</tt> or any machines with an IP address starting with <tt>88.4.2</tt>
+<sup><a href="#errata-1">(1)</a></sup>. The last rule in the configuration pretty does what it says,
+which is to deny all machines access to the other &quot;tcp wrapped&quot; services and d&aelig;mons that do not
+have any explicit rules stating otherwise. If you want to allow all hosts to the other services without
+intervention, replace the last line with:
+</p>
+
+<pre>
+	ALL : ALL : allow
+</pre>
+
+<p>
+If you do include a rule that denies all hosts access to a particular service and forget to include the
+localhost or management hosts, you may end up inadvertantly lock yourself (and others) out. If you
+setup a rule that allows all hosts to use a service and deny specific hosts, you may still leave yourself
+open to other untrusted hosts. To limit such exposures, check <tt>/etc/inetd.conf</tt> for any services
+that are enabled but really do not need to be enabled, and disable them. One perfect example on
+restricting access to services that are known to be inherently insecure is to only allow clients
+from the internal network access to the telnet d&aelig;mon (telnetd).
+</p>
+
+<h3>Words Of Caution</h3>
+<p>
+No matter how tempting it is to setup a rule that says
+</p>
+
+<pre>
+	ALL : ALL : deny
+</pre>
+
+<p>
+at the very top if the <tt>hosts.allow</tt> file, <strong>DO NOT DO IT!</strong>. The access
+control facility takes each rule literally, meaning that it will see that rule and deny the
+connection before going through the rest of the rules. The same applies to denying access to all
+hosts to a particular service first, then allowing the trusted hosts; the deny rule will be enacted
+upon and the connection is rejected. For example, a bad way of writing a ruleset would be:
+</p>
+
+<pre>
+	sshd : ALL : deny
+	sshd : localhost : allow
+	sshd : 10.0.3. : allow
+</pre>
+
+<p>
+Instead, re-write the ruleset to be:
+</p>
+
+<pre>
+	ssh : 10.0.3. : allow
+	ssh : localhost : allow
+	ssh : ALL : deny
+</pre>
+
+<p>
+That way, the hosts that should be allowed will be allowed through, the rest will fail the first two
+rules and then finally gets denied when it reaches the deny rule.
+</p>
+
+<p>
+If you write any rules that use domain or hostnames for the second field, you could be denying access to
+hosts that do have a valid reverse domain lookup name (this includes IP addresses that do not have any
+PTR records setup on the domain name server that is responsible for that subnet) or do not have any ident
+d&aelig;mons running, if you do not include any allow rules for them before a &quot;<tt>: ALL : deny</tt>&quot;
+rule. Instead, you may want to allow specific subnets or IP address ranges to allow access to those services.
+</p>
+
+<h3>Other Notes</h3>
+<p>
+Any changes that are made to <tt>/etc/hosts.allow</tt> take effect immediately (there is no need to restart
+inetd or restart the network services).  There are some options that will only work with TCP services or
+cause problems when used with UDP services. Some of the caveats and warnings are documented in both
+<tt>hosts_access(5)</tt> and <tt>hosts_options(5)</tt> manual pages. By using rules to allow or deny
+connections, each connection made to the host requires some additional overhead to check the validity of the
+client information and to compare that information with each of the applicable rules. Depending on the
+average load on the host, number of connection attempted in a given time, and the available resources, using
+<tt>hosts.allow</tt> may not be a viable option.
+</p>
+
+<p>
+Some services or d&aelig;mons provide more detailed facilities to allow or deny connections based on IP
+address, domain name and other criteria that could be easier to configure than what is possible with
+<tt>hosts.allow</tt>. In addition, <tt>hosts.allow</tt> cannot act as a filter for malicious code or
+application level denial-of-service attacks (like the file-globbing exploit in earlier versions of ProFTPD
+or a man-in-the-middle attack with ssh).
+</p>
+
+<h2>Conclusion</h2>
+<p>
+<tt>hosts.allow</tt> is quite an interesting and useful facility that can help increase the security of the
+host, but typos and poorly written rules can make the host as or more susceptable to exploits than without
+those rules. Typos could also end up locking yourself out of the box when you least expect it. As stated
+above, using the access control facility for &quot;tcp wrapped&quot; services and d&aelig;mons can and
+probably will take a hit on the host's performance and possibly limit the response rate for the client.
+</p>
+
+<p>
+The facility is not a complete security solution nor should it be treated as such, rather it's a
+compliment to packet filtering and firewall solutions available (be it gratis, free-speech or commercial).
+There are some features that are available only by using the <tt>hosts.allow</tt> facility such as
+redirecting specific clients to other services, or returning specific error messages, and banners
+specific to the service and/or client. Nonetheless, this is a great facility that some people overlook as
+a method to provide a simple means to deny access to specific servies to specific hosts.
+</p>
+
+<h2>Resources</h2>
+<h3>Manual Pages</h3>
+<ul>
+<li>
+<tt>hosts_access(5)</tt> -
+<a href="http://www.freebsd.org/cgi/man.cgi?query=hosts_access&amp;apropos=0&amp;sektion=5&amp;manpath=FreeBSD+4.5-stable&amp;format=html">FreeBSD</a>,
+<a href="http://www.tac.eu.org/cgi-bin/man-cgi?hosts_access++NetBSD-current">NetBSD</a>,
+<a href="http://www.openbsd.org/cgi-bin/man.cgi?query=hosts_access&amp;apropos=0&amp;sektion=0&amp;manpath=OpenBSD+Current&amp;arch=i386&amp;format=html">OpenBSD</a>
+</li>
+
+<li>
+<tt>hosts_options(5)</tt> -
+<a href="http://www.freebsd.org/cgi/man.cgi?query=hosts_options&amp;apropos=0&amp;sektion=0&amp;manpath=FreeBSD+4.5-stable&amp;format=html">FreeBSD</a>,
+<a href="http://www.tac.eu.org/cgi-bin/man-cgi?hosts_options++NetBSD-current">NetBSD</a>,
+<a href="http://www.openbsd.org/cgi-bin/man.cgi?query=hosts_options&amp;apropos=0&amp;sektion=0&amp;manpath=OpenBSD+Current&amp;arch=i386&amp;format=html">OpenBSD</a>
+</li>
+</ul>
+
+<hr />
+<h2 id="errata">Errata</h2>
+<h3 id="errata-1">1. allow/deny ordering</h3>
+
+<p>
+Recently, a reader caught a mistake that was made in the article but was not caught before the article was originally
+published. In the version of the article that was published, the following section was written:
+</p>
+
+<div class="errata-bad-section">
+<pre>
+	sshd : ALL : allow
+	sshd : bad.host : deny
+	sshd : 88.4.2. : deny
+</pre>
+
+<p>
+The sshd section states that all machines are allowed at first, but then blocks any machine with the
+relative hostname of <tt>bad.host</tt> or any machines with an IP address starting with <tt>88.4.2</tt>.
+</p>
+</div>
+
+<p>
+The correct block and description should be:
+</p>
+
+<div class="errata-corrected">
+<pre>
+	sshd : bad.host : deny
+	sshd : 88.4.2. : deny
+	sshd : ALL : allow
+</pre>
+
+<p>
+The sshd section states that any hosts with the hostname of <tt>bad.host</tt> or machines that have an
+IP address that stars with <tt>88.4.2</tt> are denied, then to allow anything else.
+</p>
+</div>
+
+<p>
+The reason why you do not want to start the file or a section with either:
+</p>
+
+<pre>
+	<var>service</var> : ALL : allow
+</pre>
+
+<p>
+or
+</p>
+
+<pre>
+	<var>service</var> : ALL : deny
+</pre>
+
+<p>
+(where <var>service</var> can be <tt>ALL</tt>, <tt>sshd</tt> or any other service) is that if that first
+line matches, it will act on that line and anything below that will be ignored. So if you want to allow
+access for one or all services to anyone except for a couple of hosts, you will want to add the rules to
+block those hosts first, <strong>then</strong> add the <tt>allow</tt> line.
+</p>
+
+<p>
+The idea applies if you want to block access to one or all services to everyone except for one or more
+trusted hosts, you will want to allow those trusted hosts first, <strong>then</strong> deny everyone.
+</p>
+
+<hr />
+<p>
+Article copyright &copy; 2002&#8211;2010 Linh Pham.
+All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
+</p>
+
+</body>
+</html>
