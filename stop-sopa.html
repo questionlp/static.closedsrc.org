@@ -1,12 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>STOP SOPA!</title>
-
 <style type="text/css" media="all">
 html,
 body {
@@ -124,14 +120,14 @@ body {
 
 </head>
 <body>
-    
+
 <div id="text-shadow-box">
     <div id="tsb-box"></div>
     <p id="tsb-text">STOP SOPA!</p>
     <p id="tsb-link"><a href="http://americancensorship.org/">STOP SOPA!</a></p>
     <div id="tsb-wall">
         <div id="tsb-ie"></div>
-        
+
         <p>This site has gone dark today in protest of the U.S. Stop Online Piracy Act (SOPA) and PROTECT-IP Act (PIPA).  The U.S. Congress is about to censor the Internet, even though the vast majority of Americans are opposed. We need to kill these bills to protect our rights to free speech, privacy, and prosperity.  Learn more at <a href="http://americancensorship.org/">AmericanCensorship.org</a></p>
     </div>
     <div id="tsb-spot"></div>
@@ -145,7 +141,7 @@ body {
  *
  * Fork it on GitHub: https://github.com/zachstronaut/stop-sopa
  */
- 
+
 var text = null;
 var spot = null;
 var box = null;
@@ -157,7 +153,7 @@ function init() {
     text = document.getElementById('tsb-text');
     spot = document.getElementById('tsb-spot');
     box = document.getElementById('tsb-box');
-    
+
     if (typeof box.style.webkitBoxShadow == 'string') {
         boxProperty = 'webkitBoxShadow';
     } else if (typeof box.style.MozBoxShadow == 'string') {
@@ -176,16 +172,16 @@ function onMouseMove(e) {
     if (typeof e === 'undefined' || typeof e.clientX === 'undefined') {
         return;
     }
-    
+
     var xm = (e.clientX - Math.floor(window.innerWidth / 2)) * 0.4;
     var ym = (e.clientY - Math.floor(window.innerHeight / 3)) * 0.4;
     var d = Math.round(Math.sqrt(xm*xm + ym*ym) / 5);
     text.style.textShadow = -xm + 'px ' + -ym + 'px ' + (d + 10) + 'px black';
-    
+
     if (boxProperty) {
         box.style[boxProperty] = '0 ' + -ym + 'px ' + (d + 30) + 'px black';
     }
-    
+
     xm = e.clientX - Math.floor(window.innerWidth / 2);
     ym = e.clientY - Math.floor(window.innerHeight / 2);
     spot.style.backgroundPosition = xm + 'px ' + ym + 'px';

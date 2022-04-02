@@ -1,19 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Book Review: Essential System Administration Pocket Reference</title>
-<link rel="stylesheet" href="article.css" type="text/css" />
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<link rel="stylesheet" href="article.css" type="text/css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ0DCLMP9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  ga('create', 'UA-18728142-3', 'closedsrc.org');
-  ga('send', 'pageview');
+  gtag('config', 'G-TQ0DCLMP9J');
 </script>
 </head>
 
@@ -24,16 +22,16 @@
 <blockquote>
 <p>
 This article originally appeared in the January 2003 issue of the D&aelig;mon News Online Magazine.
-This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+This is a cleaned-up version of the article with minor style edits and made it HTML5 compliant;
 else, the content has not been changed.
 </p>
 </blockquote>
 
 <p>
-<strong>Author:</strong> &AElig;leen Frisch<br />
-<strong>Publisher:</strong> O'Reilly &amp; Associates, Inc.<br />
-<strong>Pages:</strong> 144<br />
-<strong>ISBN:</strong> 0-596-00449-4<br />
+<strong>Author:</strong> &AElig;leen Frisch<br>
+<strong>Publisher:</strong> O'Reilly &amp; Associates, Inc.<br>
+<strong>Pages:</strong> 144<br>
+<strong>ISBN:</strong> 0-596-00449-4<br>
 <strong>Web Page:</strong> <a href="http://www.oreilly.com/catalog/esapr/">http://www.oreilly.com/catalog/esapr/</a>
 </p>
 
@@ -95,7 +93,7 @@ Under each section, the author includes an explanation of each command and its o
 (along with the different option and argument variations used across the different systems), file
 locations for files related to its topic, configuration file syntax, and checklists for important
 topics. For example, starting on page 100: the different options and syntax used in both the BIND
-configuration file, <tt>named.conf</tt>, and the domain map files.
+configuration file, <code>named.conf</code>, and the domain map files.
 </p>
 
 <p>
@@ -111,23 +109,23 @@ and UDP (which is misspelled as &quot;UPD&quot;) ports and its associated servic
 <p>
 Being the first printing and edition, there are some typos that I found while reading through it. The
 first one that stood out was the variables listed for enabling or setting the syslog d&aelig;mon in
-FreeBSD on page 23. The second variable listed is &quot;<tt>syslogd_flag</tt>&quot;; instead, it should
-be &quot;<tt>syslogd_flags</tt>&quot;. On page 126, the author listed the kernel build directory for
-FreeBSD as &quot;<tt>/usr/src/sys/<var>arch</var>/conf</tt>&quot;, which is actually the location of
+FreeBSD on page 23. The second variable listed is &quot;<code>syslogd_flag</code>&quot;; instead, it should
+be &quot;<code>syslogd_flags</code>&quot;. On page 126, the author listed the kernel build directory for
+FreeBSD as &quot;<code>/usr/src/sys/<var>arch</var>/conf</code>&quot;, which is actually the location of
 the kernel configuration file location. The kernel build directory (when using the old kernel compile
-method) should be &quot;<tt>/usr/src/sys/compile/<var>kernel-name</var></tt>&quot; Also, the reason why
-I italicized <tt><var>arch</var></tt> is that the author should have made a note for the reader to
+method) should be &quot;<code>/usr/src/sys/compile/<var>kernel-name</var></code>&quot; Also, the reason why
+I italicized <code><var>arch</var></code> is that the author should have made a note for the reader to
 replace it with the architecture moniker for which the kernel should be built for (this occurs on both
 page 126 and on page 127).
 </p>
 
 <p>
-Although the author mentions a downloadable log rotation tool, <tt>logrotate</tt> in the &quot;System
-Messages and Log Files&quot; section, FreeBSD's <tt>newsyslog</tt> utility was not covered.
-<tt>newsyslog</tt> can be used to not only rotate the system log file based on the file's size or on a
+Although the author mentions a downloadable log rotation tool, <code>logrotate</code> in the &quot;System
+Messages and Log Files&quot; section, FreeBSD's <code>newsyslog</code> utility was not covered.
+<code>newsyslog</code> can be used to not only rotate the system log file based on the file's size or on a
 routine basis, but it can also be used to rotate Apache log files or other program output file. Under
-the &quot;Startup and Shutdown&quot; section, the author lists <tt>/etc/rc.*</tt> for FreeBSD's
-&quot;Secondary boot scripts/script directories&quot;, but does not include <tt>/usr/local/etc/rc.d</tt>
+the &quot;Startup and Shutdown&quot; section, the author lists <code>/etc/rc.*</code> for FreeBSD's
+&quot;Secondary boot scripts/script directories&quot;, but does not include <code>/usr/local/etc/rc.d</code>
 as a startup/shutdown script directory.
 </p>
 
@@ -141,7 +139,7 @@ command and its options and variations across the different UNIX systems, the po
 something I would highly recommend getting.
 </p>
 
-<hr />
+<hr>
 <p>
 Article copyright &copy; 2003&#8211;2010 Linh Pham.
 All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.

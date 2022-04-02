@@ -1,19 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Book Review: Programming PHP</title>
-<link rel="stylesheet" href="article.css" type="text/css" />
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<link rel="stylesheet" href="article.css" type="text/css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ0DCLMP9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  ga('create', 'UA-18728142-3', 'closedsrc.org');
-  ga('send', 'pageview');
+  gtag('config', 'G-TQ0DCLMP9J');
 </script>
 </head>
 
@@ -24,14 +22,14 @@
 <blockquote>
 <p>
 This article originally appeared in the July 2002 issue of the D&aelig;mon News Online Magazine.
-This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+This is a cleaned-up version of the article with minor style edits and made it HTML5 compliant;
 else, the content has not been changed.
 </p>
 </blockquote>
 
 <p>
-<strong>Authors:</strong> Rasmus Lerdorf &amp; Kevin Tatroe with Bob Kaehms and Rick McGredy<br />
-<strong>Publisher:</strong> O'Reilly &amp; Associates, Inc.<br />
+<strong>Authors:</strong> Rasmus Lerdorf &amp; Kevin Tatroe with Bob Kaehms and Rick McGredy<br>
+<strong>Publisher:</strong> O'Reilly &amp; Associates, Inc.<br>
 <strong>ISBN:</strong> 1-56592-610-2
 </p>
 
@@ -97,9 +95,9 @@ The first chapter introduces the PHP scripting language to the reader, a brief h
 (including the text from the PHP release announcements for versions 1.0, 2.0, a.k.a. PHP/FI, and
 3.0), installing PHP along with the Apache web server from the source tarballs (sorry, no
 installation notes on installing PHP and Apache from BSD ports even though the platform listed in
-the configure script output shows &quot;<tt>FreeBSD 4.2</tt>&quot;), and finally some sample
+the configure script output shows &quot;<code>FreeBSD 4.2</code>&quot;), and finally some sample
 scripts used in conjunction with a web server or as a shell script. The chapter does not cover all
-of the <tt>php.ini</tt> configuration options; instead, it provides a link to the proper page in
+of the <code>php.ini</code> configuration options; instead, it provides a link to the proper page in
 the PHP Manual.
 </p>
 
@@ -120,9 +118,9 @@ represent all of the symbols in a particular language or written language style.
 Chapters seven and eight cover topics that would be used by PHP programmers when building websites with
 PHP. Chapter seven goes over functions and features used by almost all PHP based web sites such as
 reading server variables, handling forms and utilizing cookies and sessions to maintain state. The
-chapter briefly covers using the <tt>header</tt> function to set content types, handle redirections,
+chapter briefly covers using the <code>header</code> function to set content types, handle redirections,
 page expiration (quite handy when dealing with proxy servers) and authentication. Even though the
-authors cover the many uses of the <tt>header</tt> function, one use was not covered and I think it
+authors cover the many uses of the <code>header</code> function, one use was not covered and I think it
 should be, sending a response code of 404, and building a semi-smart &quot;Page Not Found&quot; that
 provides a link back to the referrer and maybe suggest a link to the visitor.
 </p>
@@ -133,7 +131,7 @@ The next chapter focuses on setting up and using database connections by using t
 examples provided in the chapter use a MySQL database server, though almost all of the examples would
 also be valid for those who connect to a PostgreSQL database server. For those who are not familiar
 with SQL queries and database tables, the chapter covers the most basic query statements (i.e.:
-<tt>select</tt>, <tt>insert</tt> and <tt>update</tt>) as well as creating and using tables. To combine
+<code>select</code>, <code>insert</code> and <code>update</code>) as well as creating and using tables. To combine
 the items covered in the chapter, the authors include a web application that allow users to create
 and maintain a business directory listing.
 </p>
@@ -154,9 +152,9 @@ book.
 <p>
 In chapter 12, the authors go over a topic that all PHP programmers should keep in mind while writing
 PHP code: making sure that the code is as &quot;secure&quot; as possible. Earlier versions of PHP4
-would allow the programmer to reference a query string or form variable by just using <tt>$var</tt>
-where <tt>var</tt> is the name of a query string and/or a form variable. PHP 4.20 and later disables
-the <tt>register_globals</tt> option (it can still be enabled in php.ini) by default. This can lead
+would allow the programmer to reference a query string or form variable by just using <code>$var</code>
+where <code>var</code> is the name of a query string and/or a form variable. PHP 4.20 and later disables
+the <code>register_globals</code> option (it can still be enabled in php.ini) by default. This can lead
 to tainting of data if additional checks are not made. The chapter not only covers a way to make sure
 that data is not being tainted, as well as dealing with file names, paths and permissions, and the
 evils of allowing arbitrary PHP code and shell commands from being executed (but no mention of the
@@ -166,7 +164,7 @@ evils of allowing users to run arbitrary SQL queries on a database, which is a h
 <p>
 The next chapter in the book, thirteen, goes through topics like using templates to possibly reduce
 the number of hand written HTML pages, buffering or compressing the output, working with error handling,
-benchmarking the web server using the Apache <tt>ab</tt> program and inserting timers to find slow
+benchmarking the web server using the Apache <code>ab</code> program and inserting timers to find slow
 points in your PHP application. Also included in the chapter are some simple tips to increase the
 application's performance, as well other techniques to lower response time by using Squid to act as a
 caching server along with load balancing web and database servers. The authors do not provide a whole
@@ -200,17 +198,17 @@ information about connecting to a server running Microsoft SQL Server).
 <p>
 The first appendix in the book provides an alphabetically sorted function list (only functions that
 are in the base PHP build are included, functions from any extensions that would be enabled via
-<tt>configure</tt> are included) where each function includes the syntax and return value type (in
-the form of <tt>dataType functionName (dataType argument ...)</tt>), what the function does and
+<code>configure</code> are included) where each function includes the syntax and return value type (in
+the form of <code>dataType functionName (dataType argument ...)</code>), what the function does and
 returns, and some include a list of valid values or modes. The descriptions of the functions are not
 as detailed as the ones found in the PHP Manual, but it should be used as a quick reference rather
 than a tutorial or training document.
 </p>
 
 <p>
-Appendix B covers extensions that are available during the <tt>configure</tt> phase of
+Appendix B covers extensions that are available during the <code>configure</code> phase of
 building/installing PHP, including a brief description of what the extension provides, the dependant
-libraries required to build that extension, and the <tt>configure</tt> script option to enable that
+libraries required to build that extension, and the <code>configure</code> script option to enable that
 extension. The authors refer the reader to the PHP website for more information about the dependant
 libraries and other information regarding the extensions.
 </p>
@@ -240,7 +238,7 @@ versed in PHP, are looking for a quick way to lookup function argument lists and
 around a larger book.
 </p>
 
-<hr />
+<hr>
 <p>
 Article copyright &copy; 2002&#8211;2010 Linh Pham.
 All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.

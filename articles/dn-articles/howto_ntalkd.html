@@ -1,19 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Communicating With Users Using ntalkd and ytalk</title>
-<link rel="stylesheet" href="article.css" type="text/css" />
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<link rel="stylesheet" href="article.css" type="text/css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ0DCLMP9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  ga('create', 'UA-18728142-3', 'closedsrc.org');
-  ga('send', 'pageview');
+  gtag('config', 'G-TQ0DCLMP9J');
 </script>
 </head>
 
@@ -24,7 +22,7 @@
 <blockquote>
 <p>
 This article originally appeared in the June 2002 issue of the D&aelig;mon News Online Magazine.
-This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+This is a cleaned-up version of the article with minor style edits and made it HTML5 compliant;
 else, the content has not been changed.
 </p>
 </blockquote>
@@ -44,13 +42,13 @@ and a basic instructions on how to use both clients.
 <h2>Setting Up ntalkd</h2>
 <p>
 The ntalk d&aelig;mon is included with any FreeBSD installation and it is installed under
-<tt>/usr/libexec</tt> as <tt>ntalkd</tt>. Like many services available, the d&aelig;mon needs to be
-enabled within <tt>/etc/inetd.conf</tt>. Some machines may already have the ntalk d&aelig;mon enabled,
+<code>/usr/libexec</code> as <code>ntalkd</code>. Like many services available, the d&aelig;mon needs to be
+enabled within <code>/etc/inetd.conf</code>. Some machines may already have the ntalk d&aelig;mon enabled,
 but not all do. To enable the service, make sure that you have inetd enabled and running by adding
-<tt>inetd_enable=&quot;YES&quot;</tt> or changing <tt>NO</tt> to <tt>YES</tt> if
-<tt>inetd_enable=&quot;NO&quot;</tt> in <tt>/etc/rc.conf</tt> if it is already present. Once you have
-enabled inetd in <tt>rc.conf</tt>, find the following line in your <tt>inetd.conf</tt> file and
-remove the hash mark (<tt>#</tt>) from the beginning of the line:
+<code>inetd_enable=&quot;YES&quot;</code> or changing <code>NO</code> to <code>YES</code> if
+<code>inetd_enable=&quot;NO&quot;</code> in <code>/etc/rc.conf</code> if it is already present. Once you have
+enabled inetd in <code>rc.conf</code>, find the following line in your <code>inetd.conf</code> file and
+remove the hash mark (<code>#</code>) from the beginning of the line:
 </p>
 
 <pre>
@@ -80,13 +78,13 @@ to start it up.
 <p>
 By enabling and running the inetd d&aelig;mon, you have a chance of opening your host to possible
 hack attempts if it is setup to run services like telnet or rsh. To help lock down access to
-&quot;tcp wrapped&quot; services and inetd d&aelig;mons, you can use the <tt>hosts.allow</tt> facility
+&quot;tcp wrapped&quot; services and inetd d&aelig;mons, you can use the <code>hosts.allow</code> facility
 to allow and deny specific hosts or IP address ranges. You can learn more on how to setup and use
-<tt>hosts.allow</tt> by checking out the
+<code>hosts.allow</code> by checking out the
 &quot;<a href="hosts_allow.html">HOWTO - Limiting Access to TCP-Wrapped Services With hosts.allow</a>&quot;
 article in this month's issue. The service name that you would want to use to restrict access to ntalk via
-<tt>hosts.allow</tt> is <tt>ntalkd</tt>. Since ntalk is uses the UDP protocol, some of the options in
-<tt>hosts.allow</tt> will not be available.
+<code>hosts.allow</code> is <code>ntalkd</code>. Since ntalk is uses the UDP protocol, some of the options in
+<code>hosts.allow</code> will not be available.
 </p>
 
 <p>
@@ -97,8 +95,8 @@ work. Simple, no?
 <h2>Using The talk Clients To Chat</h2>
 <h3>The talk Client</h3>
 <p>
-Also included with the ntalk d&aelig;mon is the simplistic <tt>talk</tt> client which allows you to chat
-with another user. The syntax for running the <tt>talk</tt> client is:
+Also included with the ntalk d&aelig;mon is the simplistic <code>talk</code> client which allows you to chat
+with another user. The syntax for running the <code>talk</code> client is:
 </p>
 
 <pre>
@@ -112,20 +110,20 @@ The definition of the arguments are as follows:
 <dl>
 	<dt>person</dt>
 	<dd>This can simply be the username of the person that you want to chat with if that person is
-	on the same host as you, or in the form of <tt><var>user</var>@<var>host</var></tt> where
+	on the same host as you, or in the form of <code><var>user</var>@<var>host</var></code> where
 	<var>host</var> is the remote host (which can be specified as an IP address, a relative hostname,
 	or a full qualified domain name). The remote host must be running a talk d&aelig;mon and allow
 	your machine access to it in order to talk to someone on that remote host.</dd>
 
 	<dt>ttyname</dt>
 	<dd>(Optional) If the user is logged into multiple terminals, you can direct your talk request to
-	that specific terminal by including the full terminal device name (for example: <tt>ttyp1</tt>
-	if that user is logged into <tt>p1</tt>). You can find out the terminal(s) that a user is logged
-	into by running the <tt>w</tt> command.</dd>
+	that specific terminal by including the full terminal device name (for example: <code>ttyp1</code>
+	if that user is logged into <code>p1</code>). You can find out the terminal(s) that a user is logged
+	into by running the <code>w</code> command.</dd>
 </dl>
 
 <p>
-When you run the <tt>talk</tt> command with a proper user (and terminal name if need be), it will try to
+When you run the <code>talk</code> command with a proper user (and terminal name if need be), it will try to
 connect to the host (local or remote) and then it sends a message to the user asking them to run:
 </p>
 
@@ -139,28 +137,28 @@ username and/or host, or if the user or host is not available, then it will retu
 </p>
 
 <p>
-When you run the proper <tt>talk</tt> command and arguments, the talk client will appear on the screen
+When you run the proper <code>talk</code> command and arguments, the talk client will appear on the screen
 with panes. The top pane is what you would type in and the bottom pane is what the remote user's response
-will be printed. To exit out of the client, press <tt>CTRL+C</tt> (or C-c for EMACS users, or ^C if you
-prefer). One of the disadvantages of the <tt>talk</tt> program is that it will only allow for a chat
+will be printed. To exit out of the client, press <code>CTRL+C</code> (or C-c for EMACS users, or ^C if you
+prefer). One of the disadvantages of the <code>talk</code> program is that it will only allow for a chat
 with one other person.
 </p>
 
 <h3>The ytalk Client</h3>
 <p>
-The <tt>ytalk</tt> client has one feature that is glaringly missing in the standard <tt>talk</tt>, the
+The <code>ytalk</code> client has one feature that is glaringly missing in the standard <code>talk</code>, the
 ability to talk to multiple people at the same time and using one instance of the client. Another
-feature of the <tt>ytalk</tt> client is that it includes a native X11 interface for those you are running
-X Windows and want a more <em>native</em> looking client. <tt>ytalk</tt> is not included with the base
-install, but can easily be installed from the Ports collection. To install the client, run <tt>make
-all install</tt> within the <tt>/usr/ports/net/ytalk</tt> directory. Any specific configuration commands
-that you want to make should be added to the <tt>.ytalkrc</tt> in your home directory. Configuration
-commands that affect all users should be placed in <tt>/usr/local/etc/ytalkrc</tt>. For a detailed list
-of configuration commands and options, check out the man page for <tt>ytalk</tt>.
+feature of the <code>ytalk</code> client is that it includes a native X11 interface for those you are running
+X Windows and want a more <em>native</em> looking client. <code>ytalk</code> is not included with the base
+install, but can easily be installed from the Ports collection. To install the client, run <code>make
+all install</code> within the <code>/usr/ports/net/ytalk</code> directory. Any specific configuration commands
+that you want to make should be added to the <code>.ytalkrc</code> in your home directory. Configuration
+commands that affect all users should be placed in <code>/usr/local/etc/ytalkrc</code>. For a detailed list
+of configuration commands and options, check out the man page for <code>ytalk</code>.
 </p>
 
 <p>
-The <tt>ytalk</tt> command uses a slightly different syntax than the regular <tt>talk</tt> client, many
+The <code>ytalk</code> command uses a slightly different syntax than the regular <code>talk</code> client, many
 of which aren't really needed in most cases, but you can feel free to look at them in the ytalk(1) man
 page. The basic syntax of the command is:
 </p>
@@ -170,8 +168,8 @@ page. The basic syntax of the command is:
 </pre>
 
 <p>
-where <tt>-x</tt> disables the X11 interface (which is implied if the <tt>DISPLAY</tt> environment
-variable is not set). <tt>ytalk</tt> accepts several different syntaxes for the <var>username</var>
+where <code>-x</code> disables the X11 interface (which is implied if the <code>DISPLAY</code> environment
+variable is not set). <code>ytalk</code> accepts several different syntaxes for the <var>username</var>
 argument as described below.
 </p>
 
@@ -181,28 +179,28 @@ argument as described below.
 
 	<dt>name#tty</dt>
 	<dd>If the person is logged into multiple terminals, you can target the request to a specific by
-	using the full terminal name (like <tt>ttyp2</tt> in place of <tt>tty</tt>.</dd>
+	using the full terminal name (like <code>ttyp2</code> in place of <code>tty</code>.</dd>
 
 	<dt>name@host</dt>
-	<dd>This is the same as the <tt>talk</tt> client where <tt>host</tt> is the name of the remote host
+	<dd>This is the same as the <code>talk</code> client where <code>host</code> is the name of the remote host
 	which the user is logged in to.</dd>
 
 	<dt>name#tty@host and name@host#tty</dt>
-	<dd>A combination of <tt>name#tty</tt> and <tt>name@host</tt>.</dd>
+	<dd>A combination of <code>name#tty</code> and <code>name@host</code>.</dd>
 </dl>
 
 <p>
-Once you have started <tt>ytalk</tt> and are placed into the client, which looks fairly similar to the
-<tt>talk</tt> client. It will start off one pane until the person you invited joins in (or automatically
+Once you have started <code>ytalk</code> and are placed into the client, which looks fairly similar to the
+<code>talk</code> client. It will start off one pane until the person you invited joins in (or automatically
 splits into the appropriate number of panes if you were invited to a chat).
 </p>
 
 <p>
-The <tt>ytalk</tt> client provides a pop-up menu, which is accessed and dismissed by pressing the
-<tt>ESC</tt> key, that allows you to invite, bump off current chat partcipants, or bump off any invited
+The <code>ytalk</code> client provides a pop-up menu, which is accessed and dismissed by pressing the
+<code>ESC</code> key, that allows you to invite, bump off current chat partcipants, or bump off any invited
 but not connected people, plus provide options and other commands that allow you to customize the session or be
 more flexible or productive when a chat suddenly gets quiet. Again, you can find out more about the options
-in the <tt>ytalk(1)</tt> man page. Below is a screenshot of the <tt>ytalk</tt> menu.
+in the <code>ytalk(1)</code> man page. Below is a screenshot of the <code>ytalk</code> menu.
 </p>
 
 <pre>
@@ -221,10 +219,10 @@ in the <tt>ytalk(1)</tt> man page. Below is a screenshot of the <tt>ytalk</tt> m
 </pre>
 
 <p>
-You can quit out of the client through the Main Menu or by pressing <tt>CTRL+C</tt> on the keyboard. I
-personally like to use <tt>ytalk</tt> when chatting with the D&aelig;mon News crew since a conversation
+You can quit out of the client through the Main Menu or by pressing <code>CTRL+C</code> on the keyboard. I
+personally like to use <code>ytalk</code> when chatting with the D&aelig;mon News crew since a conversation
 can start off with another person, but someone else can be requested to join or just pop in at any
-time without having to run multiple <tt>talk</tt> clients.
+time without having to run multiple <code>talk</code> clients.
 </p>
 
 <h3>Other Notes</h3>
@@ -233,7 +231,7 @@ If you use the Pine e-mail client in a console and someone is trying to send you
 Pine e-mail client will (by default) ignore the request and will not rely it to you. You can change that
 behavior by going into the Pine configure screen and make sure that the option &quot;allow-talk&quot;
 under the &quot;Advanced User Preferences&quot; section is checked. You can also enable the option by
-making sure that <tt>allow-talk</tt> is listed within the <tt>feature-list</tt> option set. With the
+making sure that <code>allow-talk</code> is listed within the <code>feature-list</code> option set. With the
 option set, talk requests will pop up in the terminal over anything being displayed by Pine.
 </p>
 
@@ -245,19 +243,19 @@ the d&aelig;mon installed and the client and start your conversation from there.
 should either be located directly on that host via a console or SSH'd into the host to keep the
 conversation data from being sent outside of the talk host without any form of encryption. I haven't
 tried to use any form of SSH port forwarding to connect to remote talk hosts, though I'm not sure if
-it would work since the <tt>talk</tt> service uses the UDP protocol instead of TCP.
+it would work since the <code>talk</code> service uses the UDP protocol instead of TCP.
 </p>
 
 <p>
 If you want to make the talk service available from a talk host behind a firewall available to the
-public Internet, you will need to let UDP port 518 through. <!--According to the <tt>/etc/services</tt>
-file that came from 4.6-RC, it shows that <tt>ntalk</tt> also uses the TCP port 518 as well, but I'm not quite
+public Internet, you will need to let UDP port 518 through. <!--According to the <code>/etc/services</code>
+file that came from 4.6-RC, it shows that <code>ntalk</code> also uses the TCP port 518 as well, but I'm not quite
 sure if it that is correct or not.-->
 </p>
 
 <h2>Conclusion</h2>
 <p>
-Although <tt>ntalk</tt> doesn't provide luxury features like file uploads and downloads, cute little
+Although <code>ntalk</code> doesn't provide luxury features like file uploads and downloads, cute little
 graphical emoticons, or other features integrated into their respective portals or network as AOL
 Instant Messenger or IRC, but it does provide a lightweight and very simple way of chatting with your
 friends, co-workers, or other people without having to run graphical or bloated text console clients.
@@ -265,7 +263,7 @@ Instead, it stays true to the way many Unix utilities and programs are (and shou
 program should be as simple as possible without unneeded bells and whistles.
 </p>
 
-<hr />
+<hr>
 <p>
 Article copyright &copy; 2002&#8211;2010 Linh Pham.
 All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.

@@ -1,19 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Review: FreeBSD: An Open Source OS for your PC</title>
-<link rel="stylesheet" href="article.css" type="text/css" />
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<link rel="stylesheet" href="article.css" type="text/css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ0DCLMP9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  ga('create', 'UA-18728142-3', 'closedsrc.org');
-  ga('send', 'pageview');
+  gtag('config', 'G-TQ0DCLMP9J');
 </script>
 </head>
 
@@ -24,16 +22,16 @@
 <blockquote>
 <p>
 This article originally appeared in the September 2001 issue of the D&aelig;mon News Online Magazine.
-This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+This is a cleaned-up version of the article with minor style edits and made it HTML5 compliant;
 else, the content has not been changed.
 </p>
 </blockquote>
 
 <p>
-<strong>Title:</strong> FreeBSD: An Open-Source Operating System For Your Personal Computer<br />
-<strong>Author:</strong> Annelise Anderson<br />
-<strong>Publisher:</strong> The Bit Tree Press<br />
-<strong>ISBN:</strong> 0-9712045-0-0<br />
+<strong>Title:</strong> FreeBSD: An Open-Source Operating System For Your Personal Computer<br>
+<strong>Author:</strong> Annelise Anderson<br>
+<strong>Publisher:</strong> The Bit Tree Press<br>
+<strong>ISBN:</strong> 0-9712045-0-0<br>
 <strong>Pages:</strong> 439
 </p>
 
@@ -112,7 +110,7 @@ some of the dial-up information (if any) to re-connect to the Internet.
 
 <p>
 On page 21, a table shows how much hard drive space each component of the install might take, along
-with a running total. I think this is very helpful since <tt>sysinstall</tt> does not really provide
+with a running total. I think this is very helpful since <code>sysinstall</code> does not really provide
 that information up front. Running out of hard drive space in a middle of an installation is neither
 pretty nor a good way to start off your first installation experience. Continuing on, there is a
 mention of the nice 1024-cylinder limitation and offers help to possibly avoid the issue. The author
@@ -124,10 +122,10 @@ of running FreeBSD within VMWare), and a quick mention about partition resizing 
 </p>
 
 <p>
-Chapter three covers the joys of install FreeBSD using <tt>sysinstall</tt>. Before getting into the
-actual installation itself, the author provides steps on how to navigate through <tt>sysinstall</tt>,
+Chapter three covers the joys of install FreeBSD using <code>sysinstall</code>. Before getting into the
+actual installation itself, the author provides steps on how to navigate through <code>sysinstall</code>,
 as well as its nuances. She continues on with the installation by walking the reader through the
-<tt>Standard</tt> installation steps, including using <tt>FDISK</tt>, creating slices and labelling
+<code>Standard</code> installation steps, including using <code>FDISK</code>, creating slices and labelling
 them, choosing the distribution sets, and making the installation choices final. The steps given are
 clear and explained in a way that the reader would not get too confused.
 </p>
@@ -138,14 +136,14 @@ mouse, X Window System, and login information. While in the networking portion o
 author takes time to explain what each TCP/IP setting means (like what a name server is and does) as
 well as a brief explanation of Anonymous FTP and NFS (even though it may not matter to the reader).
 The author continues by going over the Linux binary compatibility feature, setting up the mouse,
-adding software packages and user accounts, and setting the almighty <tt>root</tt> password. The
+adding software packages and user accounts, and setting the almighty <code>root</code> password. The
 last topic covered in the chapter is setting up the X Window System and a window manager/desktop
 environment... as well as making it clear that KDE and GNOME are not window managers per se.
 </p>
 
 <p>
 In the fifth chapter, the reader gets to learn how to login and logout of the system, learn the
-basics of the <tt>ee</tt> editor, user management, how to find and use the man pages and GNU info,
+basics of the <code>ee</code> editor, user management, how to find and use the man pages and GNU info,
 mounting and dismounting volumes (i.e. CD-ROMs, floppy disks and DOS/Windows partitions), and a bit
 on printing from FreeBSD. For someone who is learning FreeBSD, using a command line interface can be
 quite intimidating and this chapter provides a concise introduction.
@@ -153,24 +151,24 @@ quite intimidating and this chapter provides a concise introduction.
 
 <p>
 Chapters six and seven delve more into the shell, system utilities and basic maintenance. Most of
-the command line (i.e. shell) examples in the book are geared toward the <tt>bash</tt> (sorry
-<tt>csh</tt> and <tt>ksh</tt> users). There are several examples/templates of the <tt>.bash_profile</tt>
-and <tt>.bashrc</tt> that helps make the person feel a little bit more at home. Chapter seven shows
+the command line (i.e. shell) examples in the book are geared toward the <code>bash</code> (sorry
+<code>csh</code> and <code>ksh</code> users). There are several examples/templates of the <code>.bash_profile</code>
+and <code>.bashrc</code> that helps make the person feel a little bit more at home. Chapter seven shows
 the reader how to find how much space is left on the hard drive, what is taking up so much space
-(nah... it couldn't be that stash of MP3's now, could it?), how to dig through <tt>dmesg</tt> as
-well as <tt>grep</tt>-ing the output, and find out more about the system. The second half of the
+(nah... it couldn't be that stash of MP3's now, could it?), how to dig through <code>dmesg</code> as
+well as <code>grep</code>-ing the output, and find out more about the system. The second half of the
 chapter goes into a nice presentation of processes, the kernel status and modules, looking through
-<tt>syslog</tt> messages and setting up <tt>syslog</tt>. The chapter ends with libraries, a bit
-about <tt>crontab</tt>, and turning on soft updates through <tt>tunefs</tt>.
+<code>syslog</code> messages and setting up <code>syslog</code>. The chapter ends with libraries, a bit
+about <code>crontab</code>, and turning on soft updates through <code>tunefs</code>.
 </p>
 
 <p>
 Chapter eight might be kind of short, but it is probably one of the most important one for any
-FreeBSD user starting out since it covers how to edit files. The author chose to use <tt>vi</tt> as
-the editor of choice for most of the book (<tt>ee</tt> is used in the first several chapters since
+FreeBSD user starting out since it covers how to edit files. The author chose to use <code>vi</code> as
+the editor of choice for most of the book (<code>ee</code> is used in the first several chapters since
 it is much easier for someone to start out with) and provides quite a bit of help and commands to
-guide the reader through the quite terse interface/editor that is <tt>vi</tt>. The author does
-mention <tt>emacs</tt> and <tt>pico</tt>, but does not recommend them for just simple text editing
+guide the reader through the quite terse interface/editor that is <code>vi</code>. The author does
+mention <code>emacs</code> and <code>pico</code>, but does not recommend them for just simple text editing
 due to some of their downsides.
 </p>
 
@@ -185,7 +183,7 @@ of some of the Ports in the collection.
 
 <p>
 Getting on the Internet and getting it on a network are the two topics covered in chapter twelve.
-The first item coveres connecting to a Internet Service Provider over a modem using <tt>ppp</tt>.
+The first item coveres connecting to a Internet Service Provider over a modem using <code>ppp</code>.
 Nowadays, modems that come with almost every desktop or laptop are software-based, also known as
 <em>WinModems</em>, which do not work under FreeBSD. Author makes a note of that; unfortunately,
 does not provide any information on how to find out if one has acquired a WinModem, even if it
@@ -193,9 +191,9 @@ means contacting the computer or modem manufacturer.
 </p>
 
 <p>
-For those with a network connection, the author provides a walk through of <tt>ifconfig</tt> and
-<tt>route</tt>, getting other machines speaking to FreeBSD via TCP/IP, and setting up a
-gateway/router and an <tt>ipfw</tt> firewall. One note that I would like to make is that there
+For those with a network connection, the author provides a walk through of <code>ifconfig</code> and
+<code>route</code>, getting other machines speaking to FreeBSD via TCP/IP, and setting up a
+gateway/router and an <code>ipfw</code> firewall. One note that I would like to make is that there
 is not any mention about setting up FreeBSD to connect via PPPoE (Point-to-Point Protocol over
 Ethernet) which is used by many broandband providers and requires a slightly different
 configuration compared to a regular Ethernet connection.
@@ -204,7 +202,7 @@ configuration compared to a regular Ethernet connection.
 <p>
 The next two chapters, thirteen and fourteen, go over setting up sound and video (well, at
 least X Window System anyway). Both chapters provide a detailed step-by-step process of setting
-up the sound card drivers in the kernel, creating the device nodes, and using <tt>xf86config</tt>
+up the sound card drivers in the kernel, creating the device nodes, and using <code>xf86config</code>
 to configure XFree86. I find it refreshing that the author decided to stick with the text-based
 method of configuring XFree86 since using the graphical interface included with either XFree86
 3.x or 4.x can cause confusion for the person, not to mention unexpected results. What I find
@@ -214,15 +212,15 @@ desktop, but done through VNC on a Windows machine. It is not a bad thing, just 
 
 <p>
 Setting up a printer, printing and managing the print queue are topics covered in chapter fifteen.
-The chapter details editing the <tt>/etc/printcap</tt> file, using the <tt>lpr</tt>,
-<tt>lprm</tt>, printing to a printer shared from a Windows machine using Samba's <tt>smbclient</tt>
-tool, as well as <tt>dos2unix</tt> and <tt>unix2dos</tt>. The second half of the chapter provides
-detailed steps to install and setup <tt>apsfilter</tt>.
+The chapter details editing the <code>/etc/printcap</code> file, using the <code>lpr</code>,
+<code>lprm</code>, printing to a printer shared from a Windows machine using Samba's <code>smbclient</code>
+tool, as well as <code>dos2unix</code> and <code>unix2dos</code>. The second half of the chapter provides
+detailed steps to install and setup <code>apsfilter</code>.
 </p>
 
 <p>
 Although the author touched on configuring the kernel to add support and drivers for sound cards and
-<tt>ipfw</tt> in earlier chapters, chapter sixteen is dedicated to modifying the kernel
+<code>ipfw</code> in earlier chapters, chapter sixteen is dedicated to modifying the kernel
 configuration and compiling the kernel. The reader is guided through a well done overview of loading
 and unloading of kernel modules, creating and modifying a kernel configuration file, descriptions
 of each section, common options and devices, compiling the monster and basic troubleshooting if
@@ -238,17 +236,17 @@ should be able to upgrade the system without too much difficulty. The author tou
 using mergemaster and provides a list of things that a &quot;make world&quot; does not do and how
 to make up for those items. This chapter is great for those who have run into problems doing a
 &quot;make world&quot;. One nice touch that the author made was to include a nice diagram laying out
-the source tree, including a brief discussion on <tt>-CURRENT</tt>, <tt>-RELEASE</tt> and <tt>-STABLE</tt>.
+the source tree, including a brief discussion on <code>-CURRENT</code>, <code>-RELEASE</code> and <code>-STABLE</code>.
 </p>
 
 <p>
 Chapter eighteen covers some topics that just do not really fit in anywhere else, like adding colors to
-the console by using <tt>ls -G</tt>, booting from a floppy disk, setting up the machine to send and
-receive e-mail, the basics of <tt>tar</tt>, and replacing Telnet with SSH (OpenSSH of course). Although
-<tt>tar</tt> is covered in the chapter, presenting some information on <tt>gzip</tt> or <tt>bzip2</tt>
+the console by using <code>ls -G</code>, booting from a floppy disk, setting up the machine to send and
+receive e-mail, the basics of <code>tar</code>, and replacing Telnet with SSH (OpenSSH of course). Although
+<code>tar</code> is covered in the chapter, presenting some information on <code>gzip</code> or <code>bzip2</code>
 would have been helpful. Chapter nineteen goes over what one can do when things go wrong... really wrong.
 This chapter covers how to recover the boot manager if it gets blown out, booting into single-user
-mode, editing conf files with <tt>ed</tt> when <tt>vi</tt> just will not work, and using the Fixit
+mode, editing conf files with <code>ed</code> when <code>vi</code> just will not work, and using the Fixit
 floppy disk. The chapter wraps up with common error messages, what they mean and what to do to resolve
 the error (including the silly &quot;Timecounter Went Backwards&quot; error).
 </p>
@@ -257,7 +255,7 @@ the error (including the silly &quot;Timecounter Went Backwards&quot; error).
 Chapter twenty provides information on FreeBSD resources, such as mailing lists, the Handbook and the FAQ,
 published books and web sites pertaining to Unix (even mentioning good ol' D&aelig;mon News ;-), as well
 as finding out which port installed which file or library. The two appendices cover supported hardware
-(pretty much what's included in <tt>HARDWARE.TXT</tt> and the Release Notes, but with some additional
+(pretty much what's included in <code>HARDWARE.TXT</code> and the Release Notes, but with some additional
 information) and a quick blurb about the FreeBSD CD-ROM and a brief system requirements list.
 </p>
 
@@ -293,7 +291,7 @@ who has tried Linux wants to try out FreeBSD.
 <ul>
 	<li>States that WinModems will not work under FreeBSD, but does not provide any steps or information for the user to determine if he/she has one or not</li>
 	<li>PPPoE is not covered; which is becoming more common in broadband installations</li>
-	<li>Although <tt>tar</tt> is covered fairly well, but <tt>gzip</tt> and <tt>gunzip</tt> are not</li>
+	<li>Although <code>tar</code> is covered fairly well, but <code>gzip</code> and <code>gunzip</code> are not</li>
 </ul>
 
 <p>
@@ -304,7 +302,7 @@ networking or programming topics (like installing and configuring BIND or writin
 device), this book would be nice as a reference.
 </p>
 
-<hr />
+<hr>
 <p>
 Article copyright &copy; 2001&#8211;2010 Linh Pham.
 All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.

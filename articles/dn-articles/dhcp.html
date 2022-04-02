@@ -1,19 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>HOWTO - Setting Up ISC-DHCP 3.x Under FreeBSD</title>
-<link rel="stylesheet" href="article.css" type="text/css" />
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<link rel="stylesheet" href="article.css" type="text/css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ0DCLMP9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  ga('create', 'UA-18728142-3', 'closedsrc.org');
-  ga('send', 'pageview');
+  gtag('config', 'G-TQ0DCLMP9J');
 </script>
 </head>
 
@@ -24,7 +22,7 @@
 <blockquote>
 <p>
 This article originally appeared in the July 2002 issue of the D&aelig;mon News Online Magazine.
-This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+This is a cleaned-up version of the article with minor style edits and made it HTML5 compliant;
 else, the content has not been changed.
 </p>
 </blockquote>
@@ -43,11 +41,11 @@ advanced configuration options. The version of ISC DHCP that I will be referring
 <h2>Installing ISC DHCP</h2>
 <p>
 The easiest way to install the ISC DHCP software package is to install from the Ports collection under
-<tt>net/isc-dhcp3</tt>. You can also build and install the package from the
+<code>net/isc-dhcp3</code>. You can also build and install the package from the
 <a href="ftp://ftp.isc.org/isc/dhcp/dhcp-3.0.1rc9.tar.gz">tarball</a> available from the ISC's FTP server.
 I would highly recommend building and installing the ISC DHCP from the Ports collection, but before you
 start the install process, you should have the latest version of the port on your system (which can be
-done by using <tt>cvsup</tt>; more information on using <tt>cvsup</tt> can be found in the
+done by using <code>cvsup</code>; more information on using <code>cvsup</code> can be found in the
 <a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/cvsup.html">FreeBSD Handbook</a>).
 </p>
 
@@ -62,10 +60,10 @@ To install ISC DHCP from the Ports collection, run the following commands as roo
 
 <p>
 Once the port has finished building and installing, the DHCP d&aelig;mon, relay agent and the client
-have been installed on the machine, with the main executables installed under <tt>/usr/local/sbin</tt>.
+have been installed on the machine, with the main executables installed under <code>/usr/local/sbin</code>.
 In order to use the newly installed DHCP client (say, if you are going to be running the DHCP d&aelig;mon
 on a router/firewall that needs to get a dynamic address from your Internet service provider), you will
-need to add the following line to <tt>/etc/rc.conf</tt>:
+need to add the following line to <code>/etc/rc.conf</code>:
 </p>
 
 <pre>
@@ -73,16 +71,16 @@ need to add the following line to <tt>/etc/rc.conf</tt>:
 </pre>
 
 <p>
-as the default is to use <tt>dhclient</tt> from <tt>/sbin</tt>. All of the configuration files will be
-placed under <tt>/usr/local/etc</tt>.
+as the default is to use <code>dhclient</code> from <code>/sbin</code>. All of the configuration files will be
+placed under <code>/usr/local/etc</code>.
 </p>
 
 <p>
 If you decide to install ISC DHCP from the ISC tarball, the install can be done in a couple more steps
 than via Ports, and differs in the sense that it the ISC tarball version will install the files under
-<tt>/usr/sbin</tt> instead of <tt>/usr/local/sbin</tt> (with the exception of <tt>dhclient</tt> which is
-installed in <tt>/sbin</tt>); and the configuration files would be placed under <tt>/etc</tt> instead of
-<tt>/usr/local/etc</tt>. To build and install ISC DHCP from the ISC tarball, grab the tarball and do the
+<code>/usr/sbin</code> instead of <code>/usr/local/sbin</code> (with the exception of <code>dhclient</code> which is
+installed in <code>/sbin</code>); and the configuration files would be placed under <code>/etc</code> instead of
+<code>/usr/local/etc</code>. To build and install ISC DHCP from the ISC tarball, grab the tarball and do the
 following steps as root:
 </p>
 
@@ -98,7 +96,7 @@ following steps as root:
 <p>
 The install portion that is included with the ISC DHCP tarball does not include any scripts that would
 start the DHCP d&aelig;mon upon startup; therefore, you will need to hack together a startup script and
-place it under <tt>/usr/local/etc/rc.d</tt>. I will provide a very simple startup later in this article.
+place it under <code>/usr/local/etc/rc.d</code>. I will provide a very simple startup later in this article.
 </p>
 
 <h2>Configuring ISC DHCP For Your Network</h2>
@@ -106,13 +104,13 @@ place it under <tt>/usr/local/etc/rc.d</tt>. I will provide a very simple startu
 After the package has been built and installed (either from Ports or from the tarball), the
 configuration file(s) will need to be created to meet your requirements as well as configuration of the
 startup options for the d&aelig;mon. The configuration file that you would use to configure the DHCP
-server settings and lease pools is called <tt>dhcpd.conf</tt> and is located under
-<tt>/usr/local/etc</tt> (or <tt>/etc</tt> for those who installed from the tarball). The configuration
+server settings and lease pools is called <code>dhcpd.conf</code> and is located under
+<code>/usr/local/etc</code> (or <code>/etc</code> for those who installed from the tarball). The configuration
 syntax resembles a cross between PHP and the BIND configuration syntax.
 </p>
 
 <p>
-Below is an example of a basic configuration that would be in <tt>dhcpd.conf</tt>:
+Below is an example of a basic configuration that would be in <code>dhcpd.conf</code>:
 </p>
 
 <pre>
@@ -127,7 +125,7 @@ Below is an example of a basic configuration that would be in <tt>dhcpd.conf</tt
 		option routers 192.168.1.2;
 		option domain-name-servers 192.168.1.2;
 		option domain-name &quot;foo.org&quot;;
-	
+
 		host quux {
 			hardware ethernet ab:cd:ef:98:76:54;
 			fixed-address 192.168.1.150;
@@ -142,48 +140,48 @@ I have broken down each line below, explaining what each one means and what it e
 <dl class="nocolon">
 	<dt>ddns-update-style none;</dt>
 	<dd>This setting disables dynamic DNS updates to be made to the designated DNS server.</dd>
-	
+
 	<dt>subnet 192.168.1.0 netmask 255.255.255.0 {</dt>
 	<dd>Tells the DHCP server that the following block of settings apply to the specified IP subnet.</dd>
-	
+
 	<dt>range 192.168.1.50 192.168.1.100;</dt>
 	<dd>Sets the range of IP addresses available in the lease pool.</dd>
-	
+
 	<dt>default-lease-time 144000;</dt>
 	<dd>The lease length (in seconds) that the server would set to a lease if it does not receive a
 	lease length from the client.</dd>
-	
+
 	<dt>max-lease-time 192000;</dt>
 	<dd>The maximum lease length (in seconds) that the server will set, even though the client may
 	request a longer lease length.</dd>
-	
+
 	<dt>option subnet-mask 255.255.255.0;</dt>
 	<dd>The subnet mask of the network to send to the client.</dd>
-	
+
 	<dt>option broadcast-address 192.168.1.255;</dt>
 	<dd>Sets the broadcast address of the particular subnet that the client would reside on. This
 	is usually the very last IP address of an IP address range or subnet.</dd>
-	
+
 	<dt>option routers 192.168.1.2;</dt>
 	<dd>Sets the default router option for the client.</dd>
-	
+
 	<dt>option domain-name-servers 192.168.1.2, 192.168.1.3;</dt>
 	<dd>Sets the domain name server (DNS) list that the client would use for domain name
 	resolution. The list is comma delimited and should be listed in order of first to last
 	preferred server.</dd>
-	
+
 	<dt>option domain-name &quot;foo.org&quot;;</dt>
 	<dd>Sets the domain name option for the client, which the client would use (if properly
 	supported) for domain name resolution as well what domain name to append to hostnames
 	that are not fully qualified domain names.</dd>
-	
+
 	<dt>host quux</dt>
 	<dd>This starts an IP reservation block to give a specific host a specific IP address (as if
 	it were manually set with a static IP address).</dd>
-	
+
 	<dt>hardware ethernet ab:cd:ef:98:76:54;</dt>
 	<dd>The Ethernet/MAC address that belongs to the client that would be leased a <em>static</em> address.</dd>
-	
+
 	<dt>fixed-address 192.168.1.100;</dt>
 	<dd>The IP address of the reservation that would be given to the assigned client.</dd>
 </dl>
@@ -193,7 +191,7 @@ For more options and settings along with the syntax for each, refer to the dhcpd
 </p>
 
 <p>
-Once you have finished writing out the <tt>dhcpd.conf</tt> configuration file and have saved it under
+Once you have finished writing out the <code>dhcpd.conf</code> configuration file and have saved it under
 the proper directory, you are almost ready to set the server to startup the d&aelig;mon using an rc
 script. If you have installed ISC DHCP from a tarball, you will want to skip the following and click
 <a href="#noports">here</a> in which you will need to create your own rc script.
@@ -201,16 +199,16 @@ script. If you have installed ISC DHCP from a tarball, you will want to skip the
 
 <p>
 If you have installed ISC DHCP from ports, you will need to make changes to the rc configuration file
-before continuing. Open up the <tt>rc.isc-dhcpd.conf</tt> file under <tt>/usr/local/etc</tt> (if the
-file is not there, copy the <tt>rc.isc-dhcpd.conf.sample</tt> file to <tt>rc.isc-dhcpd.conf</tt>) with
+before continuing. Open up the <code>rc.isc-dhcpd.conf</code> file under <code>/usr/local/etc</code> (if the
+file is not there, copy the <code>rc.isc-dhcpd.conf.sample</code> file to <code>rc.isc-dhcpd.conf</code>) with
 your favorite text editor. You will see two shell script variables that are set to nothing by default,
-<tt>dhcpd_options</tt> and <tt>dhcpd_ifaces</tt>. Both variables are &quot;sucked&quot; in by the rc
+<code>dhcpd_options</code> and <code>dhcpd_ifaces</code>. Both variables are &quot;sucked&quot; in by the rc
 script prior to starting up the d&aelig;mon. To prevent the d&aelig;mon from displaying the
-copyright/license text each time it starts, add in <tt>&quot;-q&quot;</tt> (including the quotes)
-after the <tt>dhcpd_options</tt> variable. Next, you will want to set the network interface that the
+copyright/license text each time it starts, add in <code>&quot;-q&quot;</code> (including the quotes)
+after the <code>dhcpd_options</code> variable. Next, you will want to set the network interface that the
 d&aelig;mon will listen to, which is critical if you will be running the d&aelig;mon on a FreeBSD
 firewall, gateway or router. For example, if the interface that you want to have the d&aelig;mon
-listen to is <tt>xl0</tt>, add <tt>&quot;xl0&quot;</tt> right after the <tt>dhcpd_ifaces</tt> variable.
+listen to is <code>xl0</code>, add <code>&quot;xl0&quot;</code> right after the <code>dhcpd_ifaces</code> variable.
 Below is the least that you would need in the file in order for the rc script to start properly:
 </p>
 
@@ -227,8 +225,8 @@ configuration file is valid or not.
 <h2>Starting Up ISC DHCP</h2>
 <p>
 If you installed ISC DHCP from the Ports collection, the installer will automatically place a startup
-script under <tt>/usr/local/etc/rc.d</tt> named <tt>isc-dhcpd.sh.sample</tt>. In order for it to be
-picked up when the system is starting up, rename it to <tt>isc-dhcpd.sh</tt> and make sure that it has
+script under <code>/usr/local/etc/rc.d</code> named <code>isc-dhcpd.sh.sample</code>. In order for it to be
+picked up when the system is starting up, rename it to <code>isc-dhcpd.sh</code> and make sure that it has
 the executable bit set. Once the file has been renamed, you can startup the d&aelig;mon by running
 the following as root:
 </p>
@@ -239,20 +237,20 @@ the following as root:
 
 <p>
 <span id="noports">If</span> you have built and installed the service from a tarball, you will first
-need to create the <tt>isc-dhcpd.sh</tt> under <tt>/usr/local/etc/rc.d</tt>. Instead of storing the
-interfaces and command options under <tt>/usr/local/etc/rc.isc-dhcpd.conf</tt>, you will need to store
-them in the <tt>isc-dhcpd.sh</tt>. You will need to replace <tt>xl0</tt> for the <tt>dhcpd_ifaces</tt>
+need to create the <code>isc-dhcpd.sh</code> under <code>/usr/local/etc/rc.d</code>. Instead of storing the
+interfaces and command options under <code>/usr/local/etc/rc.isc-dhcpd.conf</code>, you will need to store
+them in the <code>isc-dhcpd.sh</code>. You will need to replace <code>xl0</code> for the <code>dhcpd_ifaces</code>
 variable to the interface that you want the DHCP d&aelig;mon to listen on for requests.
 </p>
 
 <pre>
 	#!/bin/sh
 	PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
-	
+
 	# set startup options here
 	dhcpd_ifaces=&quot;xl0&quot;
 	dhcpd_options=&quot;-q&quot;
-	
+
 	case &quot;$1&quot; in
 	start)
 		/usr/sbin/dhcpd ${dhcpd_options} ${dhcpd_ifaces} &amp;&amp;
@@ -272,9 +270,9 @@ variable to the interface that you want the DHCP d&aelig;mon to listen on for re
 </pre>
 
 <p>
-Once the d&aelig;mon has started, you will want to check <tt>/var/log/messages</tt> to make sure that
+Once the d&aelig;mon has started, you will want to check <code>/var/log/messages</code> to make sure that
 no errors have been dumped into syslog. When the d&aelig;mon is running, the active DHCP leases will be
-stored in <tt>/var/db/dhcpd.leases</tt> in a format that closely resembles the DHCP d&aelig;mon
+stored in <code>/var/db/dhcpd.leases</code> in a format that closely resembles the DHCP d&aelig;mon
 configuration file.
 </p>
 
@@ -322,7 +320,7 @@ configuration or understand how the d&aelig;mon works.
 	<li>dhcpd(8)</li>
 </ul>
 
-<hr />
+<hr>
 <p>
 Article copyright &copy; 2002&#8211;2010 Linh Pham.
 All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.

@@ -1,19 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Book Review: FreeBSD: The Complete Reference</title>
-<link rel="stylesheet" href="article.css" type="text/css" />
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<link rel="stylesheet" href="article.css" type="text/css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ0DCLMP9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  ga('create', 'UA-18728142-3', 'closedsrc.org');
-  ga('send', 'pageview');
+  gtag('config', 'G-TQ0DCLMP9J');
 </script>
 </head>
 
@@ -24,16 +22,16 @@
 <blockquote>
 <p>
 This article originally appeared in the June 2003 issue of the D&aelig;mon News Online Magazine.
-This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+This is a cleaned-up version of the article with minor style edits and made it HTML5 compliant;
 else, the content has not been changed.
 </p>
 </blockquote>
 
 <p>
-<strong>Author:</strong> Roderick Smith<br />
-<strong>Publisher:</strong> McGraw-Hill/Osborne<br />
-<strong>Pages:</strong> 912<br />
-<strong>ISBN:</strong> 0-07-222409-6<br />
+<strong>Author:</strong> Roderick Smith<br>
+<strong>Publisher:</strong> McGraw-Hill/Osborne<br>
+<strong>Pages:</strong> 912<br>
+<strong>ISBN:</strong> 0-07-222409-6<br>
 </p>
 
 <p>
@@ -65,7 +63,7 @@ for the book, which you can refer to while reading the review.
 			<li>An Overview of the System</li>
 			<li>Coexistence with Other Operating Systems</li>
 		</ol>
-		
+
 		<strong>Part II - Basic System Administration</strong>
 		<ol>
 			<li value="5">System Administration Tools</li>
@@ -103,7 +101,7 @@ for the book, which you can refer to while reading the review.
 			<li>Graphics Tools</li>
 			<li>Multimedia and Games</li>
 		</ol>
-		
+
 		<strong>Part VI - System Maintenance</strong>
 		<ol>
 			<li value="28">Automated and Nonautomated Routine Maintenance</li>
@@ -112,7 +110,7 @@ for the book, which you can refer to while reading the review.
 			<li>Writing Scripts</li>
 			<li>Troubleshooting</li>
 		</ol>
-		
+
 		<p><strong>Glossary</strong></p>
 	</td>
 </tr>
@@ -145,13 +143,13 @@ FreeBSD boot loader, reading disks and file systems created/used with another op
 Also covered in chapter four is running applications under emulation or compatibility layers. The
 author covers the more basic portions of the installation process since only the Standard
 installation option is covered; installing over a network connection and setting up XFree86 using
-<tt>xf86cfg</tt> is briefly discussed.
+<code>xf86cfg</code> is briefly discussed.
 </p>
 
 <p>
 Chapter three covers what happens after the reader boots into the newly (and hopefully working)
 install of FreeBSD by providing some information on what the boot messages are saying, logging into
-the system and su-ing to root, and covering the basic commands such as <tt>ls</tt> and <tt>cp</tt>
+the system and su-ing to root, and covering the basic commands such as <code>ls</code> and <code>cp</code>
 as well as a high-level walkthrough of the
 <acronym title="GNU Object Model Environment">GNOME</acronym> environment (which is the chosen
 graphical, or desktop, environment in the book), and how to properly shutdown a system.
@@ -161,22 +159,22 @@ graphical, or desktop, environment in the book), and how to properly shutdown a 
 Part II introduces FreeBSD system administration to the reader by covering some of the more key
 topics like setting up users, programs and building a custom kernel. Chapter five describes some of
 the more common configuration files, using text-editors (vi and gedit are covered, though vim/gvim
-are not mentioned), system information commands like <tt>df</tt>, <tt>ps</tt>, <tt>kill</tt> and
-<tt>nice</tt>/<tt>renice</tt>, using pipes and redirection, and mentions of graphical system
+are not mentioned), system information commands like <code>df</code>, <code>ps</code>, <code>kill</code> and
+<code>nice</code>/<code>renice</code>, using pipes and redirection, and mentions of graphical system
 administration tools (like Webmin). Chapter six discusses what a kernel is and does for a system,
 creating startup scripts, user login and a rough overview of
 <acronym title="Pluggable Authentication Modules">PAM</acronym>, and scheduling jobs using
-<tt>at</tt> and <tt>cron</tt>. On the topic of startup scripts, the author covers how to start up
-programs using <tt>/etc/rc.local</tt> then tells the reader that <tt>rc.local</tt> is deprecated
-and the reader should setup rc.d scripts under <tt>/usr/local/etc/rc.d</tt> instead. To me, the
-time spent covering <tt>/etc/rc.local</tt> is wasted and the author should have just mentioned it
+<code>at</code> and <code>cron</code>. On the topic of startup scripts, the author covers how to start up
+programs using <code>/etc/rc.local</code> then tells the reader that <code>rc.local</code> is deprecated
+and the reader should setup rc.d scripts under <code>/usr/local/etc/rc.d</code> instead. To me, the
+time spent covering <code>/etc/rc.local</code> is wasted and the author should have just mentioned it
 and referred the reader to use rc.d scripts instead.
 </p>
 
 <p>
 Partitions and directory structure are the two main topics for chapter seven. The first half of
-the chapter covers creating and labeling new partitions (either by using <tt>sysinstall</tt> or
-command line tools (<tt>fdisk</tt>, <tt>disklabel</tt> and <tt>newfs</tt>), and
+the chapter covers creating and labeling new partitions (either by using <code>sysinstall</code> or
+command line tools (<code>fdisk</code>, <code>disklabel</code> and <code>newfs</code>), and
 mounting/unmounting file systems (<acronym title="Network File System">NFS</acronym> is mentioned,
 but not <acronym title="Common Internet File System">CIFS</acronym>/<acronym
 title="Server Message Block File System">SMBFS</acronym> for Windows/Samba file share. The second
@@ -188,11 +186,11 @@ it relates to FreeBSD.
 
 <p>
 Chapter eight covers working with files on a system, including managing ownership and permissions
-(which includes a table of commonly used octal numbers used with <tt>chmod</tt> and a brief on
+(which includes a table of commonly used octal numbers used with <code>chmod</code> and a brief on
 <acronym title="Set User ID">SUID</acronym>, <acronym title="Set Group ID">SGID</acronym> and sticky
 bit), basic file operations, creating soft and hard links, searching for text within files and
 backing up files. On the topic of backing up, the author mentions some forms of backup media and the
-use of <tt>tar</tt>. The author only mentions <tt>dump</tt> and <tt>cpio</tt> and doesn't provide
+use of <code>tar</code>. The author only mentions <code>dump</code> and <code>cpio</code> and doesn't provide
 any information on how to use either; also the lack of coverage on tools for tape drives and working
 with tape drive device nodes in FreeBSD seems to make the backup section <strong>quite</strong> lacking.
 </p>
@@ -208,22 +206,22 @@ systems using Samba until chapter eighteen; even then, the coverage is quite lim
 
 <p>
 User management is the topic of chapter ten, which includes a look at what makes up users and groups,
-add, removing and changing user accounts either by using included tools like <tt>sysinstall</tt>,
-<tt>adduser</tt> and <tt>rmuser</tt>, or manually hacking <tt>/etc/master.passwd</tt>. The author also
+add, removing and changing user accounts either by using included tools like <code>sysinstall</code>,
+<code>adduser</code> and <code>rmuser</code>, or manually hacking <code>/etc/master.passwd</code>. The author also
 covers working with groups and where they come in play with file and directory permissions. For some
-reason, the author failed to mention the <tt>vipw</tt> utility when the master password file was
-discussed. The <tt>vipw</tt> allows you to edit <tt>/etc/master.passwd</tt> using the editor set in the
-<tt>EDITOR</tt> environment variable, and runs consistency checks on the file right after you save and
-exit out of the editor. If the file passes the check, it will then replace <tt>/etc/master.passwd</tt>
+reason, the author failed to mention the <code>vipw</code> utility when the master password file was
+discussed. The <code>vipw</code> allows you to edit <code>/etc/master.passwd</code> using the editor set in the
+<code>EDITOR</code> environment variable, and runs consistency checks on the file right after you save and
+exit out of the editor. If the file passes the check, it will then replace <code>/etc/master.passwd</code>
 with the edited version and update the user database.
 </p>
 
 <p>
 In chapter eleven, the author writes about installing, uninstalling and maintaining software by using
-built-in components and facilities (ports and packages) or <tt>portupgrade</tt>. Installing packages via
-<tt>sysinstall</tt> and MD5 checksum is also covered; but not some of the tools included with the
-<tt>portupgrade</tt> package like <tt>pkg_deinstall</tt>, <tt>portinstall</tt> and <tt>portversion</tt>
-(<tt>pkgdb</tt> is discussed only to &quot;fix&quot; the package database).
+built-in components and facilities (ports and packages) or <code>portupgrade</code>. Installing packages via
+<code>sysinstall</code> and MD5 checksum is also covered; but not some of the tools included with the
+<code>portupgrade</code> package like <code>pkg_deinstall</code>, <code>portinstall</code> and <code>portversion</code>
+(<code>pkgdb</code> is discussed only to &quot;fix&quot; the package database).
 </p>
 
 <p>
@@ -239,8 +237,8 @@ been booted.
 Chapter thirteen provides an overview of window managers, configuring the XFree86 X Windows server
 (including how to run multiple instances of XFree86), and getting additional fonts or font types setup.
 The author spends a fair part of the chapter covering the pieces and syntax of the XFree86 configuration
-file, <tt>XF86Config</tt> (which is more than what can be said about the kernel configuration file), but
-no mention of the <acronym title="X FreeType">XFT</acronym> configuration file, <tt>XftConfig</tt>.
+file, <code>XF86Config</code> (which is more than what can be said about the kernel configuration file), but
+no mention of the <acronym title="X FreeType">XFT</acronym> configuration file, <code>XftConfig</code>.
 </p>
 
 <p>
@@ -251,7 +249,7 @@ common network protocols. The rest of the chapter covers setting up a network in
 statically or dynamically with <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym>),
 configuring network routes, and resolving hostnames by using provided
 <acronym title="Domain Name Service">DNS</acronym> servers or adding hosts to the system's host file,
-<tt>/etc/hosts</tt>. The author gets into configuring a system to dial up to the Internet via an
+<code>/etc/hosts</code>. The author gets into configuring a system to dial up to the Internet via an
 <acronym title="Internet Service Provider">ISP</acronym> by using an application called X-ISP or by
 configuring the <acronym title="Point-to-Point Protocol">PPP</acronym> d&aelig;mon, as well as setting
 up <acronym title="Point-to-Point Protocol over Ethernet">PPPoE</acronym> (required by quite a few
@@ -262,7 +260,7 @@ up <acronym title="Point-to-Point Protocol over Ethernet">PPPoE</acronym> (requi
 For some reason, I think chapter sixteen is kind of a filler; it contains various topics that could have
 been integrated in previous chapters (like the discussion of
 <acronym title="Transport Control Protocol/Internet Protocol">TCP/IP</acronym> ports and connections,
-and using <tt>netstat</tt> to help pinpoint possible network configuration issues) or deferred until the
+and using <code>netstat</code> to help pinpoint possible network configuration issues) or deferred until the
 next chapter on firewalls and routers.
 </p>
 
@@ -271,7 +269,7 @@ Chapter seventeen, as mentioned above, is on the topic of setting up a firewall 
 author starts off with an explanation of the purpose of a firewall or a proxy and what it is not meant to
 do, thwart attacks from inside, and the different types of firewalls. The rest of the chapter covers
 setting up IPFW (IPFilter is mentioned and provides a URL to the project's page but isn't discussed any
-further) and the <acronym title="Network Address Translation">NAT</acronym> d&aelig;mon (<tt>natd</tt>).
+further) and the <acronym title="Network Address Translation">NAT</acronym> d&aelig;mon (<code>natd</code>).
 Overall, the author gives enough for the reader to start experimenting with IPFW rules, but doesn't
 provide any insight on setting up a true IPFW firewall for a network which would reflect a real-world
 rulesets. I found the amount of information lacking, mostly for those who are just beginning to learn IPFW.
@@ -328,7 +326,7 @@ restrict Telnet access using available mechanisms in FreeBSD (like firewalls and
 the author doesn't go in-depth into some additional uses of Telnet like testing SMTP servers or how to
 actually get data from web or FTP servers. After Telnet, the author goes a bit into
 <acronym title="Secure Shell">SSH</acronym> login and basic SSH configuration. The last section of the
-chapter covers X login mechanisms like <tt>xauth</tt> and
+chapter covers X login mechanisms like <code>xauth</code> and
 <acronym title="X Display Manager Control Protocol">XDMCP</acronym>, and using VNC for graphical login
 sessions for running X applications.
 </p>
@@ -424,9 +422,9 @@ the program).
 <p>
 The last chapter of Part V, twenty-seven, takes a look at multimedia (both listening and recording)
 and a bit at the gaming side of FreeBSD. The first thing that is covered in the chapter is finding if
-your sound card is supported under FreeBSD (the author refers the reader to the <tt>HARDWARE.TXT</tt>
+your sound card is supported under FreeBSD (the author refers the reader to the <code>HARDWARE.TXT</code>
 file included in any install medium), setting up the sound devices and tweaking the volume settings.
-The author then goes into using <tt>cd2mp3</tt> (available from the Ports collection) to copy tracks
+The author then goes into using <code>cd2mp3</code> (available from the Ports collection) to copy tracks
 from CD into MP3 format, provides a couple of short lists of MP3 and other audio/video players, and
 overview of some common audio/video file formats (including their
 <acronym title="Multipurpose Internet Mail Extensions">MIME</acronym> types). The last part of the
@@ -439,16 +437,16 @@ playing some Windows games using an open sourced Windows
 <p>
 Part VI, the last main section of the book, takes on the topic of maintaining a system, be it a
 workstation or a server, once it is up and running. Chapter twenty-eight is on the topic of both
-automated and manual routine maintenance and starts off with a look at FreeBSD's <tt>newsyslog</tt>
+automated and manual routine maintenance and starts off with a look at FreeBSD's <code>newsyslog</code>
 tool that is used to not only rotate the system's log, syslog, but other application logs. Next up
 in the chapter are how to deal with temporary files that programs can leave behind, removing unused
 programs, and monitoring and enforcing resource usage. The author provides steps on how to setup
-quotas, using <tt>renice</tt> to reduce a process' priority level, and setting up swap files. The
-last section of the chapter covers updating programs using <tt>portupgrade</tt> and a basic run-down
-of how to <tt>make world</tt>. A couple of tools and configuration files that the author didn't, but
-should have, covered that are used in monitoring and limiting resource usage include: <tt>vmstat</tt>
-to view resource and virtual memory usage, <tt>/etc/login.conf</tt> to limit resource usage on a
-per-user (rather, per user class) basis, and <tt>sysctl</tt> to increase or decrease the number of
+quotas, using <code>renice</code> to reduce a process' priority level, and setting up swap files. The
+last section of the chapter covers updating programs using <code>portupgrade</code> and a basic run-down
+of how to <code>make world</code>. A couple of tools and configuration files that the author didn't, but
+should have, covered that are used in monitoring and limiting resource usage include: <code>vmstat</code>
+to view resource and virtual memory usage, <code>/etc/login.conf</code> to limit resource usage on a
+per-user (rather, per user class) basis, and <code>sysctl</code> to increase or decrease the number of
 sockets, file handles, and many other system wide resource pools.
 </p>
 
@@ -471,23 +469,23 @@ and using Tripwire to help with the task, and what should be done after an intru
 Even with over <strong>8000</strong> ports in the FreeBSD Ports collection, there are many other
 applications and programs that, although available in source form and will run on FreeBSD, are not
 in the collection and needs to be compiled &quot;by hand&quot;. The author provides some instructions
-on how to compile software using the <tt>configure</tt> tool and with <tt>make</tt>, as well as a
+on how to compile software using the <code>configure</code> tool and with <code>make</code>, as well as a
 look at what languages, compilers and development environments are in chapter thirty. Most of the
 short chapter is dedicated to getting <acronym title="Macintosh-Like Virtual Window Manager">MLVWM</acronym>,
 which is also available in Ports, prepped for compiling, compiled and installed. I am not sure if this
 chapter is really worth the pages that it takes up; on one hand, the explanation of what compilers are
 and what some of the commonly-used tools to build programs is informative and warranted... but the
 author should have also taken a look at building a program from scratch using the GNU C compiler,
-<tt>gcc</tt> (or just <tt>cc</tt> in FreeBSD), and provide troubleshooting tips either instead of
-complementing the build and installing of a program using just <tt>configure</tt> and <tt>make</tt>.
+<code>gcc</code> (or just <code>cc</code> in FreeBSD), and provide troubleshooting tips either instead of
+complementing the build and installing of a program using just <code>configure</code> and <code>make</code>.
 </p>
 
 <p>
-The sole topic of chapter thirty-one is writing shell scripts for the Bourne shell, <tt>/bin/sh</tt>
+The sole topic of chapter thirty-one is writing shell scripts for the Bourne shell, <code>/bin/sh</code>
 in FreeBSD. The author starts off with an explanation of and a comparison between compiled and
 interpreted code, along with mentions of some of the most common scripting languages (such as Perl and
 Python). The rest of the chapter looks at how to write Bourne shell scripts, including how to use
-command line arguments, different constructs like <tt>if</tt>/<tt>fi</tt> and <tt>case</tt>/<tt>esac</tt>,
+command line arguments, different constructs like <code>if</code>/<code>fi</code> and <code>case</code>/<code>esac</code>,
 and using functions. I think this chapter is one of the better chapters in the book, as it explains one
 of the best features of UNIX and UNIX-like operating systems and covers much of what the reader needs to
 understand Bourne shell scripting; though it shouldn't be taken as a complete and concise reference for
@@ -519,11 +517,11 @@ are just completely missing from the book; some of those topics include:
 
 <ul>
 	<li>Vinum for creating striped or mirrored volumes.</li>
-	<li>Optimizing a system using <tt>sysctl</tt> control options or tuning application settings
+	<li>Optimizing a system using <code>sysctl</code> control options or tuning application settings
 	for heavy-duty servers or workstations.</li>
 	<li>Setting up a system to be a central Syslog server for other servers or network devices.</li>
 	<li>Setting up FreeBSD to work with wireless networks.</li>
-	<li>Backing up servers using tools outside of <tt>tar</tt> and controlling tape drives and tape autoloaders.</li>
+	<li>Backing up servers using tools outside of <code>tar</code> and controlling tape drives and tape autoloaders.</li>
 	<li>Using SSH/SSL tunneling or VPN as a way to securely access services on a remote server.</li>
 </ul>
 
@@ -542,7 +540,7 @@ hard for me to recommend this book to those interested in learning FreeBSD, much
 experience in other UNIX or UNIX-like operating systems. Instead, for those wanting to learn UNIX and
 FreeBSD, I would recommend two books in place of <span class="bookTitle">FreeBSD: The Complete Reference</span>:
 <span class="bookTitle">A Practical Guide to the UNIX System, Third Edition</span> by Mark G. Sobell (which
-covers the BSD side of UNIX in general, including shell scripting and more in-depth tutorial on <tt>vi</tt>
+covers the BSD side of UNIX in general, including shell scripting and more in-depth tutorial on <code>vi</code>
 and EMACS) and <span class="bookTitle">The Complete FreeBSD</span> by Greg Lehey or
 <span class="bookTitle">The FreeBSD Handbook</span> by the FreeBSD Documentation Project. Michael Lucas'
 <span class="bookTitle">Absolute BSD</span> would also be a good replacement. For those wanting a more
@@ -558,7 +556,7 @@ under the microscope.
 </p>
 -->
 
-<hr />
+<hr>
 <p>
 Article copyright &copy; 2003&#8211;2010 Linh Pham.
 All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.

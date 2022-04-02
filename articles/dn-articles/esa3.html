@@ -1,19 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Book Review: Essential System Administration, 3rd Edition</title>
-<link rel="stylesheet" href="article.css" type="text/css" />
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<link rel="stylesheet" href="article.css" type="text/css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ0DCLMP9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  ga('create', 'UA-18728142-3', 'closedsrc.org');
-  ga('send', 'pageview');
+  gtag('config', 'G-TQ0DCLMP9J');
 </script>
 </head>
 
@@ -24,16 +22,16 @@
 <blockquote>
 <p>
 This article originally appeared in the January 2003 issue of the D&aelig;mon News Online Magazine.
-This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+This is a cleaned-up version of the article with minor style edits and made it HTML5 compliant;
 else, the content has not been changed.
 </p>
 </blockquote>
 
 <p>
-<strong>Author:</strong> &AElig;leen Frisch<br />
-<strong>Publisher:</strong> O'Reilly &amp; Associates, Inc.<br />
-<strong>Pages:</strong> 1176<br />
-<strong>ISBN:</strong> 0-596-00343-9<br />
+<strong>Author:</strong> &AElig;leen Frisch<br>
+<strong>Publisher:</strong> O'Reilly &amp; Associates, Inc.<br>
+<strong>Pages:</strong> 1176<br>
+<strong>ISBN:</strong> 0-596-00343-9<br>
 <strong>Web Page:</strong> <a href="http://www.oreilly.com/catalog/esa3/">http://www.oreilly.com/catalog/esa3/</a>
 </p>
 
@@ -104,7 +102,7 @@ tools (including AIX's <acronym title="System Management Interface Tool">SMIT</a
 <acronym title="Workspace System Manager">WSM</acronym>, HP-UX's
 <acronym title="System Administration Manager">SAM</acronym>, and good ol' sysinstall) as well as a
 brief look at <acronym title="Virtual Network Computing">VNC</acronym> and a journal-like tool called
-<tt>plod</tt>, which isn't in the FreeBSD ports collection but can be found at
+<code>plod</code>, which isn't in the FreeBSD ports collection but can be found at
 <a href="http://bullwinkle.deer-run.com/~hal/plod/">http://bullwinkle.deer-run.com/~hal/plod/</a>.
 </p>
 
@@ -112,26 +110,26 @@ brief look at <acronym title="Virtual Network Computing">VNC</acronym> and a jou
 Chapter two goes over how things are done in UNIX, be it with file ownership and permissions, working
 with links (hard or symbolic), managing processes, devices, and the file system layout (covering both
 the BSD-style and the System V-style layout, and thankfully not advocating putting the Apache document
-root under <tt>/var</tt>). The chapter covers very common commands such as: <tt>ls</tt>, <tt>chmod</tt>
-and <tt>chown</tt>, <tt>pwd</tt>, <tt>ps</tt> and the different commands used for controlling processes,
-like <tt>fg</tt>, <tt>bg</tt> and <tt>jobs</tt>. The author has released an
+root under <code>/var</code>). The chapter covers very common commands such as: <code>ls</code>, <code>chmod</code>
+and <code>chown</code>, <code>pwd</code>, <code>ps</code> and the different commands used for controlling processes,
+like <code>fg</code>, <code>bg</code> and <code>jobs</code>. The author has released an
 <a href="http://www.oreilly.com/catalog/esa3/errata/ch02.pdf">errata for page 66</a>
 in which the commands to display devices has been updated for almost all of the operating systems
-covered. Unfortunately, the author replaced <tt>dmesg</tt> with <tt>pciconf -l -v</tt> and
-<tt>camcontrol devlist</tt> for FreeBSD which both commands may not display all of the devices listed in
-<tt>dmesg</tt>.
+covered. Unfortunately, the author replaced <code>dmesg</code> with <code>pciconf -l -v</code> and
+<code>camcontrol devlist</code> for FreeBSD which both commands may not display all of the devices listed in
+<code>dmesg</code>.
 </p>
 
 <p>
 Chapter three continues on, providing an overview of programs and techniques that would be used
-frequently by sysadmins. The first half of the chapter shows the reader how to use the <tt>man</tt>
-command (though the author missed the <tt>apropos</tt> command when discussing the <tt>-k</tt>
-<tt>man</tt> flag) as well as working with pipes, <tt>grep</tt> and <tt>awk</tt>, an overview of the
-many <tt>find</tt> options, more on working with files and directories, a very brief look at using
-<tt>chroot</tt> to lock a command into a cage, and rounds up with the <tt>tail</tt> command. Scheduling
-jobs using <tt>cron</tt> and FreeBSD's <tt>periodic</tt> facilities, configuring the syslog d&aelig;mon,
+frequently by sysadmins. The first half of the chapter shows the reader how to use the <code>man</code>
+command (though the author missed the <code>apropos</code> command when discussing the <code>-k</code>
+<code>man</code> flag) as well as working with pipes, <code>grep</code> and <code>awk</code>, an overview of the
+many <code>find</code> options, more on working with files and directories, a very brief look at using
+<code>chroot</code> to lock a command into a cage, and rounds up with the <code>tail</code> command. Scheduling
+jobs using <code>cron</code> and FreeBSD's <code>periodic</code> facilities, configuring the syslog d&aelig;mon,
 viewing system error messages and installing software via packages and source are covered in the second
-half of the chapter. The author does do a nice job with covering <tt>periodic</tt> but only briefly
+half of the chapter. The author does do a nice job with covering <code>periodic</code> but only briefly
 looks at how to use the Ports collection (only installing ports are covered but not re-installing or
 un-installing a port).
 </p>
@@ -151,9 +149,9 @@ networking, is the main topic of chapter five which starts off with a general ov
 networking terminologies like nodes, client and server, along with the different network topologies and
 media types (sorry, no cool pictures of multi-strand fiber-optic cables), and of course, the seven layers
 of the <acronym title="Open Systems Interconnection">OSI</acronym> model. The remainder of the chapter
-covers how to configure a system with an IP address, work with <tt>ifconfig</tt> and
+covers how to configure a system with an IP address, work with <code>ifconfig</code> and
 <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> (both client and d&aelig;mon), using
-the <tt>route</tt> command to setup a route table and the system's hostname, and basic network
+the <code>route</code> command to setup a route table and the system's hostname, and basic network
 troubleshooting tips. One thing that I found to be quite useful was that the author touched on subnets
 and supernets along with how to use
 <acronym title="Classless Inter-Domain Routing">CIDR</acronym> addressing and read slash notation.
@@ -166,9 +164,9 @@ the contents of the password file, its shadow password file (if applicable) coun
 and adding/removing accounts either by editing the password file, using a shell utility, or a graphical
 interface. In the section, the author also touches on account login controls (such as who can login when
 and where), assigning shells and setting up login initialization files using files under a template or
-skeleton directory. Although the author does mention FreeBSD's <tt>/usr/share/skel</tt> directory, she
-doesn't tell the reader that the files are named in the format of <tt>dot.<var>initfile</var></tt> and
-need to be copied and renamed to drop the <tt>dot</tt> from the filename.
+skeleton directory. Although the author does mention FreeBSD's <code>/usr/share/skel</code> directory, she
+doesn't tell the reader that the files are named in the format of <code>dot.<var>initfile</var></code> and
+need to be copied and renamed to drop the <code>dot</code> from the filename.
 </p>
 
 <p class="Normal">
@@ -211,15 +209,15 @@ where security problems could occur and how to work out and implement a security
 <acronym title="Simple Network Management Protocol">SNMP</acronym>, and network monitoring utilities
 are very common network services that are used on a daily basis and are the topics for chapter eight.
 Consisting of almost half of the chapter is an overview of how domain names are handled, how DNS
-functions, and how to troubleshoot DNS issues using utilities like <tt>nslookup</tt> and <tt>dig</tt>
-(though the <tt>host</tt> utility is not mentioned). The author focuses on
+functions, and how to troubleshoot DNS issues using utilities like <code>nslookup</code> and <code>dig</code>
+(though the <code>host</code> utility is not mentioned). The author focuses on
 <acronym title="Berkeley Internet Name Domain">BIND</acronym> 8 and 9 within the chapter and does a
 pretty good job at explaining the configuration files and terminologies associated to BIND and DNS in
 general; for more detailed explanations and configurations, she refers the reader to
 <a href="http://www.oreilly.com/catalog/dns4/">DNS and BIND</a>. After the DNS section, routing
 (protocols and configuration), setting up a DHCP server using the operating system's bundled DHCP
-server, using NTP to synchronize system clocks, and using basic network tools like <tt>netstat</tt>,
-<tt>ping</tt> and packet sniffers. The remainder of the chapter covers network monitoring tools
+server, using NTP to synchronize system clocks, and using basic network tools like <code>netstat</code>,
+<code>ping</code> and packet sniffers. The remainder of the chapter covers network monitoring tools
 including SNMP, NetSAINT (now called Nagios), Angel Network Monitor, and using
 <acronym title="Multi-Router Traffic Grapher">MRTG</acronym> and Cricket/RRDtool to collect network usage.
 </p>
@@ -227,11 +225,11 @@ including SNMP, NetSAINT (now called Nagios), Angel Network Monitor, and using
 <p>
 I also found a couple of minor errors in the chapter worth noting. In Table 8-9 on page 459, under
 &quot;Boot script that starts the DHCP server&quot;, the author notes that both the DHCP server and
-the relay component startup scripts should be under <tt>/etc/init.d</tt> and that it needs to be added
-manually for FreeBSD. In FreeBSD, one should actually put startup scripts under <tt>/usr/local/etc/rc.d</tt>
-(or, using the old-fashion method, add the startup commands in <tt>/etc/rc.local</tt>). The other bit is
+the relay component startup scripts should be under <code>/etc/init.d</code> and that it needs to be added
+manually for FreeBSD. In FreeBSD, one should actually put startup scripts under <code>/usr/local/etc/rc.d</code>
+(or, using the old-fashion method, add the startup commands in <code>/etc/rc.local</code>). The other bit is
 that the author states that the <acronym title="Internet Software Consortium">ISC</acronym>-DHCP lease
-data file is <tt>/var/lib/dhcpd.leases</tt>; in FreeBSD, the file is actually <tt>/var/db/dhcpd.leases</tt>
+data file is <code>/var/lib/dhcpd.leases</code>; in FreeBSD, the file is actually <code>/var/db/dhcpd.leases</code>
 as stated in the dhcpd.leases(5) man page. The other thing that I should note is that the URL listed on
 page 470 for the list of publically available NTP servers is missing an &quot;l&quot; at the end of the
 URL. The correct URL should be
@@ -253,8 +251,8 @@ at explaining the configuration options and setup of Sendmail, Postfix and Procm
 deep into cryptic rules and recipes. I did notice two minor errors/typos in the chapter: the first one
 is on page 523 in Figure 9-1 where the author wrote &quot;incomming&quot; which should be
 &quot;incoming&quot;. The second mistake is in the Sendmail section of the chapter on page 546 in Table
-9-3 where the author stated that FreeBSD's <tt>syslog <var>mail</var></tt> facility messages go to
-<tt>/var/adm/messages</tt>; the messages actually go into the <tt>/var/log/maillog</tt> file.
+9-3 where the author stated that FreeBSD's <code>syslog <var>mail</var></code> facility messages go to
+<code>/var/adm/messages</code>; the messages actually go into the <code>/var/log/maillog</code> file.
 </p>
 
 <p>
@@ -284,7 +282,7 @@ backed up data. The author also compares different backup media, examining physi
 capacity and the lifetime of media including tape cartridges, optical media (such as CD-R and DVD
 Recordables), hard drives, and other media or media sets. The remainder of the chapter covers the different
 tape device nodes used by the different operating systems, using common backup and restore utilities
-(<tt>tar</tt>, <tt>dump</tt>, <tt>restore</tt>, <tt>cpio</tt>, <tt>pax</tt>, <tt>dd</tt>, and operating
+(<code>tar</code>, <code>dump</code>, <code>restore</code>, <code>cpio</code>, <code>pax</code>, <code>dd</code>, and operating
 system specific tools), a good overview of the
 <acronym title="The Advanced Maryland Automatic Network Disk Archiver">Amanda</acronym> backup solution,
 and how to backup and restore system files including a brief look at how to create a Fixit floppy.
@@ -295,9 +293,9 @@ Consoles, terminals and serial devices under UNIX are things that many people do
 but understanding them can be a life saver in some cases. Chapter twelve covers those three topics as well
 as setting up HylaFAX for faxing and touches upon USB support. The first portion of the chapter goes into
 the different device nodes and files used to reference both physical and virtual, or <em>pseudo</em>,
-terminals, how to configure all or specific terminals through either the BSD-style <tt>/etc/termcap</tt>
-and <tt>/etc/ttys</tt>, or System V's <tt>terminfo</tt> and <tt>/etc/gettytab</tt> configuration files, and
-changing terminal properties once logged in using <tt>tset</tt> and <tt>stty</tt>. The author also discusses
+terminals, how to configure all or specific terminals through either the BSD-style <code>/etc/termcap</code>
+and <code>/etc/ttys</code>, or System V's <code>terminfo</code> and <code>/etc/gettytab</code> configuration files, and
+changing terminal properties once logged in using <code>tset</code> and <code>stty</code>. The author also discusses
 the different kinds of serial connectors, the wiring of straight-through and null modem cables, and Solaris'
 way of managing terminals by way of the Service Access Facility. Rounding out the chapter is a look at
 setting up HylaFAX to send/receive faxes, what USB is, and how to enable support for USB under FreeBSD,
@@ -328,8 +326,8 @@ tasks day after day but can also reduce the chance of human error (that is, once
 Chapter fourteen introduces the aspect of shell scripts and toolkits that can be used to help automate
 some to many of the tasks a sysadmin has to do on a system. In the shell script section of the chapter,
 the author provides a couple of basic yet potentially useful Bourne and C shell scripts to do tasks like
-checking differences between the current and a previous copy of <tt>/etc/passwd</tt> (which is done as
-part of one of the FreeBSD <tt>periodic</tt> scripts) and making a backup key portions of a system. The
+checking differences between the current and a previous copy of <code>/etc/passwd</code> (which is done as
+part of one of the FreeBSD <code>periodic</code> scripts) and making a backup key portions of a system. The
 author also gives tips on how to help test and debug scripts. After covering Bourne and C shell scripts,
 the author covers the basics of writing Perl script including how to create GUI interfaces for Perl
 using Tk and using Expect to automate tasks that require use of an interactive program. The chapter
@@ -354,7 +352,7 @@ are: overall system performance, processor, memory and virtual memory, disk spac
 Throughout the chapter, the author provides steps and insights into finding out how much of a system
 resource is being used, how to find out when a resource is  beginning to run out, and some ways to
 remedy the situation. Also covered in the chapter are ways to limit usage of specific system resources
-by using built-in facilities like disk quotas, limit options in shells, using <tt>nice</tt> set the
+by using built-in facilities like disk quotas, limit options in shells, using <code>nice</code> set the
 CPU priority for a process, and the schedulers included in AIX and Solaris.
 </p>
 
@@ -390,7 +388,7 @@ that got me laughing out loud are:
 <dl>
 	<dt><em>Patience</em></dt>
 	<dd>Remaining capable of waiting until the final sendmail configuration bug is fixed.</dd>
-	
+
 	<dt><em>Laziness</em></dt>
 	<dd>Writing a 250-line Perl script to avoid typing 15 characters.</dd>
 </dl>
@@ -398,8 +396,8 @@ that got me laughing out loud are:
 
 <p>
 The book's appendix takes an additional look at creating shell scripts for the Bourne shell
-(<tt>sh</tt>). The author explains the basic concepts and abilities of a Bourne shell script, such as:
-using pipes and redirects, exit codes, capturing command output with &quot;<tt>`</tt>&quot;,
+(<code>sh</code>). The author explains the basic concepts and abilities of a Bourne shell script, such as:
+using pipes and redirects, exit codes, capturing command output with &quot;<code>`</code>&quot;,
 variables, substitutions, using control blocks (if, while, case and for), and other useful built-in
 commands. The appendix provides a nice start into shell script programming for the reader and doesn't
 go into any additional extensions to the basic Bourne shell or combines other Bourne-like shells
@@ -427,7 +425,7 @@ at the <a href="./esapr.html">mini-review</a> for <span class="BookTitle">Essent
 Pocket Reference</span>.
 </p>
 
-<hr />
+<hr>
 <p>
 Article copyright &copy; 2003&#8211;2010 Linh Pham.
 All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.

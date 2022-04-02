@@ -1,19 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Book Review: FreeBSD Unleashed</title>
-<link rel="stylesheet" href="article.css" type="text/css" />
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<link rel="stylesheet" href="article.css" type="text/css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ0DCLMP9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  ga('create', 'UA-18728142-3', 'closedsrc.org');
-  ga('send', 'pageview');
+  gtag('config', 'G-TQ0DCLMP9J');
 </script>
 </head>
 
@@ -24,17 +22,17 @@
 <blockquote>
 <p>
 This article originally appeared in the January 2002 issue of the D&aelig;mon News Online Magazine.
-This is a cleaned-up version of the article with minor style edits and made it XHTML 1.0 compliant;
+This is a cleaned-up version of the article with minor style edits and made it HTML5 compliant;
 else, the content has not been changed.
 </p>
 </blockquote>
 
 <p>
-<strong>Title:</strong> FreeBSD Unleashed<br />
-<strong>Authors:</strong> Michael Urban and Brian Tiemann<br />
-<strong>Publisher:</strong> Sams Publishing<br />
-<strong>ISBN:</strong> 0-672-32206-4<br />
-<strong>Pages:</strong> 996<br />
+<strong>Title:</strong> FreeBSD Unleashed<br>
+<strong>Authors:</strong> Michael Urban and Brian Tiemann<br>
+<strong>Publisher:</strong> Sams Publishing<br>
+<strong>ISBN:</strong> 0-672-32206-4<br>
+<strong>Pages:</strong> 996<br>
 </p>
 
 <p>
@@ -72,7 +70,7 @@ for the book.
 		<li>Advanced Installation Issues</li>
 	</ol>
 
-	<p>		
+	<p>
 	<strong>Part II - Using FreeBSD</strong>
 	</p>
 
@@ -104,7 +102,7 @@ for the book.
 		<li>Introduction to Perl Programming</li>
 	</ol>
 	</td>
-	
+
 	<td valign="top">
 	<p>
 	<strong>Part IV - FreeBSD Networking</strong>
@@ -124,7 +122,7 @@ for the book.
 		<li>File and Print Sharing with Microsoft Windows</li>
 		<li>DHCP</li>
 	</ol>
-				
+
 	<p>
 	<strong>Part V - X-Windows</strong>
 	</p>
@@ -132,7 +130,7 @@ for the book.
 	<ol>
 		<li value="34">Advanced X-Windows Configuration</li>
 	</ol>
-				
+
 	<p>
 	<strong>Part VI - Appendices</strong>
 	</p>
@@ -203,19 +201,19 @@ are not discussed or mentioned as alternatives to Gnome until near the end of th
 
 <p>
 Covered in chapter seven are desktop applications, which includes an overview of text editors such as
-gedit, <tt>ee</tt> and <tt>vi</tt> (but not Emacs) and a tutorial on The GIMP graphics editor. Also
+gedit, <code>ee</code> and <code>vi</code> (but not Emacs) and a tutorial on The GIMP graphics editor. Also
 included in the chapter is a walk-through of Star Office 5.2, playing audio and video files. How to
 browse the Internet, pulling files via FTP and checking your spam, er e-mail finish up the chapter. A
-thumbs up should be given to the authors for providing key maps and commands for <tt>vi</tt> and an
-explanation of a <tt>diff</tt> output, but I think that The GIMP and Star Office sections could have
+thumbs up should be given to the authors for providing key maps and commands for <code>vi</code> and an
+explanation of a <code>diff</code> output, but I think that The GIMP and Star Office sections could have
 been trimmed down a bit by providing a highlight of both applications rather than a detailed HOWTO.
 </p>
 
 <p>
 The reader is introduced to the shell environment in chapter eight. The different shell options are
 presented and explained to the reader as well as a little history behind each one, though the
-<tt>bash</tt> shell is the one referenced throughout most of the chapter. The chapter covers basics
-like searching the man pages, working with directories, using commands like <tt>ls</tt> and <tt>rm</tt>,
+<code>bash</code> shell is the one referenced throughout most of the chapter. The chapter covers basics
+like searching the man pages, working with directories, using commands like <code>ls</code> and <code>rm</code>,
 soft versus hard links, wildcards, and text manipulation commands.
 </p>
 
@@ -231,8 +229,8 @@ an introduction to programming with Perl.
 
 <p>
 Chapters nine talks about the FreeBSD directory structure, the strict rule that is installed by the
-administrator should be placed under <tt>/usr/local</tt> and mounting and unmounting file systems
-and removable disks. Also in the chapter is an overview of <tt>/etc/fstab</tt> and <tt>fsck</tt>,
+administrator should be placed under <code>/usr/local</code> and mounting and unmounting file systems
+and removable disks. Also in the chapter is an overview of <code>/etc/fstab</code> and <code>fsck</code>,
 a discussion about soft updates versus journaling file systems, how to fix damaged super blocks,
 setting up and maintaining quotas, and the difference between blocks, files and inodes. The chapter
 tends to jump from one topic to a different, then goes back to the previous topic. This can cause
@@ -252,11 +250,11 @@ the reader getting locked out of a resource.
 Chapters eleven through thirteen revolve around system configuration files and scripts, further
 customization of the shell, and writing shell scripts for either the Bourne shell or the Korn shell.
 Chapter eleven re-caps the boot and startup process, introduces the resource configuration (i.e.:
-<tt>rc</tt>) files, the <tt>inetd</tt> d&aelig;mon and configuration file, and configuring the syslog
+<code>rc</code>) files, the <code>inetd</code> d&aelig;mon and configuration file, and configuring the syslog
 d&aelig;mon. An in-depth walk-through of shells is covered in chapter twelve with topics like installing
 different shells from packages or ports, changing the shell on the fly or the default shell for the user,
-and setting up the shell initialization files for <tt>csh</tt> (which has since been replaced with
-<tt>tcsh</tt>) and the Bourne-like shells. The chapter closes with changing the shell prompt and a
+and setting up the shell initialization files for <code>csh</code> (which has since been replaced with
+<code>tcsh</code>) and the Bourne-like shells. The chapter closes with changing the shell prompt and a
 quick touch on variables.
 </p>
 
@@ -265,26 +263,26 @@ Chapter thirteen is probably one of most detailed chapters in the book, as it co
 scripts and programs. The reader is introduced to the often chaotic but powerful world of writing Bourne
 or Korn shell scripts. C shell scripting is not covered as it can be a lot of headaches and that Bourne
 shell scripts are considered a de-facto standard. The chapter covers variables, getting user input from
-a running script or from the command arguments, using <tt>expr</tt> for basic number crunching, loops,
-shifting arguments, the <tt>if</tt> and <tt>case</tt> structures, exit status, functions, <tt>stdin</tt>,
-<tt>stdout</tt> and <tt>stderr</tt>, and debugging scripts. The last portion of the chapter covers
+a running script or from the command arguments, using <code>expr</code> for basic number crunching, loops,
+shifting arguments, the <code>if</code> and <code>case</code> structures, exit status, functions, <code>stdin</code>,
+<code>stdout</code> and <code>stderr</code>, and debugging scripts. The last portion of the chapter covers
 features that are available in the Korn shell that aren't available in the Bourne shell.
 </p>
 
 <p>
 Monitoring performance, process control and automating jobs are the topics found in Chapter fourteen.
-The chapter shows how the reader to use <tt>top</tt> to see how pegged the system is and what memory
+The chapter shows how the reader to use <code>top</code> to see how pegged the system is and what memory
 resources are available, as well as deciphering the different counters and values shown in outputs
-from <tt>top</tt> and <tt>ps</tt>. The <tt>kill</tt> command is covered along with the different
-signals that can be sent to a process. Unfortunately, the <tt>killall</tt> command is not covered,
-even though it uses the same signals as <tt>kill</tt> but it can be more dangerous. The last items
-covered in the chapter include being <tt>nice</tt> to a process and working with the <tt>cron</tt>
-d&aelig;mon and setting up a <tt>crontab</tt> file.
+from <code>top</code> and <code>ps</code>. The <code>kill</code> command is covered along with the different
+signals that can be sent to a process. Unfortunately, the <code>killall</code> command is not covered,
+even though it uses the same signals as <code>kill</code> but it can be more dangerous. The last items
+covered in the chapter include being <code>nice</code> to a process and working with the <code>cron</code>
+d&aelig;mon and setting up a <code>crontab</code> file.
 </p>
 
 <p>
 Chapter fifteen covers how to install, un-install and update packages and ports available for FreeBSD.
-Both the <tt>sysinstall</tt> and the <tt>pkg_add</tt> methods of installing packages are provided
+Both the <code>sysinstall</code> and the <code>pkg_add</code> methods of installing packages are provided
 along with a disclaimer that not all software available for FreeBSD are in a package format. The rest
 of the chapter covers the guts of the Ports system and collection, what a Port really is and how to
 install, upgrade or remove a Port. The <a href="http://www.freshports.org/">FreshPorts</a> site is
@@ -304,14 +302,14 @@ either environment.
 Chapter seventeen and eighteen provides the reader with information on two of the many things that could
 be done with the source code of FreeBSD, configuring and compiling the kernel, and keeping up to date
 with -STABLE or -CURRENT. Chapter seventeen explains what the kernel is and what it does, why the reader
-would customize the kernel, an overview of the <tt>GENERIC</tt> and the <tt>LINT</tt> kernel configuration
+would customize the kernel, an overview of the <code>GENERIC</code> and the <code>LINT</code> kernel configuration
 files, make a custom configuration file, compiling and installing the custom kernel, and tips to recover
 from a bad kernel compile.
 </p>
 
 <p>
 Chapter eighteen goes over the -STABLE and the -CURRENT branches (and does a good job at it as well), what
-the famous <tt>make world</tt> process is and provides steps and tips throughout the process as well as
+the famous <code>make world</code> process is and provides steps and tips throughout the process as well as
 pointing out the possible hurdles and problem points. The steps provided are really detailed and are
 straightforward, which are welcome to many FreeBSD users.
 </p>
@@ -330,7 +328,7 @@ The rest of the chapter includes a list of Do's and Don'ts that the reader (or a
 follow. Some of them should already be second nature for those who administer any number of FreeBSD
 (or Unix) systems. One of the Don'ts that got me chuckling was &quot;Don't get hung up on uptime.&quot;
 :-) The chapter finishes up with instructions on how to enable soft updates or asynchronous writes on a
-system that is already up and running, tuning up with <tt>sysctl</tt>, and setting up backups and mirrors.
+system that is already up and running, tuning up with <code>sysctl</code>, and setting up backups and mirrors.
 </p>
 
 <p>
@@ -365,11 +363,11 @@ model, which was not included in this book.
 <p>
 Chapter twenty-three and twenty-four covers configuring a FreeBSD box to access a network through a
 network card and through a PPP connection respectively. A list of supported network cards in the
-<tt>GENERIC</tt> kernel is provided, along with configuring network settings through the
-<tt>sysinstall</tt> utility, manually by using <tt>ifconfig</tt>, <tt>route</tt>, or by using
-<tt>/etc/rc.conf</tt>. The authors do cover the <tt>/etc/netstart</tt> script which when executed
-will reload the network configuration from <tt>/etc/rc.conf</tt> without having to reboot the
-computer. Setting up the <tt>/etc/hosts</tt> and <tt>/etc/resolv.conf</tt> wrap up chapter twenty-three.
+<code>GENERIC</code> kernel is provided, along with configuring network settings through the
+<code>sysinstall</code> utility, manually by using <code>ifconfig</code>, <code>route</code>, or by using
+<code>/etc/rc.conf</code>. The authors do cover the <code>/etc/netstart</code> script which when executed
+will reload the network configuration from <code>/etc/rc.conf</code> without having to reboot the
+computer. Setting up the <code>/etc/hosts</code> and <code>/etc/resolv.conf</code> wrap up chapter twenty-three.
 </p>
 
 <p>
@@ -407,7 +405,7 @@ made, the differences between anonymous and authenticated FTP, and setting up th
 <p>
 Setting up a FreeBSD as a NAT gateway/router is the topic of Chapter twenty-eight. The chapter starts
 off with a look at what routing between multiple networks is, what a gateway does and how it can use
-NAT, enabling <tt>IPDIVERT</tt> and <tt>IPFIREWALL</tt>, setting up clients to use the new gateway
+NAT, enabling <code>IPDIVERT</code> and <code>IPFIREWALL</code>, setting up clients to use the new gateway
 (with instructions to configure Windows, Mac OS and some Linux clients), a touch on setting up a
 wireless network gateway, and routing between more than two networks.
 </p>
@@ -420,8 +418,8 @@ security risks and models, how to make sure passwords are strong enough to avoid
 setting up passwords to expire or through S/Key for one-time passwords, setting up and using
 OpenSSH for secure terminal access, as well as using OpenSSL to secure POP3 and IMAP. Security FTP
 and Apache starts off the second half of the chapter, then continues on with system security
-profiles and <tt>securelevel</tt> (it also includes a table of what is enabled and/or disabled for
-each security profile available in <tt>sysinstall</tt>), configuring a firewall, setting up and
+profiles and <code>securelevel</code> (it also includes a table of what is enabled and/or disabled for
+each security profile available in <code>sysinstall</code>), configuring a firewall, setting up and
 using PortSentry and Tripwire, and tips on what to do if you think the system is being hacked, what
 and how to reduce the risk of denial of service attacks, what can be done to increase the physical
 security of the box, and resources available to find out about security exploits and fixes. This
@@ -441,31 +439,31 @@ restricting access to the name server, setting up zones to serve, and setting up
 The next two chapters, thirty-one and thirty-two cover file serving using NFS and Samba, as well as
 using Samba as a print server for Windows machines. Chapter thirty-one's topic is NFS and it provides
 information on what NFS is and how it works from a user standpoint, setting up the NFS d&aelig;mon,
-setting up NFS shares via <tt>/etc/exports</tt>, setting up a client to mount the NFS shares, and using
+setting up NFS shares via <code>/etc/exports</code>, setting up a client to mount the NFS shares, and using
 the auto-mount d&aelig;mon to mount shares when needed. Chapter thirty-two focuses on file and print
 services for Windows machines by using Samba and provides steps to set up Samba, configuring Samba
-through the <tt>smb.conf</tt> configuration file or through the SWAT web-based interface, and how to
-mount Windows or Samba shares with <tt>smbfs</tt>. Just a note for those thinking of setting up Samba
+through the <code>smb.conf</code> configuration file or through the SWAT web-based interface, and how to
+mount Windows or Samba shares with <code>smbfs</code>. Just a note for those thinking of setting up Samba
 as a Windows NT domain controller will need to refer elsewhere. For those who work with Macintosh
-computers, the authors do mention the <tt>netatalk</tt> port to provide AppleTalk file services but
+computers, the authors do mention the <code>netatalk</code> port to provide AppleTalk file services but
 don't provide any instructions to set it up.
 </p>
 
 <p>
 Chapter thirty-three provides a quick introduction to DHCP including the advantages of using DHCP to
-assign IP addresses over assigning static IP addresses, enabling DHCP on the client via <tt>sysinstall</tt>
-or manually by enabling it in <tt>/etc/rc.conf</tt> and configuring the <tt>dhclient</tt> program, and
+assign IP addresses over assigning static IP addresses, enabling DHCP on the client via <code>sysinstall</code>
+or manually by enabling it in <code>/etc/rc.conf</code> and configuring the <code>dhclient</code> program, and
 setting up the ISC-DHCP server d&aelig;mon. The steps provided to configure the DHCP server are based on
-using the <tt>dhcpconf</tt> program rather than manually hacking the <tt>dhcpd.conf</tt> file.
+using the <code>dhcpconf</code> program rather than manually hacking the <code>dhcpd.conf</code> file.
 </p>
 
 <p>
 The last chapter in the book covers more advanced configuration of X-Windows such as upgrading from
-XFree86 3.3.6 to 4.x and installing the <tt>Xwrapper</tt> port, using <tt>SuperProbe</tt> to detect
-the video card, using <tt>xf86config</tt> to set up XFree86, deciphering the <tt>XF86Config</tt>
-file, setting up the <tt>.xinitrc</tt> file to change the window manager between Blackbox, Window
+XFree86 3.3.6 to 4.x and installing the <code>Xwrapper</code> port, using <code>SuperProbe</code> to detect
+the video card, using <code>xf86config</code> to set up XFree86, deciphering the <code>XF86Config</code>
+file, setting up the <code>.xinitrc</code> file to change the window manager between Blackbox, Window
 Maker and Gnome, setting up X to use True Type fonts, connecting to a remote X-Windows host, and
-using <tt>xdm</tt> to provide a graphical login prompt.
+using <code>xdm</code> to provide a graphical login prompt.
 </p>
 
 <p>
@@ -503,7 +501,7 @@ of FreeBSD. The book is also a good guide for those who want to migrate from a W
 environment to a FreeBSD/Unix environment.
 </p>
 
-<hr />
+<hr>
 <p>
 Article copyright &copy; 2002&#8211;2010 Linh Pham.
 All rights reserved. Re-production of portions of this work, or its entirety, requires permission of the copyright holder.
