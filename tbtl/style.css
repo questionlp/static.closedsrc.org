@@ -1,0 +1,24 @@
+@media all {
+*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+body { background-color: #01248c; color: white; font-family: "Helvetica Neue", HelveticaNeue, Helvetica, Calibri, sans-serif; font-size: 12pt; margin: 0.25em 0.5em; padding: 0; }
+h1, h2 { color: #fffd53; font-weight: bold; padding: 0; }
+h1 { font-size: 200%; margin: 0.25em 0; }
+h2 { font-size: 150%; margin: 0.33em 0; }
+a:link, a:hover, a:active, a:visited { color: white; text-decoration: underline; }
+nav { padding: 0.1em 0; }
+nav p { display: inline-block; font-size: 150%; font-weight: bolder; margin: 0.25em 0; padding: 0.25em 0; }
+section div.item { border: 1px outset white; display: inline-block; height: 7.5em; margin: 0.25em; padding: 0 1em; text-align: center; width: 20em; vertical-align: middle; }
+div.item p.name { color: #fffd53; font-weight: bolder; }
+span.meta { color: red; font-weight: bold; }
+span.meta:after { content: ':'; }
+}
+
+@media (min-device-width: 320px) and (max-device-width: 768px) {
+body { margin: 0.2em; overflow-x: hidden; width: 100%; }
+a:link, a:hover, a:active, a:visited { font-weight: 500; }
+h1 { font-size: 16pt; }
+h2 { font-size: 14pt; }
+header p, footer p { margin: 0.5em 0.25em; }
+footer p { font-size: 85%; }
+section div.item { display: block; margin: 0.66em 0.2em; padding: 0 0.2em; width: 96%; }
+}
