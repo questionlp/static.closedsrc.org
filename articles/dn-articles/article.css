@@ -1,5 +1,5 @@
 body {
-	font-family: Calibri, Verdana, "Bitstream Vera Sans", sans-serif;
+	font-family: sans-serif;
 	margin: 0 0.5em 0.5em 0.5em;
 }
 
@@ -12,7 +12,7 @@ body {
 }
 
 pre, tt, kbd, code {
-	font-family: Consolas, "Bitstream Vera Sans Mono", monospace;
+	font-family: monospace;
 }
 
 var {

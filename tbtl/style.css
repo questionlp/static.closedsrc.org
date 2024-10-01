@@ -1,6 +1,6 @@
 @media all {
 *, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
-body { background-color: #01248c; color: white; font-family: "Helvetica Neue", HelveticaNeue, Helvetica, Calibri, sans-serif; font-size: 12pt; margin: 0.25em 0.5em; padding: 0; }
+body { background-color: #01248c; color: white; font-family: "Helvetica Neue", HelveticaNeue, Helvetica, "IBM Plex Sans", Calibri, sans-serif; font-size: 12pt; margin: 0.25em 0.5em; padding: 0; }
 h1, h2 { color: #fffd53; font-weight: bold; padding: 0; }
 h1 { font-size: 200%; margin: 0.25em 0; }
 h2 { font-size: 150%; margin: 0.33em 0; }
